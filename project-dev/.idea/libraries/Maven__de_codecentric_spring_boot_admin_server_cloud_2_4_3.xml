@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: de.codecentric:spring-boot-admin-server-cloud:2.4.3">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../../Maven/repository/de/codecentric/spring-boot-admin-server-cloud/2.4.3/spring-boot-admin-server-cloud-2.4.3.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../../../Maven/repository/de/codecentric/spring-boot-admin-server-cloud/2.4.3/spring-boot-admin-server-cloud-2.4.3-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../../Maven/repository/de/codecentric/spring-boot-admin-server-cloud/2.4.3/spring-boot-admin-server-cloud-2.4.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
