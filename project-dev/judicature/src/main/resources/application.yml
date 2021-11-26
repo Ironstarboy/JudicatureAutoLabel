@@ -1,10 +1,10 @@
 #datasource
-#ÕâÀïÅäµÄÊÇÎÒ±¾»úµÄÊı¾İ¿â mysql+redis
+#è¿™é‡Œé…çš„æ˜¯æˆ‘æœ¬æœºçš„æ•°æ®åº“ mysql+redis
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/datasci?useSSL=false
     username: root
-    password: 123456
+    password: 888888
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   mvc:
@@ -19,11 +19,11 @@ spring:
   #  prefix: classpath:/template/
   #  suffix: .html
 
-#Ó³ÉäÎÄ¼ş·½Ê½
+#æ˜ å°„æ–‡ä»¶æ–¹å¼
 mybatis:
-  mapper-locations: classpath:mapper/*Mapper.xml #mapperµÄÓ³ÉäÎÄ¼şÂ·¾¶
-  type-aliases-package: DataSci.judicature.domain #ÅäÖÃ±ğÃûÉ¨Ãè
-  config-location: classpath:sqlMapConfig.xml   #Ö¸¶¨ºËĞÄÅäÖÃÎÄ¼ş
+  mapper-locations: classpath:mapper/*Mapper.xml #mapperçš„æ˜ å°„æ–‡ä»¶è·¯å¾„
+  type-aliases-package: DataSci.judicature.domain #é…ç½®åˆ«åæ‰«æ
+  config-location: classpath:sqlMapConfig.xml   #æŒ‡å®šæ ¸å¿ƒé…ç½®æ–‡ä»¶
 
 server:
   port: 80

@@ -4,5 +4,6 @@
     <file url="file://$PROJECT_DIR$/admin-client/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/admin-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/application.yml" charset="UTF-8" />
   </component>
 </project>
