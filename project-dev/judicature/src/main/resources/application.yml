@@ -7,6 +7,14 @@ spring:
     password: 888888
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+      #文件保存路径
+      location: 'D:\\java\DataSci\\lqf\\JudicatureAutoLabel\\project-dev\\judicature\\src\\main\\resources\\case\\'
+
+
   mvc:
     view:
       prefix:

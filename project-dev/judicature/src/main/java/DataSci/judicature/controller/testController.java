@@ -1,5 +1,6 @@
 package DataSci.judicature.controller;
 
+import DataSci.judicature.domain.CaseMsg;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,6 +53,19 @@ public class testController {
     public ModelAndView redirect(ModelAndView modelAndView) {
         modelAndView.setViewName("redirect:/test/hello");
         return modelAndView;
+    }
+
+    /**
+     * 返回json字符串测试
+     */
+    @RequestMapping("/json")
+    @ResponseBody
+    public CaseMsg jsonTest() {
+        return new CaseMsg(
+                "哈", "哈哈", "哈哈哈",
+                "哈哈哈哈", "哈哈哈哈哈", "哈哈哈哈哈哈"
+        );
+
     }
 
 

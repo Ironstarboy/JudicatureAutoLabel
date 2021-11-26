@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传文件</title>
+</head>
+<body>
+
+
+<!--
+文件上传
+* 三要素：
+* 表单项type="file"
+* 提交方式：post
+* 表单的enctype属性是多部份表单形式，即enctype=“multipart/form-data”
+-->
+
+<form action="/file/save"
+      method="post" enctype="multipart/form-data">
+<!--    名称<input type="text" name="username"><br>-->
+    文件<input type="file" name="upload"><br>
+    <input type="submit" value="提交">
+</form>
+
+</body>
+</html>
+
+
+
