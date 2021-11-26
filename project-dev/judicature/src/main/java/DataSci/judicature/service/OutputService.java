@@ -13,8 +13,10 @@ public interface OutputService {
     /**
      * 根据案件文本，生成 json 标注
      *
-     * @param f 案件文本
+     * @param  caseMsg 案件实体类
      * @return json 字符串
      */
-    String FileToJson(File f);
+    String CaseToJson(CaseMsg caseMsg);
+
+
 }
