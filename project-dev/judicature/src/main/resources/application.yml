@@ -38,3 +38,6 @@ server:
   servlet:
     encoding:
       charset: utf-8
+
+#当前项目在本机的真实路径
+PATH: 'D:\\java\DataSci\\lqf\\JudicatureAutoLabel\\project-dev\\judicature\\'

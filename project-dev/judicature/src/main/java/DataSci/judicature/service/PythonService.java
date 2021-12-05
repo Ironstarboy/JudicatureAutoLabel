@@ -15,8 +15,5 @@ public interface PythonService {
      */
     Words jieba(File file);
 
-    /**
-     * 生成案件信息
-     */
-    CaseMsg proCaseMsg(File file);
+
 }
