@@ -1,6 +1,8 @@
 package DataSci.judicature.controller;
 
 import DataSci.judicature.domain.CaseMsg;
+import DataSci.judicature.service.testService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -8,12 +10,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 测试controller
- * 测试是否乱码
- * 是否能够正确跳转页面
+ * localhost/test/xxx
  */
 @Controller
 @RequestMapping("/test")
 public class testController {
+
+    @Autowired
+    private testService testService;
 
 
     /**
@@ -68,5 +72,14 @@ public class testController {
 
     }
 
+    /**
+     * 调用python脚本测试
+     */
+    @RequestMapping("/py")
+    @ResponseBody
+    public void execPyTest() {
+        String path = "D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\spyder\\testbaidu.py";
+        testService.testPy(path);
+    }
 
 }
