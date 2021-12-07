@@ -87,4 +87,14 @@ public class testController {
         testService.testPy(path);
     }
 
+    /**
+     * 自动爬虫测试
+     */
+    @RequestMapping("/sele")
+    @ResponseBody
+    public void climb() {
+        String path = "D:\\java\\DataSci\\JudicatureAutoLabel\\spyder\\1.py";
+        testService.testPy(path);
+    }
+
 }

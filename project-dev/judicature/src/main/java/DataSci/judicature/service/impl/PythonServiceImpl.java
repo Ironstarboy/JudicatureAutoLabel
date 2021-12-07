@@ -27,7 +27,7 @@ public class PythonServiceImpl implements PythonService {
      * 执行python脚本
      *
      * @param args1   参数集 {"python","python脚本的绝对路径","参数1","参数2","参数3..."}
-     * @param charset 字符编码 默认为GBK
+     * @param charset 字符编码 默认为 GBK
      */
     private void exec(String[] args1, String charset) {
         Process proc;
@@ -36,12 +36,21 @@ public class PythonServiceImpl implements PythonService {
         try {
             proc = Runtime.getRuntime().exec(args1);// 执行py文件
             //用输入输出流来截取结果
-            BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream(), charset));
+            BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream(), charset));
+            //获取错误流
+            BufferedReader err = new BufferedReader(new InputStreamReader(proc.getErrorStream(), charset));
+
             String line;
-            while ((line = br.readLine()) != null) {
+            while ((line = in.readLine()) != null) {
                 System.out.println(line);
             }
-            br.close();
+            String error;
+            while ((error = err.readLine()) != null) {
+                System.err.println(error);
+            }
+
+            in.close();
+            err.close();
             proc.waitFor();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

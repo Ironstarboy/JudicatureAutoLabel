@@ -25,11 +25,21 @@ public class testServiceImpl implements testService {
             proc = Runtime.getRuntime().exec(args1);// 执行py文件
             //用输入输出流来截取结果
             BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream(), charset));
+            //获取错误流
+            BufferedReader err = new BufferedReader(new InputStreamReader(proc.getErrorStream(), charset));
+
             String line;
             while ((line = in.readLine()) != null) {
                 System.out.println(line);
             }
+            String error;
+            while ((error = err.readLine()) != null) {
+                System.err.println(error);
+            }
+
+
             in.close();
+            err.close();
             proc.waitFor();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
