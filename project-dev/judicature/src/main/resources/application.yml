@@ -12,7 +12,7 @@ spring:
       max-file-size: 10MB
       max-request-size: 100MB
       #文件保存路径
-      location: 'D:\\java\DataSci\\lqf\\JudicatureAutoLabel\\project-dev\\judicature\\src\\main\\resources\\case\\'
+      location: ${PATH}project-dev\\judicature\\src\\main\\resources\\case\\
 
 
   mvc:
@@ -40,4 +40,4 @@ server:
       charset: utf-8
 
 #当前项目在本机的真实路径
-PATH: 'D:\\java\DataSci\\lqf\\JudicatureAutoLabel\\'
+PATH: 'D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\'

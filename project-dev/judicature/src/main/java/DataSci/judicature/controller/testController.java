@@ -3,6 +3,7 @@ package DataSci.judicature.controller;
 import DataSci.judicature.domain.CaseMsg;
 import DataSci.judicature.service.testService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +19,9 @@ public class testController {
 
     @Autowired
     private testService testService;
+
+    @Value("${PATH}")
+    private String PATH;
 
 
     /**
@@ -78,7 +82,8 @@ public class testController {
     @RequestMapping("/py")
     @ResponseBody
     public void execPyTest() {
-        String path = "D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\spyder\\testbaidu.py";
+
+        String path = PATH + "spyder\\testbaidu.py";
         testService.testPy(path);
     }
 

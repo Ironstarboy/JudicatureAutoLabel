@@ -2,6 +2,7 @@ package DataSci.judicature.service.impl;
 
 import DataSci.judicature.domain.Words;
 import DataSci.judicature.service.PythonService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -11,6 +12,9 @@ import java.io.InputStreamReader;
 
 @Service
 public class PythonServiceImpl implements PythonService {
+
+    @Value("${PATH}")
+    private String PATH;
 
 
     @Override
