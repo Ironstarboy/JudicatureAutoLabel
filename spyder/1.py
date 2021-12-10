@@ -5,6 +5,7 @@ from time import sleep
 import random
 import threading
 
+
 # 这个方法可行
 class wenshu:
 
@@ -33,14 +34,15 @@ class wenshu:
         chrome_options = webdriver.ChromeOptions()
         # 让浏览器不显示自动化测试
         chrome_options.add_argument('disable-infobars')
-        self.chrome = webdriver.Chrome( options=chrome_options)
+        self.chrome = webdriver.Chrome(options=chrome_options)
 
     def send_login(self):
         # 模拟登陆获取到登陆的Cookie
-        url='https://wenshu.court.gov.cn/website/wenshu/181010CARHS5BS3C/index.html?open=login'
+        url = 'https://wenshu.court.gov.cn/website/wenshu/181010CARHS5BS3C/index.html?open=login'
         # url='https://account.court.gov.cn/app#/login'
         self.chrome.get(url)
-        self.chrome.implicitly_wait(5)
+        # self.chrome.implicitly_wait(5)
+        sleep(3)
         # 最大化浏览器,防止被遮挡？
         self.chrome.maximize_window()
         # 因为登录框在iframe框中，需要先切换到iframe中
@@ -49,34 +51,38 @@ class wenshu:
         self.chrome.refresh()  # 刷新多次才会加载出来？
         sleep(2)
         self.chrome.switch_to.frame('contentIframe')
-        self.chrome.find_element_by_xpath('//*[@id="root"]/div/form/div[1]/div[1]/div/div/div/input').send_keys('18851751056')
-        self.chrome.find_element_by_xpath('//*[@id="root"]/div/form/div[1]/div[2]/div/div/div/input').send_keys('wenshuCourt666')
-        sleep(random.randint(1, 5))
-        self.chrome.find_element_by_xpath('//*[@id="root"]/div/form/div/div[3]/span').click() # 登陆按钮
+        self.chrome.find_element_by_xpath('//*[@id="root"]/div/form/div[1]/div[1]/div/div/div/input').send_keys(
+            '18851751056')
+        self.chrome.find_element_by_xpath('//*[@id="root"]/div/form/div[1]/div[2]/div/div/div/input').send_keys(
+            'wenshuCourt666')
+        sleep(1)
+        self.chrome.find_element_by_xpath('//*[@id="root"]/div/form/div/div[3]/span').click()  # 登陆按钮
         sleep(2)
         # TODO 偶尔会跳出验证码，验证码自动识别可以先从盟课网试试，或者试试ip代理
-        self.chrome.refresh();self.chrome.refresh();
+        self.chrome.refresh();
+        sleep(1)
+        self.chrome.refresh();
         xpath_search_base = '//div[@class="header"]/div[@class="item_table"]//div[@class="search-con clearfix"]/div[1]'
         self.chrome.find_element_by_xpath(xpath_search_base + '/div[2]/input').send_keys('经济犯罪')
         sleep(random.randint(1, 5))
         self.chrome.find_element_by_xpath(xpath_search_base + '/div[3]').click()
         sleep(random.randint(1, 5))
         self.chrome.refresh()
-        self.chrome.implicitly_wait(10)
-
+        # self.chrome.implicitly_wait(10)
+        sleep(10)
 
         print('开始下载了')
         AllSelect = self.chrome.find_element_by_xpath(
             '//*[@id="_view_1545184311000"]/div[2]/div[4]/a[1]/label')  # 点击全选
         Alldownload = self.chrome.find_element_by_xpath('//*[@id="_view_1545184311000"]/div[2]/div[4]/a[3]')  # 批量下载
-        self.chrome.implicitly_wait(5)
+        # self.chrome.implicitly_wait(5)
+        sleep(5)
         AllSelect.click()
         print('点中全选了')
-        self.chrome.implicitly_wait(10)
+        sleep(5)
+        # self.chrome.implicitly_wait(10)
         Alldownload.click()
         return self.chrome.get_cookies()
-
-
 
     def send_request(self, ws_params):
         return self.request.post(url=self.url, headers=self.headers, data=ws_params).json()
@@ -93,15 +99,19 @@ class wenshu:
         # 此处在windows下执行有报编码错误问题，需要将源码下的subprocess.py文件里的encoding改成utf-8
         return self.ctx.eval(func_name)
 
+
 import js2py
+
+
 def get_js_ans():
     # TODO jquery这里还有问题
     context = js2py.EvalJs()
     c = open('strToBinary.js', encoding='utf-8').read()
     context.execute(c)
     return context.strToBinary()
-if __name__ == '__main__':
 
+
+if __name__ == '__main__':
 
     wenshu = wenshu()
     # 获取登陆后的Cookie
@@ -114,25 +124,25 @@ if __name__ == '__main__':
     for cookie in cookies:
         name = cookie['name']
         value = cookie['value']
-        json_cookie += name+'='+value+'; '
+        json_cookie += name + '=' + value + '; '
     # 退出selenium浏览器自动化
     # wenshu.chrome.quit()
     print(json_cookie)
     wenshu.headers['Cookie'] = json_cookie
     # 通过加载js生成ciphertext参数
-    ciphertext =get_js_ans() # TODO python运行js还有点问题
+    ciphertext = get_js_ans()  # TODO python运行js还有点问题
 
     # ciphertext=
     # 通过加载js生成__RequestVerificationToken参数
     verification_token = wenshu.ctx.eval("random(24)")
     params = {
-        'pageId': '2f48cc03c6e38865bcbdaf2e81a09f7d',# 参数由什么决定？
+        'pageId': '2f48cc03c6e38865bcbdaf2e81a09f7d',  # 参数由什么决定？
         's21': '经济犯罪',
         'sortFields': 's50:desc',
-        'ciphertext': ciphertext, # cipher的js生成函数在网页里面找 website/wenshu/js/strToBinary.js
-        'pageNum': '2',#参数是？
+        'ciphertext': ciphertext,  # cipher的js生成函数在网页里面找 website/wenshu/js/strToBinary.js
+        'pageNum': '2',  # 参数是？
         'queryCondition': '[{"key":"s21","value":"经济犯罪"}]',
-        'cfg': 'com.lawyee.judge.dc.parse.dto.SearchDataDsoDTO@queryDoc', #真正的接口参数
+        'cfg': 'com.lawyee.judge.dc.parse.dto.SearchDataDsoDTO@queryDoc',  # 真正的接口参数
         '__RequestVerificationToken': verification_token
     }
     # 发送请求获取返回结果

@@ -15,12 +15,18 @@
 * 表单的enctype属性是多部份表单形式，即enctype=“multipart/form-data”
 -->
 
-<form action="/file/save"
+<form action="/upload/file"
       method="post" enctype="multipart/form-data">
-<!--    名称<input type="text" name="username"><br>-->
+    <!--    名称<input type="text" name="username"><br>-->
     文件<input type="file" name="upload"><br>
     <input type="submit" value="提交">
 </form>
+
+<div style="color: red;border: 1px solid">
+    <a href="/download/txt">点我下载</a>
+</div>
+
+
 
 </body>
 </html>

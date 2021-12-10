@@ -1,14 +1,15 @@
 package DataSci.judicature.service.impl;
 
 import DataSci.judicature.domain.CaseMsg;
-import DataSci.judicature.service.OutputService;
+import DataSci.judicature.service.FileService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
+import java.io.*;
 
 
 @Service
-public class OutputServiceImpl implements OutputService {
+public class FileServiceImpl implements FileService {
 
 
     //todo 生成案例信息的实现
@@ -16,4 +17,7 @@ public class OutputServiceImpl implements OutputService {
     public CaseMsg proCaseMsg(String[] words) {
         return null;
     }
+
+
+
 }
