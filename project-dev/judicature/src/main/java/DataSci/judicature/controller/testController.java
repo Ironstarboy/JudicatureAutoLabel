@@ -154,7 +154,7 @@ public class testController {
     @RequestMapping("/sele")
     @ResponseBody
     public void climb() {
-        String path = "D:\\java\\DataSci\\JudicatureAutoLabel\\spyder\\1.py";
+        String path = PATH+"spyder\\1.py";
         testService.testPy(path);
     }
 

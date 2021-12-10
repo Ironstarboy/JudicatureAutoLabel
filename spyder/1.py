@@ -69,17 +69,17 @@ class wenshu:
         sleep(random.randint(1, 5))
         self.chrome.refresh()
         # self.chrome.implicitly_wait(10)
-        sleep(10)
+        sleep(5)
 
         print('开始下载了')
         AllSelect = self.chrome.find_element_by_xpath(
             '//*[@id="_view_1545184311000"]/div[2]/div[4]/a[1]/label')  # 点击全选
         Alldownload = self.chrome.find_element_by_xpath('//*[@id="_view_1545184311000"]/div[2]/div[4]/a[3]')  # 批量下载
         # self.chrome.implicitly_wait(5)
-        sleep(5)
+        sleep(2)
         AllSelect.click()
         print('点中全选了')
-        sleep(5)
+        sleep(3)
         # self.chrome.implicitly_wait(10)
         Alldownload.click()
         return self.chrome.get_cookies()

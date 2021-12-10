@@ -2,7 +2,6 @@ package DataSci.judicature.controller;
 
 import DataSci.judicature.domain.CaseMsg;
 import DataSci.judicature.service.FileService;
-import DataSci.judicature.utils.FileUtil;
 import DataSci.judicature.utils.impl.FileUtilImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,24 +23,19 @@ import java.nio.charset.StandardCharsets;
 public class FileOutPutController {
 
     @Autowired
-    private FileService fileService;
-
-    @Autowired
     private FileUtilImpl fileUtil;
 
     /**
      * @return 返回案件信息的json文件
-     * todo service层逻辑没实现，未确定python脚本的传入参数
      */
     @RequestMapping("/json")
-    public CaseMsg json(HttpServletResponse response) {
+    public CaseMsg json(CaseMsg caseMsg, HttpServletResponse response) {
         response.reset();
         response.setContentType("application/octet-stream");// 设置强制下载不打开
         response.setCharacterEncoding("utf8");
         response.addHeader("Content-Disposition", "attachment;fileName=" + new String("标注.json".getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
 
-        //TODO 确定应该返回json的对象
-        return null;
+        return caseMsg;
     }
 
     /**
