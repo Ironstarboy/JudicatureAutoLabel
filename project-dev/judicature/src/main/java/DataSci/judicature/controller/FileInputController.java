@@ -21,8 +21,11 @@ public class FileInputController {
     private String location;
 
     @RequestMapping("/file")
-    public void save(MultipartFile upload, HttpSession session) throws IOException {
+    public String save(MultipartFile upload, HttpSession session) throws IOException {
 
+        if (upload == null || upload.isEmpty()){
+            return "请上传文件";
+        }
 
         //获取上传文件的名称
         String originalFilename = upload.getOriginalFilename();
@@ -43,6 +46,11 @@ public class FileInputController {
 
             //设置session 记录上传的是哪个文件
             session.setAttribute("userUploadFile", location + "txt\\" + prefix + ".txt");
+
+            System.out.println(originalFilename);
+            System.out.println("上传成功！！！！");
+            return "上传成功！！！！";
         }
+        return "上传失败！！！";
     }
 }

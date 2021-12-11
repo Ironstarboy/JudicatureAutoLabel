@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/echarts.min.js"></script>
+</head>
+
+<body>
+    <div id="main2" style="width:700px; height: 300px;" class=""></div>
+    <script>
+        // 初始化树图方法
+
+        //-----------------------第一步：实现树图，代码如下---------------------------
+        //获取echarts要渲染的元素
+        let dom = document.getElementById('main2');
+        let myChart = this.echarts.init(dom);
+        //模拟数据，注意树图取的是name属性
+        myChart.showLoading();
+        myChart.hideLoading();
+        let data = [{
+            name: '周永华抢劫死刑复核刑事裁定书',
+            children: [
+                {
+                    name: '审理法院',
+                    children: [
+                        {
+                            name: '最高人民法院',
+                        },
+                    ]
+                },
+                {
+                    name: '案件类型',
+                    children: [
+                        { name: '刑事案件' },
+                    ]
+                },
+                {
+                    name: '案由',
+                    children: [
+                        { name: '抢劫' },
+                    ]
+                },
+                {
+                    name: '审理程序',
+                    children: [
+                        { name: '刑事二审' },
+                    ]
+
+                },
+                {
+                    name: '裁判日期',
+                    children: [
+                        { name: '2020-12-28' },
+                    ]
+                },
+                {
+                    name: '当事人',
+                    children: [
+                        { name: '周永华' },
+                    ]
+                },
+            ]
+        }];
+        //树图配置
+        let option = {
+            tooltip: {
+                trigger: 'item',
+                triggerOn: 'mousemove'
+            },
+            series: [
+                {
+                    type: 'tree',
+                    data: data,
+                    top: '1%',
+                    left: '30%',
+                    bottom: '1%',
+                    right: '20%',
+                    symbolSize: 10,
+                    itemStyle: {
+                        color: '#819aeb',
+                    },
+                    lineStyle: {
+                        color: '#DDD',
+                    },
+                    label: {
+                        color: "#333",
+                        position: 'left',
+                        verticalAlign: 'middle',
+                        align: 'right',
+                        fontSize: 14
+                    },
+                    leaves: {
+                        label: {
+                            position: 'right',
+                            verticalAlign: 'middle',
+                            align: 'left'
+                        }
+                    },
+                    emphasis: {
+                        focus: 'descendant'
+                    },
+                    //用于减缓速度
+                    expandAndCollapse: true,
+                    animationDuration: 550,
+                    animationDurationUpdate: 750
+                }
+            ]
+
+        };
+        myChart.setOption(option);
+
+        // $.get('data.json').done(function (data) {动态数据的思想 待实现
+        //     // data 的结构:
+        //     // {
+        //     //     categories: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"],
+        //     //     values: [5, 20, 36, 10, 10, 20]
+        //     // }
+        //     myChart.setOption({
+        //         title: {
+        //             text: '异步数据加载示例'
+        //         },
+        //         tooltip: {},
+        //         legend: {},
+        //         xAxis: {
+        //             data: data.categories
+        //         },
+        //         yAxis: {},
+        //         series: [
+        //             {
+        //                 name: '销量',
+        //                 type: 'bar',
+        //                 data: data.values
+        //             }
+        //         ]
+        //     });
+        // });
+    </script>
+
+
+</html>

@@ -1,7 +1,7 @@
 function function1(x) {
     var str = $('#person').val();//先获取用显示div的内容，然后把当前复选框内容拼接，再把拼接内容在show中
     if (str.length != 0) {
-        str += "," + x;
+        str += "，" + x;
     } else {
         str += x;//拼接当前值val
     }
@@ -14,12 +14,12 @@ function function3() {
     document.getElementById("3cases").src = "fenci.html"
 }
 function function4() {
-    document.getElementById("3cases").src = ""
+    document.getElementById("3cases").src = "faq.html"
 }
 function function5(x) {
     var str = $('#sex').val();//先获取用显示div的内容，然后把当前复选框内容拼接，再把拼接内容在show中
     if (str.length != 0) {
-        str += "," + x;
+        str += "，" + x;
     } else {
         str += x;//拼接当前值val
     }
@@ -28,7 +28,7 @@ function function5(x) {
 function function6(x) {
     var str = $('#nation').val();//先获取用显示div的内容，然后把当前复选框内容拼接，再把拼接内容在show中
     if (str.length != 0) {
-        str += "," + x;
+        str += "，" + x;
     } else {
         str += x;//拼接当前值val
     }
@@ -37,7 +37,7 @@ function function6(x) {
 function function7(x) {
     var str = $('#hometown').val();//先获取用显示div的内容，然后把当前复选框内容拼接，再把拼接内容在show中
     if (str.length != 0) {
-        str += "," + x;
+        str += "，" + x;
     } else {
         str += x;//拼接当前值val
     }
@@ -46,7 +46,7 @@ function function7(x) {
 function function8(x) {
     var str = $('#cause').val();//先获取用显示div的内容，然后把当前复选框内容拼接，再把拼接内容在show中
     if (str.length != 0) {
-        str += "," + x;
+        str += "，" + x;
     } else {
         str += x;//拼接当前值val
     }
@@ -55,9 +55,12 @@ function function8(x) {
 function function9(x) {
     var str = $('#court').val();//先获取用显示div的内容，然后把当前复选框内容拼接，再把拼接内容在show中
     if (str.length != 0) {
-        str += "," + x;
+        str += "，" + x;
     } else {
         str += x;//拼接当前值val
     }
     $('#court').val(str);//显示 
+}
+function function10() {
+    document.getElementById("detail_echarts").src = "details_echarts.html"
 }
