@@ -25,15 +25,14 @@ public class JudgmentImpl implements WordService {
     public void extract(String fileName) throws IOException {
 
 
-
         BufferedReader br = new BufferedReader(new FileReader(location + "txt\\" + "白福贵嫩江市白云乡人民政府合同纠纷民事申请再审审查民事裁定书.txt"));
 
-        CaseMarks caseMarks = new CaseMarks();
+        CaseMarks[] caseMarks = new CaseMarks[10];
 
         String line;
         int i = 1;
         while ((line = br.readLine()) != null) {
-            if (i==4){
+            if (i == 4) {
 
             }
 
@@ -44,9 +43,8 @@ public class JudgmentImpl implements WordService {
 
     }
 
-    private CaseMarks pro(CaseMarks caseMarks,String line){
+    private CaseMarks pro(CaseMarks caseMarks, String line) {
         //再审申请人（一审原告、二审上诉人）：白福贵，男，1962年10月21日出生，汉族，住黑龙江省北安市。
-
 
 
         return caseMarks;

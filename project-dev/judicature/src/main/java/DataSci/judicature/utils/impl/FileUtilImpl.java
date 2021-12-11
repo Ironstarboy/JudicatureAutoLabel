@@ -138,8 +138,10 @@ public class FileUtilImpl implements FileUtil {
 
             if (list != null)
                 for (String doc : list) {
-                    String txt = doc.split("\\.")[0] + ".txt";
-                    word2txt(wordPath + doc, txtPath + txt, 7);
+                    if (new File(wordPath + doc).isFile()) {//是文件才操作
+                        String txt = doc.split("\\.")[0] + ".txt";
+                        word2txt(wordPath + doc, txtPath + txt, 7);
+                    }
                 }
         } else
             word2txt(wordPath, txtPath, 7);//单个文件就直接转
@@ -195,5 +197,75 @@ public class FileUtilImpl implements FileUtil {
     }
 
 
+    /**
+     * 转移文件
+     * 根据文件性质转移到不同的目录下
+     */
+    public void transfer(String dirPath) throws IOException {
+        File dir = new File(dirPath);
+        File[] files = dir.listFiles();
+
+
+        assert files != null;
+        for (File file : files) {
+            if (!file.isDirectory()) {
+                String name = file.getName().split("\\.")[0];
+                String ver = name.substring(name.length() - 3);
+                if ("裁定书".equals(ver)) {
+                    readAndWrite(file, dirPath + "adjudication\\" + file.getName());
+                } else if ("判决书".equals(ver)) {
+                    readAndWrite(file, dirPath + "judgment\\" + file.getName());
+                } else if ("调解书".equals(ver)) {
+                    readAndWrite(file, dirPath + "mediate\\" + file.getName());
+                } else if ("通知书".equals(ver)) {
+                    readAndWrite(file, dirPath + "notification\\" + file.getName());
+                } else if ("决定书".equals(ver)) {
+                    readAndWrite(file, dirPath + "decision\\" + file.getName());
+                } else {
+                    readAndWrite(file, dirPath + "else\\" + file.getName());
+                }
+            }
+        }
+    }
+
+
+    /**
+     * 处理 其他
+     */
+    public void dealWithElse(String dirPath) throws IOException {
+        File dir = new File(dirPath);
+        File[] files = dir.listFiles();
+
+
+        assert files != null;
+        for (File file : files) {
+            if (!file.isDirectory()) {
+                BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+
+            }
+        }
+    }
+
+    /**
+     * 读写操作
+     *
+     * @param file 需要剪切的文件
+     * @param path 对应的地址
+     */
+    private void readAndWrite(File file, String path) throws IOException {
+        byte[] buff = new byte[1024];
+        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(path));
+
+        int i = bis.read(buff);
+        while (i != -1) {
+            bos.write(buff, 0, i);
+            bos.flush();
+            i = bis.read(buff);
+        }
+
+        bos.close();
+        bis.close();
+    }
 
 }

@@ -2,10 +2,13 @@ package DataSci.judicature;
 
 import DataSci.judicature.service.impl.FileServiceImpl;
 import DataSci.judicature.utils.FileUtil;
+import DataSci.judicature.utils.impl.FileUtilImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.io.IOException;
 
 
 @SpringBootTest
@@ -20,7 +23,7 @@ public class FileTest {
 
 
     @Autowired
-    private FileUtil fileUtil;
+    private FileUtilImpl fileUtil;
 
     @Test
     void testDOC() {
@@ -34,7 +37,7 @@ public class FileTest {
 
     @Test
     void testZip() throws Exception {
-        String inputName = "C:\\Users\\18933\\Desktop\\DataSciProject\\202112111215142112118PWGS2KK1P.zip";
+        String inputName = "C:\\Users\\18933\\Desktop\\DataSciProject\\20211211144224211211ADX03TT06W.zip";
         String destDirPath = location + "doc";
         fileUtil.zipUncompress(inputName, destDirPath);
     }
@@ -45,4 +48,10 @@ public class FileTest {
         String dest = location + "zip\\test.zip";
         fileUtil.ZipCompress(input,dest);
     }
+
+    @Test
+    void testTransfer() throws IOException {
+        fileUtil.transfer(location+"txt\\");
+    }
+
 }
