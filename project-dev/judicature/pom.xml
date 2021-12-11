@@ -16,6 +16,22 @@
     <properties>
         <java.version>11</java.version>
     </properties>
+
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo.huaweicloud.com/repository/maven/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+
     <dependencies>
 
         <dependency>
@@ -50,15 +66,17 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--这里先不加上数据库 加快运行速度-->
+<!--
 
 
-        <!--redis框架-->
+        &lt;!&ndash;redis框架&ndash;&gt;
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
-        <!--mybatis框架-->
+        &lt;!&ndash;mybatis框架&ndash;&gt;
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -66,14 +84,14 @@
         </dependency>
 
 
-        <!--mysql驱动-->
+        &lt;!&ndash;mysql驱动&ndash;&gt;
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
 
-        <!--配一些能用的高版本的分页插件-->
+        &lt;!&ndash;配一些能用的高版本的分页插件&ndash;&gt;
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
@@ -84,6 +102,23 @@
             <artifactId>jsqlparser</artifactId>
             <version>1.0</version>
         </dependency>
+-->
+
+        <!--doc转txt-->
+        <dependency>
+            <groupId>com.jacob</groupId>
+            <artifactId>jacob</artifactId>
+            <version>1.20</version>
+        </dependency>
+
+        <!--文件压缩-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.12</version>
+        </dependency>
+
+
 
 
     </dependencies>

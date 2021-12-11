@@ -1,0 +1,112 @@
+﻿	/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 22/05/2020 15:35
+  	*/
+
+	@font-face {
+		font-family: "Flaticon";
+		src: url("../fonts/flaticon.eot");
+		src: url("../fonts/flaticon.eot") format("embedded-opentype"),
+			url("../fonts/flaticon.woff2") format("woff2"),
+			url("../fonts/flaticon.woff") format("woff"),
+			url("../fonts/flaticon.ttf") format("truetype"),
+			url("../fonts/flaticon.svg#flaticon") format("svg");
+		font-weight: normal;
+		font-style: normal;
+	}
+
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+		@font-face {
+			font-family: "Flaticon";
+			src: url("../fonts/flaticon.svg") format("svg");
+		}
+	}
+
+	[class^="flaticon-"]:before,
+	[class*=" flaticon-"]:before,
+	[class^="flaticon-"]:after,
+	[class*=" flaticon-"]:after {
+		font-family: Flaticon;
+		font-size: 20px;
+		font-style: normal;
+	}
+
+	.flaticon-lawyer:before {
+		content: "\f100";
+	}
+
+	.flaticon-agreement:before {
+		content: "\f101";
+	}
+
+	.flaticon-hammer:before {
+		content: "\f102";
+	}
+
+	.flaticon-gavel:before {
+		content: "\f103";
+	}
+
+	.flaticon-courthouse:before {
+		content: "\f104";
+	}
+
+	.flaticon-certificate:before {
+		content: "\f105";
+	}
+
+	.flaticon-family:before {
+		content: "\f106";
+	}
+
+	.flaticon-law:before {
+		content: "\f107";
+	}
+
+	.flaticon-book:before {
+		content: "\f108";
+	}
+
+	.flaticon-balance:before {
+		content: "\f109";
+	}
+
+	.flaticon-international-business:before {
+		content: "\f10a";
+	}
+
+	.flaticon-house:before {
+		content: "\f10b";
+	}
+
+	.flaticon-contract:before {
+		content: "\f10c";
+	}
+
+	.flaticon-mortarboard:before {
+		content: "\f10d";
+	}
+
+	.flaticon-worker:before {
+		content: "\f10e";
+	}
+
+	.flaticon-insurance:before {
+		content: "\f10f";
+	}
+
+	.flaticon-heart:before {
+		content: "\f110";
+	}
+
+	.flaticon-podium:before {
+		content: "\f111";
+	}
+
+	.flaticon-attorney:before {
+		content: "\f112";
+	}
+
+	.flaticon-support:before {
+		content: "\f113";
+	}

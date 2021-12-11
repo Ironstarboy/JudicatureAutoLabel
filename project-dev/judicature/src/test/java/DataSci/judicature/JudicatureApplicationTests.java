@@ -1,6 +1,10 @@
 package DataSci.judicature;
 
+import DataSci.judicature.service.FileService;
+import DataSci.judicature.service.impl.FileServiceImpl;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.BufferedReader;
@@ -9,6 +13,9 @@ import java.io.InputStreamReader;
 
 @SpringBootTest
 class JudicatureApplicationTests {
+
+    @Value("${PATH}")
+    private String PATH;
 
     @Test
     void contextLoads() {

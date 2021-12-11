@@ -22,6 +22,8 @@
 * 存放POJO
 
 ## resources
+* case
+  * 存放具体案件
 * mapper
     * mybatis框架映射文件
 * static
