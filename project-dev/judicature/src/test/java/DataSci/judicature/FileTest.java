@@ -20,9 +20,6 @@ public class FileTest {
 
 
     @Autowired
-    private FileServiceImpl fileService;
-
-    @Autowired
     private FileUtil fileUtil;
 
     @Test
@@ -37,7 +34,7 @@ public class FileTest {
 
     @Test
     void testZip() throws Exception {
-        String inputName = "C:\\Users\\18933\\Desktop\\DataSciProject\\20211206200917211206FARAM81W6W.zip";
+        String inputName = "C:\\Users\\18933\\Desktop\\DataSciProject\\202112111215142112118PWGS2KK1P.zip";
         String destDirPath = location + "doc";
         fileUtil.zipUncompress(inputName, destDirPath);
     }
