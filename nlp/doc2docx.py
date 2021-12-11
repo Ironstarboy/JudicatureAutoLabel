@@ -7,17 +7,17 @@ import shutil
 from win32com import client as wc
 import docx
 import os
-def getfiles(kind:str):
+
+def getfiles(type:str):
     # kind .docx .doc
     # 到时候的目录结构应该是按照日期分类
     path= 'source\\202112070223562112071NY9FG24BC'
     files=os.listdir('../'+path)
     for file in files:
-        if os.path.splitext(file)[1]==kind:
+        if os.path.splitext(file)[1]==type:
             current_path = os.path.abspath(__file__)
             father_path = os.path.abspath(os.path.dirname(current_path) + os.path.sep + ".")
             grader_father = os.path.abspath(os.path.dirname(current_path) + os.path.sep + "..")
-
             if not os.path.isdir(file): #判断是否是文件
                 yield os.path.basename(file),r'{}\{}\{}'.format(grader_father,path,os.path.basename(file)) # 文件绝对路径
 
