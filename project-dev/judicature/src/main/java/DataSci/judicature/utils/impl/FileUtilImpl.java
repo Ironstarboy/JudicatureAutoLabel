@@ -139,7 +139,8 @@ public class FileUtilImpl implements FileUtil {
                 for (String doc : list) {
                     if (new File(wordPath + doc).isFile()) {//是文件才操作
                         String txt = doc.split("\\.")[0] + ".txt";
-                        word2txt(wordPath + doc, txtPath + txt, 7);
+                        if (!new File(txtPath + txt).exists())
+                            word2txt(wordPath + doc, txtPath + txt, 7);
                     }
                 }
         } else

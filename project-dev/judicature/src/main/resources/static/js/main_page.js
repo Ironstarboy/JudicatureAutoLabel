@@ -8,13 +8,13 @@ function function1(x) {
     $('#person').val(str);//显示 
 }
 function function2() {
-    document.getElementById("3cases").src = "details.html"
+    document.getElementById("3cases").src = "基本信息展示页.html"
 }
 function function3() {
-    document.getElementById("3cases").src = "fenci.html"
+    document.getElementById("3cases").src = "分词页.html"
 }
 function function4() {
-    document.getElementById("3cases").src = "faq.html"
+    document.getElementById("3cases").src = "法律依据.html"
 }
 function function5(x) {
     var str = $('#sex').val();//先获取用显示div的内容，然后把当前复选框内容拼接，再把拼接内容在show中
@@ -62,5 +62,14 @@ function function9(x) {
     $('#court').val(str);//显示 
 }
 function function10() {
-    document.getElementById("detail_echarts").src = "details_echarts.html"
+    document.getElementById("detail").src = "基本信息树图.html"
+}
+function function11() {
+    document.getElementById("graphs").src = "echarts/2012-2019结案数量统计图.html"
+}
+function function12() {
+    document.getElementById("graphs").src = "echarts/2019男女犯罪比例图.html"
+}
+function function13() {
+    document.getElementById("graphs").src = "echarts/2017-2019五种罪行罪犯人数变化图.html"
 }

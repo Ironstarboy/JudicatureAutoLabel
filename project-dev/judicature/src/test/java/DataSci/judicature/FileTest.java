@@ -3,12 +3,14 @@ package DataSci.judicature;
 import DataSci.judicature.service.impl.FileServiceImpl;
 import DataSci.judicature.utils.FileUtil;
 import DataSci.judicature.utils.impl.FileUtilImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 
 @SpringBootTest
@@ -27,8 +29,8 @@ public class FileTest {
 
     @Test
     void testDOC() {
-        String fileName = location + "doc\\";
-        String outName = location + "txt\\";
+        String fileName = location + "doc\\adjudication\\";
+        String outName = location + "txt\\adjudication\\";
 
         fileUtil.word2Txt(fileName, outName);
 
@@ -37,7 +39,7 @@ public class FileTest {
 
     @Test
     void testZip() throws Exception {
-        String inputName = "C:\\Users\\18933\\Desktop\\DataSciProject\\20211211144224211211ADX03TT06W.zip";
+        String inputName = "C:\\Users\\18933\\Desktop\\DataSciProject\\20211212143128211212AA70NGABHH.zip";
         String destDirPath = location + "doc";
         fileUtil.zipUncompress(inputName, destDirPath);
     }
@@ -51,7 +53,14 @@ public class FileTest {
 
     @Test
     void testTransfer() throws IOException {
-        fileUtil.transfer(location+"txt\\");
+        fileUtil.transfer(location+"doc\\");
+    }
+
+    @Test
+    void testString(){
+        String[] s={"sf","111","dsjflsjfs"};
+        String line= StringUtils.join(s,"");
+        System.out.println(line);
     }
 
 }

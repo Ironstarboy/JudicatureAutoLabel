@@ -1,5 +1,7 @@
 package DataSci.judicature.controller;
 
+import DataSci.judicature.service.FileService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,10 +22,13 @@ public class FileInputController {
     @Value("${spring.servlet.multipart.location}")
     private String location;
 
+    @Autowired
+    private FileService fileService;
+
     @RequestMapping("/file")
     public String save(MultipartFile upload, HttpSession session) throws IOException {
 
-        if (upload == null || upload.isEmpty()){
+        if (upload == null || upload.isEmpty()) {
             return "请上传文件";
         }
 
@@ -38,19 +43,22 @@ public class FileInputController {
             if (suffix.equals("docx"))
                 suffix = "doc";
 
-            File f = new File(location + suffix + "\\" + originalFilename);
-            if (f.exists())
-                f.delete();
+            String category = fileService.transfer(originalFilename);
 
-            upload.transferTo(new File(suffix + "\\" + originalFilename));
+            File f = new File(location + suffix + "\\" + category + originalFilename);
+            if (f.exists())
+                System.out.println(f.delete());
+
+            upload.transferTo(new File(suffix + "\\" + category + originalFilename));
 
             //设置session 记录上传的是哪个文件
-            session.setAttribute("userUploadFile", location + "txt\\" + prefix + ".txt");
+            session.setAttribute("userUploadFile", location + "txt\\" + category + prefix + ".txt");
 
             System.out.println(originalFilename);
+            System.out.println(session.getAttribute("userUploadFile"));
             System.out.println("上传成功！！！！");
-            return "上传成功！！！！";
+            return "上传成功！";
         }
-        return "上传失败！！！";
+        return "上传失败！";
     }
 }

@@ -54,6 +54,10 @@
 				}
 			});
 		}
+
+		function downloadtxt(){
+			location.href = "/download/txt";
+		}
 	</script>
 
 </head>
@@ -224,6 +228,8 @@
 
 			<input id="file" type="file" />
 			<input type="submit" value="上传文书" onclick="submit2();" />
+
+			<input type="submit" value="保存案件文本" onclick="downloadtxt()"/>
 
 		<!--
 		<form action="/file/save" method="post" enctype="multipart/form-data">

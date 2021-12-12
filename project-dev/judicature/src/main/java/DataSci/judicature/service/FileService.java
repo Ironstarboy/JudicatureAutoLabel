@@ -19,4 +19,6 @@ public interface FileService {
      */
     public CaseMsg proCaseMsg(String[] words);
 
+    public String transfer(String fileName);
+
 }
