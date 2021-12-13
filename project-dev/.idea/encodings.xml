@@ -5,6 +5,7 @@
     <file url="file://$PROJECT_DIR$/admin-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/application.yml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/test/案件文本.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/中欧汽车电器有限公司吴国琳等合伙协议纠纷股权转让纠纷其他民事民事裁定书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/中铁九局集团成都工程有限公司中诚信托有限责任公司信托纠纷民事申请再审审查民事裁定书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/仲利国际贸易上海有限公司青岛森逸国际船舶服务有限公司等买卖合同纠纷其他民事民事裁定书.txt" charset="GBK" />
