@@ -1,0 +1,297 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>文书分析</title>
+
+	<!--Favicon-->
+	<link rel="icon" href="assets/img/favicon.png" type="image/jpg" />
+	<!-- Bootstrap CSS -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome CSS-->
+	<link href="css/font-awesome.min.css" rel="stylesheet">
+	<!-- Line Awesome CSS -->
+	<link href="css/line-awesome.min.css" rel="stylesheet">
+	<!-- Animate CSS-->
+	<link href="css/animate.css" rel="stylesheet">
+	<!-- Magnific Popup Video -->
+	<link href="css/magnific-popup.css" rel="stylesheet">
+	<!-- Flaticon CSS -->
+	<link href="css/flaticon.css" rel="stylesheet">
+	<!-- Owl Carousel CSS -->
+	<link href="css/owl.carousel.css" rel="stylesheet">
+	<!-- Style CSS -->
+	<link href="css/style.css" rel="stylesheet">
+	<!-- Responsive CSS -->
+	<link href="css/responsive.css" rel="stylesheet">
+
+	<!-- jquery -->
+	<script src="js/jquery-1.12.4.min.js"></script>
+
+	<script src="js/main_page.js"></script>
+
+	<!--jquery异步提交数据-->
+	<script>
+		function submit2() {
+			var type = "upload";          //后台接收时需要的参数名称，自定义即可
+			var id = "file";            //即input的id，用来寻找值
+			var formData = new FormData();
+			formData.append(type, $("#" + id)[0].files[0]);    //生成一对表单属性
+			$.ajax({
+				type: "POST",           //因为是传输文件，所以必须是post
+				url: '/upload/file',         //对应的后台处理类的地址
+				data: formData,
+				processData: false,
+				contentType: false,
+				// todo 回调函数的设计？
+				success: function (data) {
+					alert(data);
+				}
+			});
+		}
+	</script>
+</head>
+
+<body>
+
+	<!-- Pre-Loader -->
+	<div id="loader">
+		<div class="loading">
+			<div class="sk-circle">
+				<div class="sk-circle1 sk-child"></div>
+				<div class="sk-circle2 sk-child"></div>
+				<div class="sk-circle3 sk-child"></div>
+				<div class="sk-circle4 sk-child"></div>
+				<div class="sk-circle5 sk-child"></div>
+				<div class="sk-circle6 sk-child"></div>
+				<div class="sk-circle7 sk-child"></div>
+				<div class="sk-circle8 sk-child"></div>
+				<div class="sk-circle9 sk-child"></div>
+				<div class="sk-circle10 sk-child"></div>
+				<div class="sk-circle11 sk-child"></div>
+				<div class="sk-circle12 sk-child"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Header Area -->
+
+	<header id="header-2" class="header-area absolute-header">
+		<div class="sticky-area">
+			<div class="navigation">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-3 col-12">
+							<div class="logo">
+								<a class="navbar-brand" href="index.html"><img src="picture/logo-white.png" alt=""></a>
+							</div>
+						</div>
+
+						<div class="col-lg-6 col-12">
+							<div class="main-menu">
+								<nav class="navbar navbar-expand-lg">
+									<button class="navbar-toggler" type="button" data-toggle="collapse"
+										data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+										aria-expanded="false" aria-label="Toggle navigation">
+										<span class="navbar-toggler-icon"></span>
+										<span class="navbar-toggler-icon"></span>
+										<span class="navbar-toggler-icon"></span>
+									</button>
+
+									<div class="collapse navbar-collapse justify-content-center"
+										id="navbarSupportedContent">
+										<ul class="navbar-nav m-auto">
+											<li class="nav-item">
+												<a class="nav-link active" href="首页.html">首页
+													<span class="sub-nav-toggler">
+													</span>
+												</a>
+											</li>
+
+											<li class="nav-item">
+												<a class="nav-link" href="文书分析.html">文书分析
+													<span class="sub-nav-toggler">
+													</span>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="数据展示.html">数据展示
+													<span class="sub-nav-toggler">
+													</span>
+												</a>
+											</li>
+
+											<li class="nav-item">
+												<a class="nav-link" href="#">高频数据
+													<span class="sub-nav-toggler">
+													</span>
+												</a>
+												<ul class="sub-menu">
+													<li><a href="高频案件.html">高频案件</a></li>
+													<li><a href="法条推荐.html">法条推荐</a></li>
+												</ul>
+											</li>
+
+											<li class="nav-item">
+												<a class="nav-link" href="联系我们.html">联系我们</a>
+											</li>
+										</ul>
+
+									</div>
+								</nav>
+							</div>
+						</div>
+						<div class="col-lg-3 col-12 text-right">
+							<div class="header-right-content">
+								<a href="https://wenshu.court.gov.cn/website/wenshu/181029CR4M5A62CH/index.html"
+									class="main-btn">更多信息</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+
+	<!-- 封面Breadcroumb Area -->
+
+	<div class="breadcroumb-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcroumb-title">
+						<h1>文书分析</h1>
+						<h6><a href="index.html">首页</a> / 文书分析</h6>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<!-- Blog Area  文书阅读分析区域-->
+
+
+	<div class="col-lg-12">
+
+		<form action="服务器地址" method="get"></form>
+		<p>
+			<button type="submit">爬取案件</button>
+			&nbsp;开始日期：
+			<input type="date" name="start_date" id="start_date" value="2021-12-10" style="border: 1px solid #ddd">
+			&nbsp;结束日期：
+			<input type="date" name="start_date" id="start_date" value="2021-12-10" style="border: 1px solid #ddd">
+			</form>
+		</p>
+
+		<p>
+			<input type="submit" value="上传文书" onclick="submit2();" />
+			<input id="file" type="file" />
+
+			<span class="popular-tag">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span><a href="JavaScript:function2();">基本信息</a></span>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span><a href="JavaScript:function3();">自动分词</a></span>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span><a href="JavaScript:function4();">法律依据</a></span>
+			</span>
+			<!-- </form> -->
+
+
+		</p>
+	</div>
+
+	<form action="">
+		<div class="comments-form">
+			<div class="row">
+				<div class="col-lg-12">
+					<textarea name="message" id="message" style="width: 100%; border: 1px solid #ddd"></textarea>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	</div>
+
+	<!-- 这里根据三种情况选择展示页面 -->
+	<iframe id="3cases" class="frame-style" scrolling="no" height="600" width="1300" frameborder="0"></iframe>
+
+
+
+
+	<!-- Footer Area -->
+
+	<footer class="footer-area dark-bg wow fadeIn" data-wow-delay=".3s">
+		<div class="container">
+			<div class="footer-up">
+				<div class="row">
+					<div class="col-lg-3 col-md-6 col-sm-12">
+						<div class="logo">
+							<img src="picture/logo-white.png" alt="expoint-logo">
+						</div>
+					</div>
+					<div class="col-lg-2 offset-lg-1 col-md-6 com-sm-12">
+						<h5>Explore</h5>
+						<ul>
+							<li>
+								<a href="文书分析.html">文书分析</a>
+								<a href="数据展示.html">数据展示</a>
+								<a href="高频案件.html">高频案件</a>
+								<a href="法条推荐.html">法条推荐</a>
+								<a href="联系我们.html">联系我们</a>
+							</li>
+						</ul>
+					</div>
+					<div class="col-lg-3 col-md-6 col-sm-12">
+						<h5>涉及领域</h5>
+						<ul>
+							<li>
+								<a href="#"><span>-</span> 宪法</a>
+								<a href="#"><span>-</span> 民事</a>
+								<a href="#"><span>-</span> 刑事 </a>
+								<a href="#"><span>-</span> 经济</a>
+								<a href="#"><span>-</span> 行政</a>
+							</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</footer>
+
+
+	<!-- Scroll Top Area -->
+	<a href="#top" class="go-top"><i class="las la-angle-up"></i></a>
+
+
+	<!-- Popper JS -->
+	<script src="js/popper.min.js"></script>
+	<!-- Bootstrap JS -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Wow JS -->
+	<script src="js/wow.min.js"></script>
+	<!-- Way Points JS -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Counter Up JS -->
+	<script src="js/jquery.counterup.min.js"></script>
+	<!-- Owl Carousel JS -->
+	<script src="js/owl.carousel.min.js"></script>
+	<!-- Magnific Popup JS -->
+	<script src="js/magnific-popup.min.js"></script>
+	<!-- Sticky JS -->
+	<script src="js/jquery.sticky.js"></script>
+	<!-- Main JS -->
+	<script src="js/main.js"></script>
+
+</body>
+
+</html>

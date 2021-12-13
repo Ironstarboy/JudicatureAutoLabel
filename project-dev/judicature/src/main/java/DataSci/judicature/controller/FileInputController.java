@@ -1,12 +1,13 @@
 package DataSci.judicature.controller;
 
+import DataSci.judicature.service.FileService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -20,29 +21,55 @@ public class FileInputController {
     @Value("${spring.servlet.multipart.location}")
     private String location;
 
+    @Autowired
+    private FileService fileService;
+
     @RequestMapping("/file")
-    public void save(MultipartFile upload, HttpSession session) throws IOException {
+    public String save(MultipartFile upload, HttpSession session) {
 
-
-        //获取上传文件的名称
-        String originalFilename = upload.getOriginalFilename();
-
-        //文件转移到某个目录下
-        if (originalFilename != null) {
-            String prefix = originalFilename.split("\\.")[0];//获取文件前缀
-            String suffix = originalFilename.split("\\.")[1];//获取文件后缀
-
-            if (suffix.equals("docx"))
-                suffix = "doc";
-
-            File f = new File(location + suffix + "\\" + originalFilename);
-            if (f.exists())
-                f.delete();
-
-            upload.transferTo(new File(suffix + "\\" + originalFilename));
-
-            //设置session 记录上传的是哪个文件
-            session.setAttribute("userUploadFile", location + "txt\\" + prefix + ".txt");
+        if (upload == null || upload.isEmpty()) {
+            return "请上传文件";
         }
+
+        try {
+            //获取上传文件的名称
+            String originalFilename = upload.getOriginalFilename();
+
+            //文件转移到某个目录下
+            if (originalFilename != null) {
+                String prefix = originalFilename.split("\\.")[0];//获取文件前缀
+                String suffix = originalFilename.split("\\.")[1];//获取文件后缀
+
+                if (suffix.equals("docx"))
+                    suffix = "doc";
+
+                if ((!"doc".equals(suffix)) && (!"txt".equals(suffix)))
+                    return "请上传doc或者txt文件";
+
+                //todo 文件的分类没实现完
+                String category = fileService.transfer(originalFilename);
+
+                //设置session 记录上传的是哪个文件
+                session.setAttribute("userUploadFile", location + "txt\\" + category + prefix + ".txt");
+
+                //设置上传文件的种类信息
+                session.setAttribute("category", category);
+
+                System.out.println(originalFilename);
+                System.out.println(session.getAttribute("userUploadFile"));
+                System.out.println("上传成功！！！！");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "上传失败！";
+        }
+        return "上传成功！";
+    }
+
+
+    @RequestMapping("/words")
+    public String write(){
+        //todo 上传文字 转txt
+        return null;
     }
 }

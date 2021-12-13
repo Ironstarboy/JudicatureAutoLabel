@@ -2595,7 +2595,7 @@ p.privacy {
 }
 
 .process-grids {
-	background-image: url(../images/featured-process-bg.jpg);
+	background-image: url(../images/pic1.jpeg);
 	position: relative;
 	z-index: 1;
 }
@@ -4050,7 +4050,7 @@ a.reply-btn {
 .styled-faq .panel .panel-heading h6 a i.fa {
 	float: right;
 	font-size: 150%;
-	line-height: 15px;
+	line-height: 0px;
 	display: none;
 	color: #ddd;
 }

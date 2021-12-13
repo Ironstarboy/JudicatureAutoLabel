@@ -16,7 +16,6 @@ spring:
   config:
     activate:
       on-profile: dev
-
   mvc:
     view:
       prefix:

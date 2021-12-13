@@ -4,7 +4,6 @@ import DataSci.judicature.utils.FileUtil;
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;
@@ -140,7 +139,8 @@ public class FileUtilImpl implements FileUtil {
                 for (String doc : list) {
                     if (new File(wordPath + doc).isFile()) {//是文件才操作
                         String txt = doc.split("\\.")[0] + ".txt";
-                        word2txt(wordPath + doc, txtPath + txt, 7);
+                        if (!new File(txtPath + txt).exists())
+                            word2txt(wordPath + doc, txtPath + txt, 7);
                     }
                 }
         } else
@@ -193,6 +193,15 @@ public class FileUtilImpl implements FileUtil {
             outputStream.write(buff, 0, i);
             outputStream.flush();
             i = bis.read(buff);
+        }
+        bis.close();
+    }
+
+    @Override
+    public void transfer(String fileName, String path) throws IOException {
+        File file = new File(fileName);
+        if (file.isFile()) {
+            readAndWrite(file, path);
         }
     }
 

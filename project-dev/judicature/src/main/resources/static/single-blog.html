@@ -34,6 +34,32 @@
 
 	<script src="js/main_page.js"></script>
 
+
+	<!--jquery异步提交数据-->
+	<script>
+		function submit2() {
+			var type = "upload";          //后台接收时需要的参数名称，自定义即可
+			var id = "file";            //即input的id，用来寻找值
+			var formData = new FormData();
+			formData.append(type, $("#"+id)[0].files[0]);    //生成一对表单属性
+			$.ajax({
+				type: "POST",           //因为是传输文件，所以必须是post
+				url: '/upload/file',         //对应的后台处理类的地址
+				data: formData,
+				processData: false,
+				contentType: false,
+				// todo 回调函数的设计？
+				success: function (data) {
+					alert(data);
+				}
+			});
+		}
+
+		function downloadtxt(){
+			location.href = "/download/txt";
+		}
+	</script>
+
 </head>
 
 <body>
@@ -67,8 +93,7 @@
 					<div class="row">
 						<div class="col-lg-3 col-12">
 							<div class="logo">
-								<a class="navbar-brand" href="index.html"><img src="picture/logo-white.png"
-																			   alt=""></a>
+								<a class="navbar-brand" href="index.html"><img src="picture/logo-white.png" alt=""></a>
 							</div>
 						</div>
 
@@ -200,10 +225,17 @@
 		</p>
 
 		<p>
+
+			<input id="file" type="file" />
+			<input type="submit" value="上传文书" onclick="submit2();" />
+
+			<input type="submit" value="保存案件文本" onclick="downloadtxt()"/>
+
+		<!--
 		<form action="/file/save" method="post" enctype="multipart/form-data">
 			<input type="submit" value="上传文书">
 			<input type="file" name="upload">
-
+-->
 			<span class="popular-tag">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<span><a href="JavaScript:function2();">基本信息</a></span>
@@ -212,7 +244,7 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<span><a href="JavaScript:function4();">法律依据</a></span>
 			</span>
-		</form>
+	<!--	</form>-->
 
 
 		</p>

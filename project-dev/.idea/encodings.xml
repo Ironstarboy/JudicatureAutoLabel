@@ -5,33 +5,48 @@
     <file url="file://$PROJECT_DIR$/admin-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/application.yml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/test/案件文本.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/中欧汽车电器有限公司吴国琳等合伙协议纠纷股权转让纠纷其他民事民事裁定书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/中铁九局集团成都工程有限公司中诚信托有限责任公司信托纠纷民事申请再审审查民事裁定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/仲利国际贸易上海有限公司青岛森逸国际船舶服务有限公司等买卖合同纠纷其他民事民事裁定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/厦门众鼎科技有限公司阮宇平等计算机软件开发合同纠纷民事二审民事裁定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/哈尔滨东电实业发展有限公司中国工商银行股份有限公司哈尔滨红旗支行合同纠纷其他民事民事裁定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/堰市竹山县郧商小额贷款有限责任公司湖北省新华书店集团有限公司十堰市分公司等小额借款合同纠纷民事申请.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/山西信托股份有限公司程正义等案外人执行异议之诉民事申请再审审查民事裁定书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/川天府银行股份有限公司成都锦江支行四川千业环保产业发展有限公司金融借款合同纠纷再审审查与审判监督民.txt" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/川天府银行股份有限公司成都锦江支行四川千业环保产业发展有限公司金融借款合同纠纷再审审查与审判监督民.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/张震中原银行股份有限公司新乡金利支行保证合同纠纷再审审查与审判监督民事裁定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/欧珠伦珠建设工程施工合同纠纷再审审查与审判监督民事裁定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/江市正达房地产开发有限公司重庆大雍建设集团有限公司因申请诉前财产保全损害责任纠纷民事申请再审审查民.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/江西富盈置业有限公司吴福祥等建设工程施工合同纠纷民事申请再审审查民事裁定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/济南荣耀房地产开发有限公司济南四建集团有限责任公司建设工程施工合同纠纷民事申请再审审查民事裁定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/涧县华阳鸿基置地有限责任公司湖南鹏华装饰设计工程有限责任公司等建设工程施工合同纠纷其他民事民事裁定.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/王滨河南六合置业有限公司再审审查与审判监督民事裁定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/瑞华会计师事务所周向东等证券虚假陈述责任纠纷民事申请再审审查民事裁定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/甘肃连鑫建设有限责任公司中国第四冶金建设有限责任公司侵权责任纠纷再审审查与审判监督民事裁定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/白福贵嫩江市白云乡人民政府合同纠纷民事申请再审审查民事裁定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/苏州安靠电源有限公司与江西昌河汽车有限责任公司买卖合同纠纷再审审查民事裁定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/蓝松马高发展有限公司与公司有关的纠纷其他民事民事裁定书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/辽市安邦房地产开发有限公司中国江苏国际经济技术合作集团有限公司合资合作开发房地产合同纠纷民事申请再.txt" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/辽市安邦房地产开发有限公司中国江苏国际经济技术合作集团有限公司合资合作开发房地产合同纠纷民事申请再.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/连云港中豪房地产开发有限公司与连云港市教育局合同纠纷再审审查民事裁定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/重庆市康德实业集团有限公司重庆铝业有限公司合同纠纷再审审查与审判监督民事裁定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/陈明贵州建工集团第八建筑工程有限责任公司等建设工程施工合同纠纷民事申请再审审查民事裁定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/黄立雄黄少仕等借款合同纠纷其他民事民事裁定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/龚正飞中国甘肃国际经济技术合作有限公司等建设工程施工合同纠纷民事申请再审审查民事裁定书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/decision/兰晓锋非法制造买卖运输邮寄储存枪支弹药爆炸物管辖刑事决定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/decision/杨灿涛翁泽彬强奸罪走私贩卖运输制造毒品罪强奸罪刑事指定管辖管辖决定书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/else/上诉人陈国金成都传化置业有限公司被上诉人陈大春合同纠纷.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/else/再审申请人原审原告孔令柱孔祥友被申请人巨野县人民政府其他.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/else/诉人北京华文燕园文化有限公司被上诉人郑州象过河软件技术有限公司原审第三人河南省消防协会计算机软件开.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/else/诉人广州市诺米家居五金有限公司上海德寓安防设备有限公司被上诉人克塞伯默尔控股两合公司侵害发明专利权.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/judgment/东莞市御明电器科技有限公司与上海洛佛实业有限公司专利权转让合同纠纷二审判决书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/judgment/北京天泓科技股份有限公司郭新洪等侵害实用新型专利权纠纷民事二审民事判决书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/judgment/常州通灵信息科技有限公司福启文化北京有限责任公司等计算机软件开发合同纠纷民事二审民事判决书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/mediate/北京尚学跨考教育科技有限公司北京金唯新思科技有限公司计算机软件开发合同纠纷民事二审民事调解书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/mediate/欧特克公司山东大卫国际建筑设计有限公司侵害计算机软件著作权纠纷二审知识产权调解书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/mediate/诸暨镭尔福机械科技有限公司圣东尼上海针织机器有限公司侵害发明专利权纠纷二审民事调解书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/notification/时相臣挪用资金其他刑事刑事通知书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/notification/李安堂故意伤害罪刑事申诉再审审查刑事通知书.txt" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/东莞市艾德照明科技有限公司欧普照明股份有限公司侵害实用新型专利权纠纷民事二审民事判决书.txt" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/中铁九局集团成都工程有限公司中诚信托有限责任公司信托纠纷民事申请再审审查民事裁定书.txt" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/中铁九局集团有限公司中铁九局集团有限公司成都分公司等信托纠纷民事申请再审审查民事裁定书.txt" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/厦门众鼎科技有限公司阮宇平等计算机软件开发合同纠纷民事二审民事裁定书.txt" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/安徽科麦斯物联网科技有限公司安徽古弗兰数字科技有限公司计算机软件开发合同纠纷民事二审民事判决书.txt" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/川天府银行股份有限公司成都锦江支行四川千业环保产业发展有限公司金融借款合同纠纷再审审查与审判监督民.txt" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/广州徒狮贸易有限公司陈华妹等侵害实用新型专利权纠纷民事二审民事判决书.txt" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/张震中原银行股份有限公司新乡金利支行保证合同纠纷再审审查与审判监督民事裁定书.txt" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/朱桂芝故意伤害罪刑事申诉再审审查刑事通知书.txt" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/玉环品臣液压工具有限公司玉环联刚工具有限公司等侵害实用新型专利权纠纷民事二审民事判决书.txt" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/王滨河南六合置业有限公司再审审查与审判监督民事裁定书.txt" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/白福贵嫩江市白云乡人民政府合同纠纷民事申请再审审查民事裁定书.txt" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/诉人北京华文燕园文化有限公司被上诉人郑州象过河软件技术有限公司原审第三人河南省消防协会计算机软件开.txt" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/连云港中豪房地产开发有限公司与连云港市教育局合同纠纷再审审查民事裁定书.txt" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/陈明贵州建工集团第八建筑工程有限责任公司等建设工程施工合同纠纷民事申请再审审查民事裁定书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/notification/王庆华挪用公款罪贪污罪刑事申诉再审审查刑事通知书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/notification/王德义非法占用农用地其他刑事刑事通知书.txt" charset="GBK" />
   </component>
 </project>
