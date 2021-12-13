@@ -73,3 +73,15 @@ function function12() {
 function function13() {
     document.getElementById("graphs").src = "echarts/2017-2019五种罪行罪犯人数变化图.html"
 }
+function function14() {
+    document.getElementById("cases").src = "高频刑事案件.html"
+}
+function function15() {
+    document.getElementById("cases").src = "高频民事案件.html"
+}
+function function16() {
+    document.getElementById("lists").src = "高频宪法.html"
+}
+function function17() {
+    document.getElementById("lists").src = "高频民事.html"
+}

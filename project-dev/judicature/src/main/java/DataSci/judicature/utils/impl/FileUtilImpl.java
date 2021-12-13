@@ -194,6 +194,15 @@ public class FileUtilImpl implements FileUtil {
             outputStream.flush();
             i = bis.read(buff);
         }
+        bis.close();
+    }
+
+    @Override
+    public void transfer(String fileName, String path) throws IOException {
+        File file = new File(fileName);
+        if (file.isFile()) {
+            readAndWrite(file, path);
+        }
     }
 
 

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -26,39 +25,51 @@ public class FileInputController {
     private FileService fileService;
 
     @RequestMapping("/file")
-    public String save(MultipartFile upload, HttpSession session) throws IOException {
+    public String save(MultipartFile upload, HttpSession session) {
 
         if (upload == null || upload.isEmpty()) {
             return "请上传文件";
         }
 
-        //获取上传文件的名称
-        String originalFilename = upload.getOriginalFilename();
+        try {
+            //获取上传文件的名称
+            String originalFilename = upload.getOriginalFilename();
 
-        //文件转移到某个目录下
-        if (originalFilename != null) {
-            String prefix = originalFilename.split("\\.")[0];//获取文件前缀
-            String suffix = originalFilename.split("\\.")[1];//获取文件后缀
+            //文件转移到某个目录下
+            if (originalFilename != null) {
+                String prefix = originalFilename.split("\\.")[0];//获取文件前缀
+                String suffix = originalFilename.split("\\.")[1];//获取文件后缀
 
-            if (suffix.equals("docx"))
-                suffix = "doc";
+                if (suffix.equals("docx"))
+                    suffix = "doc";
 
-            String category = fileService.transfer(originalFilename);
+                if ((!"doc".equals(suffix)) && (!"txt".equals(suffix)))
+                    return "请上传doc或者txt文件";
 
-            File f = new File(location + suffix + "\\" + category + originalFilename);
-            if (f.exists())
-                System.out.println(f.delete());
+                //todo 文件的分类没实现完
+                String category = fileService.transfer(originalFilename);
 
-            upload.transferTo(new File(suffix + "\\" + category + originalFilename));
+                //设置session 记录上传的是哪个文件
+                session.setAttribute("userUploadFile", location + "txt\\" + category + prefix + ".txt");
 
-            //设置session 记录上传的是哪个文件
-            session.setAttribute("userUploadFile", location + "txt\\" + category + prefix + ".txt");
+                //设置上传文件的种类信息
+                session.setAttribute("category", category);
 
-            System.out.println(originalFilename);
-            System.out.println(session.getAttribute("userUploadFile"));
-            System.out.println("上传成功！！！！");
-            return "上传成功！";
+                System.out.println(originalFilename);
+                System.out.println(session.getAttribute("userUploadFile"));
+                System.out.println("上传成功！！！！");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "上传失败！";
         }
-        return "上传失败！";
+        return "上传成功！";
+    }
+
+
+    @RequestMapping("/words")
+    public String write(){
+        //todo 上传文字 转txt
+        return null;
     }
 }

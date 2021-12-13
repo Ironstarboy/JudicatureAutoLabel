@@ -30,4 +30,6 @@ public interface FileUtil {
      */
     void download(String filename, HttpServletResponse res) throws IOException;
 
+    void transfer(String fileName,String path)throws IOException;
+
 }

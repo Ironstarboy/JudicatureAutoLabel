@@ -17,7 +17,6 @@ spring:
     activate:
       on-profile: dev
   mvc:
-    static-path-pattern: /static/**
     view:
       prefix:
       suffix:
@@ -31,9 +30,6 @@ spring:
       #thymeleaf:
       #  prefix: classpath:/template/
       #  suffix: .html
-  web:
-    resources:
-      static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
 
 
 server:
