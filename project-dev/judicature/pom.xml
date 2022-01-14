@@ -125,6 +125,20 @@
             <version>3.12.0</version>
         </dependency>
 
+        <!--我自己的jieba-->
+        <dependency>
+            <groupId>com.hflqf</groupId>
+            <artifactId>jieba-analysis</artifactId>
+            <version>1.0.3-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.hankcs</groupId>
+            <artifactId>hanlp</artifactId>
+            <version>portable-1.8.2</version>
+        </dependency>
+
+
 
 
 

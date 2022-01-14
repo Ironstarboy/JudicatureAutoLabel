@@ -2,7 +2,7 @@ package DataSci.judicature.controller;
 
 import DataSci.judicature.domain.CaseMsg;
 import DataSci.judicature.service.FileService;
-import DataSci.judicature.utils.impl.FileUtilImpl;
+import DataSci.judicature.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets;
 public class FileOutPutController {
 
     @Autowired
-    private FileUtilImpl fileUtil;
+    private FileUtil fileUtil;
 
     /**
      * @return 返回案件信息的json文件
@@ -39,7 +39,7 @@ public class FileOutPutController {
     }
 
     /**
-     * 返回案件文本.txt
+     * @return 返回案件文本.txt
      */
     @RequestMapping("/txt")
     public String txt(HttpServletResponse response, HttpSession session) {

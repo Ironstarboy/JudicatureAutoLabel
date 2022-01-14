@@ -3,11 +3,13 @@ package DataSci.judicature.service.impl;
 import DataSci.judicature.domain.CaseMsg;
 import DataSci.judicature.service.FileService;
 import DataSci.judicature.utils.FileUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.*;
 
 
@@ -30,11 +32,11 @@ public class FileServiceImpl implements FileService {
 
     /**
      * 根据文件名分类，顺带转移
+     * 返回文书类型
      */
     @Override
-    public String transfer(String fileName) throws IOException {
-        if (fileName != null) {
-            String name = fileName.split("\\.")[0];
+    public String transfer(MultipartFile upload, String name) throws IOException {
+        if (!upload.isEmpty() && name != null) {
             String ver = name.substring(name.length() - 3);
 
             String type;
@@ -49,14 +51,101 @@ public class FileServiceImpl implements FileService {
                 type = "notification\\";
             } else if ("决定书".equals(ver)) {
                 type = "decision\\";
+            } else if ("支付令".equals(ver)) {
+                type = "order\\";
             } else {
                 type = "else\\";
             }
-            fileUtil.transfer(fileName, location + type);
+
+            upload.transferTo(new File(location + "doc\\" + type+upload.getOriginalFilename()));
 
             return type;
         }
         return null;
     }
+
+    /**
+     * word 转TXT
+     *
+     * @param filepath 文件路径
+     * @return
+     */
+    @Override
+    public boolean toTxt(String filepath, HttpSession session) {
+        String txtPath = (String) session.getAttribute("userUploadFile");
+        String category = (String) session.getAttribute("category");
+
+
+        fileUtil.word2Txt(filepath, txtPath);
+
+        boolean flag = false;
+        //是其他 进一步分类
+        if (category.startsWith("else")) {
+            String prefix = (String) session.getAttribute("filename");
+
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(txtPath), "GBK"));
+                String line;
+                int index = 1;
+                while ((line = br.readLine()) != null && index < 3) {
+                    String[] words = line.split(" ");
+                    line = StringUtils.join(words, "");
+                    if (line.contains("裁定书")) {
+                        session.setAttribute("category", "adjudication\\");
+                        session.setAttribute("userUploadFile", location + "txt\\" + "adjudication\\" + prefix + ".txt");
+                        flag = true;
+                        break;
+                    } else if (line.contains("决定书")) {
+                        session.setAttribute("category", "decision\\");
+                        session.setAttribute("userUploadFile", location + "txt\\" + "decision\\" + prefix + ".txt");
+                        flag = true;
+                        break;
+                    } else if (line.contains("判决书")) {
+                        session.setAttribute("category", "judgment\\");
+                        session.setAttribute("userUploadFile", location + "txt\\" + "judgment\\" + prefix + ".txt");
+                        flag = true;
+                        break;
+                    } else if (line.contains("调解书")) {
+                        session.setAttribute("category", "mediate\\");
+                        session.setAttribute("userUploadFile", location + "txt\\" + "mediate\\" + prefix + ".txt");
+                        flag = true;
+                        break;
+                    } else if (line.contains("通知书")) {
+                        session.setAttribute("category", "notification\\");
+                        session.setAttribute("userUploadFile", location + "txt\\" + "notification\\" + prefix + ".txt");
+                        flag = true;
+                        break;
+                    } else if (line.contains("支付令")) {
+                        session.setAttribute("category", "order\\");
+                        session.setAttribute("userUploadFile", location + "txt\\" + "order\\" + prefix + ".txt");
+                        flag = true;
+                        break;
+                    } else {//还是无法识别，就不跳转了
+
+                    }
+
+                    index++;
+                }
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        //能识别出来，转移文件
+        if (flag) {
+            try {
+                fileUtil.transfer(txtPath, (String) session.getAttribute("userUploadFile"));
+                return new File(txtPath).delete();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 
 }

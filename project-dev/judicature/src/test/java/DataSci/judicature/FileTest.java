@@ -1,16 +1,14 @@
 package DataSci.judicature;
 
-import DataSci.judicature.service.impl.FileServiceImpl;
 import DataSci.judicature.utils.FileUtil;
-import DataSci.judicature.utils.impl.FileUtilImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
 
 @SpringBootTest
@@ -25,12 +23,12 @@ public class FileTest {
 
 
     @Autowired
-    private FileUtilImpl fileUtil;
+    private FileUtil fileUtil;
 
     @Test
     void testDOC() {
-        String fileName = location + "doc\\adjudication\\";
-        String outName = location + "txt\\adjudication\\";
+        String fileName = location + "doc\\decision\\";
+        String outName = location + "txt\\decision\\";
 
         fileUtil.word2Txt(fileName, outName);
 
@@ -39,27 +37,35 @@ public class FileTest {
 
     @Test
     void testZip() throws Exception {
-        String inputName = "C:\\Users\\18933\\Desktop\\DataSciProject\\20211212143128211212AA70NGABHH.zip";
+        File dir = new File("C:\\Users\\18933\\Desktop\\DataSciProject\\");
         String destDirPath = location + "doc";
-        fileUtil.zipUncompress(inputName, destDirPath);
+        String[] fns = dir.list();
+        for (String fn : fns) {
+            if (fn.endsWith("zip")) {
+                String inputName = "C:\\Users\\18933\\Desktop\\DataSciProject\\" + fn;
+                fileUtil.zipUncompress(inputName, destDirPath);
+            }
+        }
+
+
     }
 
     @Test
     void testZipCompress() throws Exception {
         String input = location + "txt";
         String dest = location + "zip\\test.zip";
-        fileUtil.ZipCompress(input,dest);
+        fileUtil.ZipCompress(input, dest);
     }
 
     @Test
     void testTransfer() throws IOException {
-        fileUtil.transfer(location+"doc\\");
+        fileUtil.transfer(location + "doc\\");
     }
 
     @Test
-    void testString(){
-        String[] s={"sf","111","dsjflsjfs"};
-        String line= StringUtils.join(s,"");
+    void testString() {
+        String[] s = {"sf", "111", "dsjflsjfs"};
+        String line = StringUtils.join(s, "");
         System.out.println(line);
     }
 
