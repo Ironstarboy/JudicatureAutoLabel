@@ -69,4 +69,17 @@ public class FileTest {
         System.out.println(line);
     }
 
+    @Test
+    void util() {
+        String s =
+                ""
+                ;
+        String res=s;
+        res=res.replaceAll("\\s"," ");
+        System.out.println(res);
+        System.out.println();
+        System.out.println();
+
+    }
+
 }

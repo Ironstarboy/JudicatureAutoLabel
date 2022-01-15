@@ -53,7 +53,7 @@ public class FileInputController {
                     return "请上传doc或者txt文件";
 
                 //todo 文件的分类没实现完
-                String category = fileService.transfer(upload,prefix);
+                String category = fileService.transfer(upload,prefix,suffix);
 
                 //设置session 记录上传的是哪个文件
                 session.setAttribute("userUploadFile", location + "txt\\" + category + prefix + ".txt");

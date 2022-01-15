@@ -35,9 +35,9 @@ public class FileServiceImpl implements FileService {
      * 返回文书类型
      */
     @Override
-    public String transfer(MultipartFile upload, String name) throws IOException {
+    public String transfer(MultipartFile upload, String name,String suffix) throws IOException {
         if (!upload.isEmpty() && name != null) {
-            String ver = name.substring(name.length() - 3);
+            String ver = name.substring(Math.max(name.length() - 3,0));
 
             String type;
 
@@ -57,7 +57,7 @@ public class FileServiceImpl implements FileService {
                 type = "else\\";
             }
 
-            upload.transferTo(new File(location + "doc\\" + type+upload.getOriginalFilename()));
+            upload.transferTo(new File(location + suffix +"\\" + type+upload.getOriginalFilename()));
 
             return type;
         }

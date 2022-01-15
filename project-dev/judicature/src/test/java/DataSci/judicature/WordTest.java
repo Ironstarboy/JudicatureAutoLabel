@@ -146,14 +146,20 @@ public class WordTest {
     void testNLP() throws IOException {
 
         Segment seg = NLPTokenizer.ANALYZER.enableOrganizationRecognize(true).enablePlaceRecognize(true);
-        List<Term> s = seg.seg("宋锦犯,刘冠男犯");
+        List<Term> s = seg.seg("再审申请人（一审原告、反诉被告、二审被上诉人）：史生来，男，1966年3月22日出生，汉族，住陕西省西安市户县。\n" +
+                "　　被申请人（一审被告、反诉原告、二审上诉人）：甘肃省第八建设集团有限责任公司。住所地：甘肃省天水市秦州区建设路161号。");
 
         System.out.println(s);
 
         Segment crf = new CRFLexicalAnalyzer().enablePlaceRecognize(true).enableOrganizationRecognize(true);
-        List<Term> seg1 = crf.seg("宋锦犯,刘冠男犯");
+        List<Term> seg1 = crf.seg("再审申请人（一审原告、反诉被告、二审被上诉人）：史生来，男，1966年3月22日出生，汉族，住陕西省西安市户县。\n" +
+                "　　被申请人（一审被告、反诉原告、二审上诉人）：甘肃省第八建设集团有限责任公司。住所地：甘肃省天水市秦州区建设路161号。");
         System.out.println(seg1);
 
+
+        List<String> strings = HanLP.extractPhrase("再审申请人（一审原告、反诉被告、二审被上诉人）：史生来，男，1966年3月22日出生，汉族，住陕西省西安市户县。\n" +
+                "　　被申请人（一审被告、反诉原告、二审上诉人）：甘肃省第八建设集团有限责任公司。住所地：甘肃省天水市秦州区建设路161号。", 50);
+        System.out.println(strings.toString());
 
     }
 

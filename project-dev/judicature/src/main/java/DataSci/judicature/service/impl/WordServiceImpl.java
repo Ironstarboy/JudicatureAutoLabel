@@ -239,18 +239,13 @@ public class WordServiceImpl implements WordService {
                         }
                     }
                     for (String s : info) {
-                        List<Term> nlpSeg = nlp.seg(s);
-                        List<Term> crfSeg = crf.seg(s);
+                        List<Term> Seg = nlp.seg(s);
+                        Seg.addAll(crf.seg(s));
 
-                        for (Term term : nlpSeg) {
-                            if (term.nature == Nature.nt && term.word.matches(court_regEx))
+                        for (Term term : Seg) {
+                            if (isCourt(term, court_regEx))
                                 marks.setCourts(term.word);
                         }
-                        for (Term term : crfSeg) {
-                            if (term.nature == Nature.nt && term.word.matches(court_regEx))
-                                marks.setCourts(term.word);
-                        }
-
 
                     }
 
@@ -279,7 +274,6 @@ public class WordServiceImpl implements WordService {
 
                     ArrayList<String> info = new ArrayList<>();
 
-                    //TODO 这里到底要怎么切
                     //先把一行字切成几句话来处理
                     String[] words = line.split("[，。：,\\s]");
 
@@ -290,11 +284,11 @@ public class WordServiceImpl implements WordService {
                     }
                     String s;
                     for (int i = 0; i < info.size(); i++) {
-                        List<Term> nlpSeg = nlp.seg(info.get(i));
-                        List<Term> crfSeg = crf.seg(info.get(i));
+                        //两个全放到一个集合里
+                        List<Term> Seg = nlp.seg(info.get(i));
+                        Seg.addAll(crf.seg(info.get(i)));
 
-
-                        for (Term term : nlpSeg) {
+                        for (Term term : Seg) {
                             if (isName(term)) {//名字
                                 if (term.word.endsWith("犯"))
                                     term.word = term.word.replaceAll("犯", "");
@@ -303,13 +297,7 @@ public class WordServiceImpl implements WordService {
                             if (term.nature == Nature.ns)//住址,用NLP的更准确
                                 marks.setBirthplace(term.word);
                         }
-                        for (Term term : crfSeg) {
-                            if (isName(term)) {//名字
-                                if (term.word.endsWith("犯"))
-                                    term.word = term.word.replaceAll("犯", "");
-                                marks.setCriminals(term.word);
-                            }
-                        }
+
                         s = info.get(i);
                         if ("男".equals(s) || "女".equals(s)) {
                             marks.setGender(s);//性别
@@ -331,5 +319,13 @@ public class WordServiceImpl implements WordService {
                 term.nature == Nature.nth || term.nature == Nature.ntch || term.nature == Nature.ntcf ||
                 term.nature == Nature.nit || term.nature == Nature.nic || term.nature == Nature.ni ||
                 term.nature == Nature.ntcb || term.nature == Nature.ntc || term.nature == Nature.nt;
+    }
+
+    private boolean isCourt(Term term, String court_regEx) {
+        return term.nature == Nature.nt && term.word.matches(court_regEx);
+    }
+
+    private boolean isAccusation(Term term, String court_regEx){
+        return false;
     }
 }

@@ -21,7 +21,7 @@ public interface FileService {
      */
     public CaseMsg proCaseMsg(String[] words);
 
-    public String transfer(MultipartFile upload, String name) throws IOException;
+    public String transfer(MultipartFile upload, String name,String suffix) throws IOException;
 
     public boolean toTxt(String fileName, HttpSession session);
 
