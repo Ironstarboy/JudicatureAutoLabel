@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 
 @SpringBootTest
@@ -27,8 +27,8 @@ public class FileTest {
 
     @Test
     void testDOC() {
-        String fileName = location + "doc\\decision\\";
-        String outName = location + "txt\\decision\\";
+        String fileName = location + "doc\\order\\";
+        String outName = location + "txt\\order\\";
 
         fileUtil.word2Txt(fileName, outName);
 
@@ -44,6 +44,7 @@ public class FileTest {
             if (fn.endsWith("zip")) {
                 String inputName = "C:\\Users\\18933\\Desktop\\DataSciProject\\" + fn;
                 fileUtil.zipUncompress(inputName, destDirPath);
+                new File(inputName).delete();
             }
         }
 
@@ -72,14 +73,26 @@ public class FileTest {
     @Test
     void util() {
         String s =
-                ""
-                ;
-        String res=s;
-        res=res.replaceAll("\\s"," ");
+                "";
+        String res = s;
+        res = res.replaceAll("\\s", " ");
         System.out.println(res);
         System.out.println();
         System.out.println();
 
+    }
+
+    @Test
+    void encoding() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\project-dev\\judicature\\src\\main\\resources\\case\\txt\\adjudication\\安徽河海水利水电机械维护有限公司西宁特殊钢股份有限公司合同纠纷再审审查与审判监督民事裁定书(1).txt"), "GBK"));
+        String line;
+        OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream("D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\project-dev\\judicature\\src\\main\\resources\\case\\txt\\测试编码.txt"), StandardCharsets.UTF_8);
+        while ((line = br.readLine()) != null) {
+            writer.write(line + System.lineSeparator());
+        }
+
+        writer.close();
+        br.close();
     }
 
 }

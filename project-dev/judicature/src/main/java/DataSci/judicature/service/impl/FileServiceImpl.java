@@ -35,9 +35,11 @@ public class FileServiceImpl implements FileService {
      * 返回文书类型
      */
     @Override
-    public String transfer(MultipartFile upload, String name,String suffix) throws IOException {
+    public String transfer(MultipartFile upload, String suffix, HttpSession session) throws IOException {
+        String name = (String) session.getAttribute("filename");
+
         if (!upload.isEmpty() && name != null) {
-            String ver = name.substring(Math.max(name.length() - 3,0));
+            String ver = name.substring(Math.max(name.length() - 3, 0));
 
             String type;
 
@@ -57,7 +59,17 @@ public class FileServiceImpl implements FileService {
                 type = "else\\";
             }
 
-            upload.transferTo(new File(location + suffix +"\\" + type+upload.getOriginalFilename()));
+            int i = 1;
+            String newName = name;
+            File f;
+            while ((f = new File(location + suffix + "\\" + type + newName + "." + suffix)).exists()) {//文件名已存在
+                newName = name + "(" + i + ")";
+                i++;
+            }
+            upload.transferTo(f);
+            session.setAttribute("filename", newName);
+            session.setAttribute("userUploadFile", location + "txt\\" + type + newName + ".txt");
+            session.setAttribute("category", type);
 
             return type;
         }

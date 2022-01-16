@@ -1,7 +1,8 @@
 package DataSci.judicature.controller;
 
-import DataSci.judicature.domain.CaseMsg;
-import DataSci.judicature.service.FileService;
+import DataSci.judicature.domain.CaseMarks;
+import DataSci.judicature.domain.CaseMarksArr;
+import DataSci.judicature.service.WordService;
 import DataSci.judicature.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,17 +26,20 @@ public class FileOutPutController {
     @Autowired
     private FileUtil fileUtil;
 
+    @Autowired
+    private WordService wordService;
+
     /**
      * @return 返回案件信息的json文件
      */
     @RequestMapping("/json")
-    public CaseMsg json(CaseMsg caseMsg, HttpServletResponse response) {
+    public CaseMarks json(CaseMarks caseMarks, HttpServletResponse response) {
         response.reset();
         response.setContentType("application/octet-stream");// 设置强制下载不打开
         response.setCharacterEncoding("utf8");
         response.addHeader("Content-Disposition", "attachment;fileName=" + new String("标注.json".getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
 
-        return caseMsg;
+        return caseMarks;
     }
 
     /**
@@ -64,6 +68,49 @@ public class FileOutPutController {
             }
         }
         return null;
+    }
+
+    /**
+     * 案件文本前端展示
+     */
+    @RequestMapping(value="/view",produces = "text/html;charset=utf-8")
+    private String txtView(HttpServletResponse response, HttpSession session) {
+        response.setCharacterEncoding("utf-8");
+        String downloadFilePath = (String) session.getAttribute("userUploadFile");
+        String name = (String) session.getAttribute("filename");
+        String format= (String) session.getAttribute("format");
+
+        if (downloadFilePath == null) {
+            return "请先上传文书!";
+        }
+        File file = new File(downloadFilePath);
+        if (file.exists()) {
+            try {
+                fileUtil.show(downloadFilePath, response, name,format);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    @RequestMapping("/fenci")
+    public CaseMarksArr fenci(HttpSession session) {
+        String downloadFilePath = (String) session.getAttribute("userUploadFile");
+        String type = (String) session.getAttribute("category");
+        if (downloadFilePath == null) {//还没上传文件，session里没有记录
+            return null;
+        }
+
+        CaseMarksArr caseSet;
+        try {//分词 返回的是set类型的实体类
+            caseSet = wordService.extract(downloadFilePath, type.substring(0, type.length() - 2));// 去掉\\
+        } catch (IOException e) {
+            return null;
+        }
+
+        //criminals, gender, ethnicity, birthplace, accusation, courts
+        return caseSet;
     }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -192,6 +193,30 @@ public class FileUtil {
         bis.close();
     }
 
+    /**
+     * 文件展示 和文件下载不同点就是要展示题目
+     */
+    public void show(String filename, HttpServletResponse res, String name, String format) throws IOException {
+        // 发送给客户端的数据
+        res.setCharacterEncoding("UTF-8");
+        PrintWriter writer = res.getWriter();
+        writer.write(name + System.lineSeparator());
+
+        BufferedReader br;
+        if ("doc".equals(format))
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(filename), "GBK"));
+        else
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(filename), StandardCharsets.UTF_8));
+
+        String line;
+        while ((line = br.readLine()) != null) {
+            writer.write(new String(line.getBytes(StandardCharsets.UTF_8)) + System.lineSeparator());
+            writer.flush();
+        }
+        writer.close();
+        br.close();
+    }
+
     public void transfer(String fileName, String path) throws IOException {
         File file = new File(fileName);
         if (file.isFile()) {
@@ -244,6 +269,7 @@ public class FileUtil {
         } else {
             readAndWrite(file, dirPath + "else\\" + file.getName());
         }
+        file.delete();
     }
 
     /**

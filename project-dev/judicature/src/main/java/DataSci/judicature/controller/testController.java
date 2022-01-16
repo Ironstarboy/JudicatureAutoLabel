@@ -1,5 +1,7 @@
 package DataSci.judicature.controller;
 
+import DataSci.judicature.domain.CaseMarks;
+import DataSci.judicature.domain.CaseMarksArr;
 import DataSci.judicature.domain.CaseMsg;
 import DataSci.judicature.service.FileService;
 import DataSci.judicature.service.testService;
@@ -14,6 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 
 /**
  * 测试controller
@@ -97,17 +103,22 @@ public class testController {
      */
     @RequestMapping(value = "/jsonFile")
     @ResponseBody
-    public CaseMsg jsonFileTest(HttpServletResponse response) {
-
+    public CaseMarksArr jsonFileTest(HttpServletResponse response) {
+/*
         response.reset();
         response.setContentType("application/octet-stream");// 设置强制下载不打开
         response.setCharacterEncoding("utf8");
         response.addHeader("Content-Disposition", "attachment;fileName=" + new String("标注.json".getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
+*/
+        String[] s = {"哈", "哈哈", "哈哈哈","哈哈哈哈哈","哈哈哈"};
 
-
-        return new CaseMsg(
-                "哈", "哈哈", "哈哈哈",
-                "哈哈哈哈", "哈哈哈哈哈", "哈哈哈哈哈哈"
+        return new CaseMarksArr(
+                new HashSet<>(Arrays.asList(s)),
+                new HashSet<>(Arrays.asList(s)),
+                new HashSet<>(Arrays.asList(s)),
+                new HashSet<>(Arrays.asList(s)),
+                new HashSet<>(Arrays.asList(s)),
+                new HashSet<>(Arrays.asList(s))
         );
 
     }
@@ -154,7 +165,7 @@ public class testController {
     @RequestMapping("/sele")
     @ResponseBody
     public void climb() {
-        String path = PATH+"spyder\\1.py";
+        String path = PATH + "spyder\\1.py";
         testService.testPy(path);
     }
 
