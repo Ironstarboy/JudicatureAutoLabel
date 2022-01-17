@@ -49,7 +49,8 @@
 				contentType: false,
 				// todo 回调函数的设计？
 				success: function (data) {
-					alert(data);
+					alert("上传成功！");
+					$('#message').val(data);//显示
 				}
 			});
 		}

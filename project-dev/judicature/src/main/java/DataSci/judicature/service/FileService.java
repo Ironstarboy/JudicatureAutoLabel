@@ -2,7 +2,9 @@ package DataSci.judicature.service;
 
 import DataSci.judicature.domain.CaseMsg;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 
@@ -19,6 +21,8 @@ public interface FileService {
      */
     public CaseMsg proCaseMsg(String[] words);
 
-    public String transfer(String fileName) throws IOException;
+    public String transfer(MultipartFile upload, String suffix, HttpSession session) throws IOException;
+
+    public boolean toTxt(String fileName, HttpSession session);
 
 }
