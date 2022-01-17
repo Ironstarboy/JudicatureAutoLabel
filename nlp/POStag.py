@@ -10,7 +10,7 @@ import json
 from pyhanlp import *
 import pandas as pd
 import re
-import my_tfidf
+import my_IO
 def readfile(file):
     text=''
     with open(file,encoding='utf-8') as f:
@@ -104,7 +104,7 @@ def saveTag():
             dic = {'fileName':file}
             dongCi,xingRongCi=hanlpPOS(readfile(tfidfDir + file))
             dic['动词'] = dongCi
-            dongCi, xingRongCi = shortPos(my_tfidf.readfile(originDir + file))
+            dongCi, xingRongCi = shortPos(my_IO.readfile(originDir + file))
             dic['形容词']=xingRongCi
             outFileName='{}/{}/{}'.format(outRootPath,type,file).replace('txt','json')
             outPath='{}/{}'.format(outRootPath,type)

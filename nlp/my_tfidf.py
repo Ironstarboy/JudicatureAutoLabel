@@ -5,6 +5,7 @@ import sys
 import string
 import chardet
 import CaseType
+import my_IO
 from sklearn import feature_extraction
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import CountVectorizer
@@ -21,27 +22,7 @@ def getFilelist(path):
     return filelist
 
 
-def readfile(filename):
-    content = ''
-    encodings = ['utf-8', 'GBK', 'gb2312']
-    index = -1
-    while 1:
-        if content != '' or index == len(encodings):
-            break
-        try:
 
-            f = open(filename, 'r+', encoding=encodings[index])
-            content = f.read()
-            f.close()
-            break
-        except:
-            pass
-            # print('{} {}编码失败，正在尝试下一种编码'.format(filename,encodings[index]))
-        finally:
-            index += 1
-    if content == '':
-        print('{}读取失败'.format(filename))
-    return content
 # 对一个类别的文档进行分词处理,分词结果存在segPath里面
 
 def fenci(srcPath,srcFile, typePath):
@@ -73,6 +54,7 @@ def fenci(srcPath,srcFile, typePath):
     f.close()
 
 
+
 # 读取几百份份已分词好的文档，进行TF-IDF计算
 def Tfidf(type,srcPath):
     corpus = []  # 存取100份文档的分词结果,稀疏矩阵
@@ -82,7 +64,7 @@ def Tfidf(type,srcPath):
         fpath=srcPath+'\\'+fname
         names.append(fname)
         f = open(fpath, 'r+')
-        content = f.read()
+        content = f.read() # TODO 没有过滤停用词
         f.close()
         corpus.append(content)
 
