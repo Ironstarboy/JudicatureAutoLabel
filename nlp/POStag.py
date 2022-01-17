@@ -79,11 +79,12 @@ def shortPos(sentence):
 def save_dic_as_json(path,fileName, dic):
     # 先将字典对象转化为可写入文本的字符串
     dic = json.dumps(dic,ensure_ascii=False)
+    dic=json.loads(dic)
     if not os.path.exists(path):
         os.mkdir(path)
     try:
         with open(fileName, "w", encoding='utf-8') as f:
-            f.write(dic )
+            json.dump(dic, f, indent=4, ensure_ascii=False)
     except Exception as e:
         print("write error==>", e)
     finally:
