@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 
 @Service
@@ -85,18 +86,33 @@ public class FileServiceImpl implements FileService {
     @Override
     public boolean toTxt(String filepath, HttpSession session) {
         String txtPath = (String) session.getAttribute("userUploadFile");
-        String category = (String) session.getAttribute("category");
 
 
         fileUtil.word2Txt(filepath, txtPath);
 
+        boolean flag;
+        flag = transferTXT(session, false);
+
+        return flag;
+    }
+
+    @Override
+    public boolean transferTXT(HttpSession session, boolean isUTF8) {
         boolean flag = false;
+        String category = (String) session.getAttribute("category");
+        String txtPath = (String) session.getAttribute("userUploadFile");
+
         //是其他 进一步分类
         if (category.startsWith("else")) {
             String prefix = (String) session.getAttribute("filename");
 
             try {
-                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(txtPath), "GBK"));
+                BufferedReader br;
+                if (!isUTF8)
+                    br = new BufferedReader(new InputStreamReader(new FileInputStream(txtPath), "GBK"));
+                else
+                    br = new BufferedReader(new InputStreamReader(new FileInputStream(txtPath), StandardCharsets.UTF_8));
+
                 String line;
                 int index = 1;
                 while ((line = br.readLine()) != null && index < 3) {
@@ -133,7 +149,6 @@ public class FileServiceImpl implements FileService {
                         flag = true;
                         break;
                     } else {//还是无法识别，就不跳转了
-
                     }
 
                     index++;
@@ -155,7 +170,6 @@ public class FileServiceImpl implements FileService {
                 return false;
             }
         }
-
         return true;
     }
 

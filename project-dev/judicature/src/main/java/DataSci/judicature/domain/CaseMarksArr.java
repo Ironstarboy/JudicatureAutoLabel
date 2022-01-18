@@ -14,11 +14,11 @@ public class CaseMarksArr {
 
     public CaseMarksArr() {
         Criminals = new HashSet<>();
-        Gender =    new HashSet<>();
+        Gender = new HashSet<>();
         Ethnicity = new HashSet<>();
-        Birthplace =new HashSet<>();
-        Accusation =new HashSet<>();
-        Courts =    new HashSet<>();
+        Birthplace = new HashSet<>();
+        Accusation = new HashSet<>();
+        Courts = new HashSet<>();
     }
 
     public CaseMarksArr(Set<String> criminals, Set<String> gender, Set<String> ethnicity, Set<String> birthplace, Set<String> accusation, Set<String> courts) {

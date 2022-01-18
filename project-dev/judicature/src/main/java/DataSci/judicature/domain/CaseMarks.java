@@ -2,6 +2,9 @@ package DataSci.judicature.domain;
 
 import java.util.List;
 
+/**
+ * 废弃
+ */
 public class CaseMarks {
     private List<String> Criminals;   //当事人
     private List<String> Gender;      //性别
@@ -9,17 +12,19 @@ public class CaseMarks {
     private List<String> Birthplace;  //出生地
     private List<String> Accusation;  //案由
     private List<String> Courts;      //相关法院
+    private List<String> Else;        //其他
 
     public CaseMarks() {
     }
 
-    public CaseMarks(List<String> criminals, List<String> gender, List<String> ethnicity, List<String> birthplace, List<String> accusation, List<String> courts) {
+    public CaseMarks(List<String> criminals, List<String> gender, List<String> ethnicity, List<String> birthplace, List<String> accusation, List<String> courts, List<String> anElse) {
         Criminals = criminals;
         Gender = gender;
         Ethnicity = ethnicity;
         Birthplace = birthplace;
         Accusation = accusation;
         Courts = courts;
+        Else = anElse;
     }
 
     public List<String> getCriminals() {
@@ -70,6 +75,14 @@ public class CaseMarks {
         Courts = courts;
     }
 
+    public List<String> getElse() {
+        return Else;
+    }
+
+    public void setElse(List<String> anElse) {
+        Else = anElse;
+    }
+
     @Override
     public String toString() {
         return "CaseMarks{" +
@@ -79,6 +92,7 @@ public class CaseMarks {
                 ", Birthplace=" + Birthplace +
                 ", Accusation=" + Accusation +
                 ", Courts=" + Courts +
+                ", Else=" + Else +
                 '}';
     }
 }

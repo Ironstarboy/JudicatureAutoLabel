@@ -25,4 +25,6 @@ public interface FileService {
 
     public boolean toTxt(String fileName, HttpSession session);
 
+    public boolean transferTXT(HttpSession session, boolean flag);
+
 }

@@ -2,25 +2,24 @@ package DataSci.judicature;
 
 import DataSci.judicature.domain.CaseMarksArr;
 import DataSci.judicature.service.WordService;
+import DataSci.judicature.service.impl.WordServiceImpl;
 import DataSci.judicature.utils.FileUtil;
+import com.hankcs.hanlp.dictionary.CustomDictionary;
 import com.hankcs.hanlp.model.crf.CRFLexicalAnalyzer;
 import com.hankcs.hanlp.seg.Segment;
 import com.hankcs.hanlp.seg.common.Term;
 import com.hankcs.hanlp.tokenizer.NLPTokenizer;
-import com.huaban.analysis.jieba.JiebaSegmenter;
-import com.huaban.analysis.jieba.SegToken;
-import com.huaban.analysis.jieba.WordDictionary;
-import com.qianxinyao.analysis.jieba.keyword.TFIDFAnalyzer;
+import org.apache.catalina.session.StandardSession;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpSession;
 
+import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @SpringBootTest
 public class WordTest {
@@ -37,12 +36,13 @@ public class WordTest {
     private FileUtil fileUtil;
 
     @Autowired
-    private WordService wordService;
+    private WordServiceImpl wordService;
 
-    private final JiebaSegmenter jb = new JiebaSegmenter();
-    private final WordDictionary wd = WordDictionary.getInstance();
-    private final TFIDFAnalyzer tf = new TFIDFAnalyzer();
 
+    private static Segment nlp = null;
+    private static Segment crf = null;
+
+/*
 
     @Test
     void testAdjudication() throws IOException {
@@ -57,17 +57,29 @@ public class WordTest {
         }
     }
 
+*/
+
+    @BeforeAll
+    static void init() throws IOException {
+        nlp = NLPTokenizer.ANALYZER.enableOrganizationRecognize(true).enablePlaceRecognize(true).enableCustomDictionary(true).enableCustomDictionaryForcing(true);
+        crf = new CRFLexicalAnalyzer().enablePlaceRecognize(true).enableOrganizationRecognize(true).enableCustomDictionary(true).enableCustomDictionaryForcing(true);
+        BufferedReader br = new BufferedReader(new FileReader("D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\project-dev\\judicature\\src\\main\\resources\\case\\" + "tools\\dict.txt"));
+        String line;
+        while ((line = br.readLine()) != null) {
+            if (line.length() != 0) {
+                CustomDictionary.remove(line);
+                CustomDictionary.add(line, "accu 1024 nz 0");
+            }
+        }
+        br.close();
+        System.out.println("前奏");
+    }
 
     @Test
-    void testNLP() throws IOException {
-
-        Segment seg = NLPTokenizer.ANALYZER.enableOrganizationRecognize(true).enablePlaceRecognize(true);
-        List<Term> s = seg.seg("陈述东与靖州苗族侗族自治县人民法院国家赔偿一案决定书");
-
+    void testNLP() {
+        List<Term> s = nlp.seg("　　被申请人顾爱媛，女，1970年9月29日生，汉族。");
         System.out.println(s);
-
-        Segment crf = new CRFLexicalAnalyzer().enablePlaceRecognize(true).enableOrganizationRecognize(true);
-        List<Term> seg1 = crf.seg("陈述东与靖州苗族侗族自治县人民法院国家赔偿一案决定书");
+        List<Term> seg1 = crf.seg("　　被申请人顾爱媛，女，1970年9月29日生，汉族。");
         System.out.println(seg1);
 
 /*
@@ -79,47 +91,50 @@ public class WordTest {
 
     }
 
+    /*
+
+        @Test
+        void testJudgment() throws IOException {
+            String type = "judgment";
+            File dir = new File(location + "txt\\" + type);
+
+            String[] files = dir.list();
+            assert files != null;
+            for (String file : files) {
+                CaseMarksArr marks = wordService.extract(dir.getAbsolutePath() + "\\" + file, type);
+                System.out.println(marks);
+            }
+        }
+
+        @Test
+        void testMediate() throws IOException {
+            String type = "mediate";
+            File dir = new File(location + "txt\\" + type);
+
+            String[] files = dir.list();
+            assert files != null;
+            for (String file : files) {
+                CaseMarksArr marks = wordService.extract(dir.getAbsolutePath() + "\\" + file, type);
+                System.out.println(marks);
+            }
+        }
+
+    */
     @Test
-    void testJudgment() throws IOException {
+    void testNotification() throws IOException {
+
         String type = "judgment";
         File dir = new File(location + "txt\\" + type);
 
         String[] files = dir.list();
         assert files != null;
         for (String file : files) {
-            CaseMarksArr marks = wordService.extract(dir.getAbsolutePath() + "\\" + file, type);
+            CaseMarksArr marks = wordService.extract(dir.getAbsolutePath() + "\\" + file);
             System.out.println(marks);
         }
     }
 
-    @Test
-    void testMediate() throws IOException {
-        String type = "mediate";
-        File dir = new File(location + "txt\\" + type);
-
-        String[] files = dir.list();
-        assert files != null;
-        for (String file : files) {
-            CaseMarksArr marks = wordService.extract(dir.getAbsolutePath() + "\\" + file, type);
-            System.out.println(marks);
-        }
-    }
-
-
-    @Test
-    void testNotification() throws IOException {
-        String type = "notification";
-        File dir = new File(location + "txt\\" + type);
-
-        String[] files = dir.list();
-        assert files != null;
-        for (String file : files) {
-            CaseMarksArr marks = wordService.extract(dir.getAbsolutePath() + "\\" + file, type);
-            System.out.println(marks);
-        }
-    }
-
-
+/*
     @Test
     void testOrder() throws IOException {
         String type = "order";
@@ -146,75 +161,7 @@ public class WordTest {
         }
     }
 
-
-
-    @Test
-    void testJieba() {
-
-        List<SegToken> tks = jb.process("",
-                JiebaSegmenter.SegMode.SEARCH);
-
-
-        //对关键词进行结巴keyword分词
-        String keyword = "";
-        String[] keyword_list;
-
-        for (SegToken s : tks)
-            if (s.word.length() > 1)
-                keyword += " " + s.word;
-
-        keyword_list = keyword.split("[,;\\s'\\*\\+|\\^]+");
-        Set<String> keywordList = new LinkedHashSet<String>(Arrays.asList(keyword_list));//用set是为了去除文章的重复
-
-        for (String s : keywordList) {
-            System.out.println(wd.getProperties(s) + s);
-        }
-
-/*        List<Keyword> analyze = tf.analyze("", 100);
-        for (Keyword keyword : analyze) {
-            System.out.println(keyword.getName() + keyword.getTfidfvalue());
-        }*/
-       /* for (SegToken tk : tks) {
-            System.out.println(wd.getProperties(tk.word));
-            System.out.println(tk);
-        }*/
-    }
-
-    @Test
-    void testfenci() throws IOException {
-/*
-        System.out.println("你好啊" + wd.getProperties("你好啊"));
-        System.out.println("鲁权锋" + wd.getProperties("鲁权锋"));
-        System.out.println("你在干什么" + wd.getProperties("你在干什么"));
-        System.out.println("睡觉" + wd.getProperties("睡觉"));
-        System.out.println("抢劫" + wd.getProperties("抢劫"));
-        System.out.println("犯罪" + wd.getProperties("犯罪"));
-        System.out.println("大作业" + wd.getProperties("大作业"));
-        System.out.println("司法大数据" + wd.getProperties("司法大数据"));
-        System.out.println("踢球" + wd.getProperties("踢球"));
-        System.out.println("踢足球" + wd.getProperties("踢足球"));
-        System.out.println("广东省人民法院" + wd.getProperties("广东省人民法院"));
-
 */
-
-
-        String type = "decision";
-        File dir = new File(location + "txt\\" + type);
-
-        String[] files = dir.list();
-        CaseMarksArr marks = null;
-        for (String file : files) {
-            marks = wordService.extract(dir.getAbsolutePath() + "\\" + file, type);
-            System.out.println(marks);
-            break;
-        }
-
-        Set<String> criminals = marks.getCriminals();
-        for (String c : criminals) {
-            String properties = wd.getProperties(c);
-            System.out.println(c + properties);
-        }
-    }
 
 
     @Test

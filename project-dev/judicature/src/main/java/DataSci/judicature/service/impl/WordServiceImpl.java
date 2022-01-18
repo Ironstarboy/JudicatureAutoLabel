@@ -1,6 +1,8 @@
 package DataSci.judicature.service.impl;
 
+import DataSci.judicature.domain.CaseMarks;
 import DataSci.judicature.domain.CaseMarksArr;
+import DataSci.judicature.domain.CaseMsg;
 import DataSci.judicature.service.WordService;
 import com.hankcs.hanlp.corpus.tag.Nature;
 import com.hankcs.hanlp.dictionary.CustomDictionary;
@@ -12,9 +14,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -29,47 +32,63 @@ public class WordServiceImpl implements WordService {
     private String location;
 
     //HanLP分词器
-    private final Segment nlp = NLPTokenizer.ANALYZER.enableOrganizationRecognize(true).enablePlaceRecognize(true).enableCustomDictionary(true).enableCustomDictionaryForcing(true);
+    private static Segment nlp;
 
-    private final Segment crf = new CRFLexicalAnalyzer().enablePlaceRecognize(true).enableOrganizationRecognize(true).enableCustomDictionary(true).enableCustomDictionaryForcing(true);
+    private static Segment crf;
 
-    public WordServiceImpl() throws IOException {
-        init();
-    }
+    private static Set<String> accu;
+
 
     //初始化nlp分词器
     //TODO 这里路径耦合死了
-    private void init() throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\project-dev\\judicature\\src\\main\\resources\\case\\" + "tools\\dict.txt"));
-        String line;
-        while ((line = br.readLine()) != null) {
-            if (line.length() != 0)
-                CustomDictionary.add(line, "accu 1024");
+    static {
+        System.out.println("静态代码块");
+        try {
+            nlp = NLPTokenizer.ANALYZER.enableOrganizationRecognize(true).enablePlaceRecognize(true).enableCustomDictionary(true).enableCustomDictionaryForcing(true);
+            crf = new CRFLexicalAnalyzer().enablePlaceRecognize(true).enableOrganizationRecognize(true).enableCustomDictionary(true).enableCustomDictionaryForcing(true);
+            accu = new HashSet<>();
+
+            BufferedReader br = new BufferedReader(new FileReader("D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\project-dev\\judicature\\src\\main\\resources\\case\\" + "tools\\dict.txt"));
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (line.length() != 0) {
+                    accu.add(line);
+                    CustomDictionary.add(line, "accu 1024");
+                }
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        br.close();
     }
+   /* public static void init() throws IOException {
+
+    }*/
 
 
     @Override
-    public CaseMarksArr extract(String fileName, String type) throws IOException {
+    public CaseMarksArr extract(String fileName, HttpSession session) throws IOException {
         CaseMarksArr marks = null;
-        if ("adjudication".equals(type)) {
-            marks = adjudication(fileName);
-        } else if ("decision".equals(type)) {
-            marks = decision(fileName);
-        } else if ("judgment".equals(type)) {
-            marks = judgment(fileName);
-        } else if ("mediate".equals(type)) {
-            marks = mediate(fileName);
-        } else if ("notification".equals(type)) {
-            marks = notification(fileName);
-        } else if ("order".equals(type)) {
-            marks = order(fileName);
+        String type = (String) session.getAttribute("category");
+
+        if (type.startsWith("adjudication")) {
+            marks = adjudication(fileName, session);
+        } else if (type.startsWith("decision")) {
+            marks = decision(fileName, session);
+        } else if (type.startsWith("judgment")) {
+            marks = judgment(fileName, session);
+        } else if (type.startsWith("mediate")) {
+            marks = mediate(fileName, session);
+        } else if (type.startsWith("notification")) {
+            marks = notification(fileName, session);
+        } else if (type.startsWith("order")) {
+            marks = order(fileName, session);
         }
         return marks;
     }
 
-    private CaseMarksArr notification(String fileName) throws IOException {
+
+    private CaseMarksArr notification(String fileName, HttpSession session) throws IOException {
         //当事人
         String regEx = "^((.*)人（(.*)）：(.*))|((.*)人(.*))|((.*)罪犯(.*))|((.*)机关(.*))|((.*)被告(.*))$";
         Pattern pattern = Pattern.compile(regEx);
@@ -99,7 +118,14 @@ public class WordServiceImpl implements WordService {
             }
         }
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "GBK"));
+        String format = (String) session.getAttribute("format");
+        BufferedReader br;
+
+        if ("txt".equals(format))
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_8));
+        else
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "GBK"));
+
         String line;
 
         int lineNo = 1;//行号
@@ -189,7 +215,7 @@ public class WordServiceImpl implements WordService {
         return marks;
     }
 
-    private CaseMarksArr order(String fileName) throws IOException {
+    private CaseMarksArr order(String fileName, HttpSession session) throws IOException {
         //当事人
         String regEx = "^((.*)人（(.*)）：(.*))|((.*)人(.*))|((.*)罪犯(.*))|((.*)机关(.*))|((.*)被告(.*))$";
         Pattern pattern = Pattern.compile(regEx);
@@ -222,7 +248,14 @@ public class WordServiceImpl implements WordService {
             }
         }
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "GBK"));
+        String format = (String) session.getAttribute("format");
+        BufferedReader br;
+
+        if ("txt".equals(format))
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_8));
+        else
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "GBK"));
+
         String line;
 
         int lineNo = 1;//行号
@@ -297,15 +330,15 @@ public class WordServiceImpl implements WordService {
         return marks;
     }
 
-    private CaseMarksArr mediate(String fileName) throws IOException {
-        return adjudication(fileName);
+    private CaseMarksArr mediate(String fileName, HttpSession session) throws IOException {
+        return adjudication(fileName, session);
     }
 
-    private CaseMarksArr judgment(String fileName) throws IOException {
-        return adjudication(fileName);
+    private CaseMarksArr judgment(String fileName, HttpSession session) throws IOException {
+        return adjudication(fileName, session);
     }
 
-    private CaseMarksArr adjudication(String fileName) throws IOException {
+    private CaseMarksArr adjudication(String fileName, HttpSession session) throws IOException {
 
         //当事人
         String regEx = "^((.*)人（(.*)）：(.*))|((.*)人(.*))|((.*)罪犯(.*))|((.*)机关(.*))|((.*)被告(.*))$";
@@ -344,7 +377,14 @@ public class WordServiceImpl implements WordService {
             }
         }
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "GBK"));
+        String format = (String) session.getAttribute("format");
+        BufferedReader br;
+
+        if ("txt".equals(format))
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_8));
+        else
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "GBK"));
+
         String line;
 
         int lineNo = 1;//行号
@@ -442,8 +482,8 @@ public class WordServiceImpl implements WordService {
 
     }
 
-    private CaseMarksArr decision(String fileName) throws IOException {
-        return adjudication(fileName);
+    private CaseMarksArr decision(String fileName, HttpSession session) throws IOException {
+        return adjudication(fileName, session);
         /*        //当事人
         String regEx = "^((.*)人（(.*)）：(.*))|((.*)人(.*))|((.*)罪犯(.*))|((.*)机关(.*))|((.*)被告(.*))$";
         Pattern pattern = Pattern.compile(regEx);
@@ -582,7 +622,7 @@ public class WordServiceImpl implements WordService {
                 term.nature == Nature.ntu || term.nature == Nature.nts || term.nature == Nature.nto ||
                 term.nature == Nature.nth || term.nature == Nature.ntch || term.nature == Nature.ntcf ||
                 term.nature == Nature.nit || term.nature == Nature.nic || term.nature == Nature.ni ||
-                term.nature == Nature.ntcb || term.nature == Nature.ntc || term.nature == Nature.nt) && (!term.word.equals("液透析") && !term.word.equals("据此") && !term.word.equals("txt"));
+                term.nature == Nature.ntcb || term.nature == Nature.ntc || term.nature == Nature.nt) && (!term.word.equals("液透析") && !term.word.equals("据此") && !term.word.equals("txt")&& !term.word.matches("(.*)\\d(.*)"));
     }
 
     private boolean isCourt(Term term, String court_regEx) {
@@ -590,11 +630,171 @@ public class WordServiceImpl implements WordService {
     }
 
     private boolean isAccusation(Term term) {
-        return term.nature.toString().equals("accu") || term.word.equals("合同纠纷") || term.word.equals("故意伤害") || term.word.equals("故意伤害罪");
+        return accu.contains(term.word);
+        //  return term.nature.toString().equals("accu") || term.word.equals("合同纠纷") || term.word.equals("故意伤害") || term.word.equals("故意伤害罪");
     }
 
     private boolean isPlace(Term term) {
         return term.word.length() >= 3 && term.nature == Nature.ns && !term.word.equals("之日起");
+    }
+
+    @Override
+    public CaseMarks toJSON(CaseMsg caseMsg) {
+        CaseMarks marks = new CaseMarks();
+        String acc = caseMsg.getAccusation_text();
+        String bir = caseMsg.getBirthplace_text();
+        String cur = caseMsg.getCourts_text();
+        String gen = caseMsg.getGender_text();
+        String eth = caseMsg.getEthnicity_text();
+        String cri = caseMsg.getCriminals_text();
+        String sum = caseMsg.getSummary_text();
+        marks.setCriminals(new ArrayList<>(Arrays.asList(cri.split("[,，]+"))));
+        marks.setCourts(new ArrayList<>(Arrays.asList(cur.split("[,，]+"))));
+        marks.setGender(new ArrayList<>(Arrays.asList(gen.split("[,，]+"))));
+        marks.setBirthplace(new ArrayList<>(Arrays.asList(bir.split("[,，]+"))));
+        marks.setAccusation(new ArrayList<>(Arrays.asList(acc.split("[,，]+"))));
+        marks.setElse(new ArrayList<>(Arrays.asList(sum.split("[,，]+"))));
+        marks.setEthnicity(new ArrayList<>(Arrays.asList(eth.split("[,，]+"))));
+
+        return marks;
+    }
+
+    public CaseMarksArr extract(String fileName) throws IOException {
+
+        //当事人
+        String regEx = "^((.*)人（(.*)）：(.*))|((.*)人(.*))|((.*)罪犯(.*))|((.*)机关(.*))|((.*)被告(.*))$";
+        Pattern pattern = Pattern.compile(regEx);
+
+        //屏蔽词
+        String NO_regEx = "^((.*)代理人(.*))|((.*)代表人(.*))|((.*)负责人(.*))|((.*)合伙人(.*))$";
+        Pattern NO_pattern = Pattern.compile(NO_regEx);
+
+        //年份
+        String year_regEx = "^(.*)(一|二|〇|三|四|五|六|七|八|九|十|(\\d\\d\\d\\d))年(.*)$";
+        //法院 检察院
+        String court_regEx = "^(.*)(法院|检察院)(.*)$";
+        Pattern courtPattern = Pattern.compile(court_regEx);
+
+        //重庆市高级人民法院（2019）渝民终795号
+        //江苏省高级人民法院（2019）苏民终1487号
+        //  String court_regEx = "^(.*)法院（\\d+）(.{0,3})民(.{0,3})终(.{0,3})\\d+号(.*)$";
+
+        CaseMarksArr marks = new CaseMarksArr();
+
+        //题目都要读
+        //名字 法院 案由
+        String name = new File(fileName).getName();
+        System.out.println(name);
+        List<Term> seg = nlp.seg(name);
+        for (Term term : seg) {
+            term.word = term.word.replaceAll("[，。：,\\s\\.]+", "");
+            if (term.word.length() > 1) {
+                if (isName(term))
+                    marks.setCriminals(term.word);
+                if (isCourt(term, court_regEx))
+                    marks.setCourts(term.word);
+                if (isAccusation(term))
+                    marks.setAccusation(term.word);
+            }
+        }
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "GBK"));
+
+        String line;
+
+        int lineNo = 1;//行号
+        while ((line = br.readLine()) != null) {
+
+            //写文书的人能不能走点心啊啊啊
+            line = line.replaceAll(":", "：");
+            line = line.replaceAll("\\(", "（");
+            line = line.replaceAll("\\)", "）");
+            line = line.replaceAll("[\\s\\p{Zs}]", "");
+
+            if (line.length() == 0)
+                continue;
+
+            if (lineNo == 1) {
+                //中华人民共和国最高人民法院
+                String[] s = line.split(" ");
+                line = StringUtils.join(s, "");
+                if (line.contains("法院")) {
+                    marks.setCourts(line);
+                }
+            } else if (lineNo == 2 || lineNo == 3) {
+                //民 事 裁 定 书
+                //（2021）最高法民申5039号
+            } else {
+                //重庆市渝中区人民检察院指控被告人王风、于思佳犯诈骗罪、非法拘禁罪一案，本院经审查，依照《中华人民共和国刑事诉讼法》第二十七条的规定，决定如下：
+
+                ArrayList<String> info;
+                //先把一行字切成几句话来处理
+                String[] words;
+
+                List<Term> Segs = nlp.seg(line);
+                Segs.addAll(crf.seg(line));
+
+                for (Term term : Segs) {
+                    term.word = term.word.replaceAll("[，。：,\\s\\.]+", "");
+                    if (term.word.length() >= 2) {
+                        if (isCourt(term, court_regEx))//法院
+                            marks.setCourts(term.word);
+                        if (term.nature.toString().equals("accu"))//案由
+                            marks.setAccusation(term.word);
+                    }
+                }
+
+                //提取人名，地名，性别，民族
+                if (pattern.matcher(line).matches() && !NO_pattern.matcher(line).matches() && (line.length() < 200 || lineNo == 4)) {
+
+                    //名字和住所地
+                    List<Term> Seg = nlp.seg(line);
+                    Seg.addAll(crf.seg(line));
+                    for (Term term : Seg) {
+                        term.word = term.word.replaceAll("[，。：,\\s]+", "");
+                        if (term.word.length() >= 2) {
+                            if (isName(term)) {//名字
+                                if (term.word.endsWith("犯"))
+                                    term.word = term.word.replaceAll("犯", "");
+                                marks.setCriminals(term.word);
+                            }
+                            if (isPlace(term))//住址,用NLP的更准确
+                                marks.setBirthplace(term.word);
+                        }
+                    }
+
+                    info = new ArrayList<>();
+                    words = line.split("[，。：,\\s]");
+                    for (String word : words) {
+                        if (!StringUtils.isEmpty(word)) {
+                            info.add(word);
+                        }
+                    }
+                    String s;
+                    //民族和性别
+                    for (int i = 0; i < info.size(); i++) {
+                        s = info.get(i);
+                        if ("男".equals(s) || "女".equals(s)) {
+                            marks.setGender(s);//性别
+                        } else if (s.contains("族") && s.length() <= 5) {
+                            marks.setEthnicity(s);//民族
+                        }
+                    }
+                }
+/*
+                //单独处理地名
+                if (lineNo >= 4 && line.length() < 60 && line.contains("市")) {
+                    for (String s : line.split("[，。：,\\s]")) {
+                        if (s.contains("市") && s.length() <= 30)
+                            marks.setBirthplace(s);
+                    }
+                }*/
+            }
+            lineNo++;
+        }
+        return marks;
+
+
     }
 
 

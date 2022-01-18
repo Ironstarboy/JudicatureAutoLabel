@@ -6,6 +6,8 @@
     <file url="file://$PROJECT_DIR$/judicature/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/application.yml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/test/案件文本.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/中国电信股份有限公司无锡分公司与顾爱媛申请支付令特别程序民事裁定书(1).txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/中国电信股份有限公司无锡分公司与黄镭申请支付令特别程序民事裁定书(1).txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/中欧汽车电器有限公司吴国琳等合伙协议纠纷股权转让纠纷其他民事民事裁定书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/中铁九局集团成都工程有限公司中诚信托有限责任公司信托纠纷民事申请再审审查民事裁定书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/adjudication/中铁九局集团有限公司中铁九局集团有限公司成都分公司等信托纠纷民事申请再审审查民事裁定书.txt" charset="GBK" />
@@ -76,9 +78,13 @@
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/judgment/东莞市艾德照明科技有限公司欧普照明股份有限公司侵害实用新型专利权纠纷民事二审民事判决书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/judgment/东莞市赛力自动化设备科技股份有限公司北京爱迪泰克科技有限公司侵害实用新型专利权纠纷二审民事判决书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/judgment/余海华涉盗窃罪刑事判决书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/judgment/冯春慧与路文军租赁合同纠纷一审民事判决书(1).txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/judgment/刘某故意伤害罪一审刑事判决书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/judgment/北京天泓科技股份有限公司郭新洪等侵害实用新型专利权纠纷民事二审民事判决书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/judgment/北京零极中盛科技有限公司周洋等侵害技术秘密纠纷民事二审民事判决书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/judgment/常州通灵信息科技有限公司福启文化北京有限责任公司等计算机软件开发合同纠纷民事二审民事判决书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/judgment/朗坤智慧科技股份有限公司葫芦岛市自然资源局计算机软件开发合同纠纷二审民事判决书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/judgment/赵红美姚刚与刘永久合同无因管理不当得利纠纷一审民事判决书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/judgment/陈永才陈冬冬等与陈银昌卢明成等机动车交通事故责任纠纷一审民事判决书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/mediate/兴中科轻纺城股权投资合伙企业与山西尚风科技股份有限公司孟新利合伙协议纠纷股权转让纠纷二审民事调解书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/mediate/北京中坤投资集团有限公司轮台县人民政府合同纠纷再审民事调解书.txt" charset="GBK" />
@@ -91,9 +97,11 @@
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/notification/刑事通知书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/notification/刘希明国有公司企业事业单位人员滥用职权罪刑事申诉再审审查刑事通知书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/notification/吴伟光行贿罪刑事申诉再审审查刑事通知书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/notification/干恩先故意伤害罪刑事申诉再审审查刑事通知书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/notification/张恒林挪用资金其他刑事刑事通知书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/notification/张曰华贪污挪用公款驳回申诉通知书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/notification/强奸刑事通知书.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/notification/强奸刑事驳回申诉通知书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/notification/徇私枉法受贿刑事通知书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/notification/抢劫聚众斗殴刑事通知书.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/judicature/src/main/resources/case/txt/notification/拒不执行判决裁定刑事通知书.txt" charset="GBK" />
