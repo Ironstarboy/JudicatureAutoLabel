@@ -3,8 +3,8 @@ package DataSci.judicature.controller;
 import DataSci.judicature.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,7 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * 文件上传控制器
@@ -57,12 +57,10 @@ public class FileInputController {
 
                 //设置文件名信息,这个要先做
                 session.setAttribute("filename", prefix);
-
                 //设置文件格式
-                session.setAttribute("format", suffix);
+                session.setAttribute("format", "doc");
 
 
-                //todo 文件的分类没实现完
                 String category = fileService.transfer(upload, suffix, session);
 
                 //设置session 记录上传的是哪个文件
@@ -93,9 +91,45 @@ public class FileInputController {
     }
 
 
+    /**
+     * 保存在文本框里的信息为txt文件
+     */
     @RequestMapping("/words")
-    public String write() {
-        //todo 上传文字 转txt
-        return null;
+    public String write(@RequestParam(value = "txt", defaultValue = "") String txt, HttpSession session) {
+        if (txt.length() == 0)
+            return "上传失败！";
+        System.out.println(txt);
+        String name = "文本";
+        File f;
+        String newName = name;
+        int i = 1;
+        while ((f = new File(location + "txt\\else\\" + newName + ".txt")).exists()) {
+            newName = name + "(" + i + ")";
+            i++;
+        }
+
+        try {
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f.getAbsolutePath())));
+            bw.write(txt);
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "上传失败！";
+        }
+
+
+        //设置文件名信息
+        session.setAttribute("filename", newName);
+        //设置文件格式
+        session.setAttribute("format", "txt");
+        session.setAttribute("userUploadFile", f.getAbsolutePath());
+        session.setAttribute("category", "else\\");
+
+        boolean success = fileService.transferTXT(session, true);
+
+        if (success)
+            return "上传成功！";
+        else
+            return "上传失败！";
     }
 }

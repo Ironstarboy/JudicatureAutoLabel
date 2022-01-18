@@ -2,6 +2,7 @@ package DataSci.judicature.controller;
 
 import DataSci.judicature.domain.CaseMarks;
 import DataSci.judicature.domain.CaseMarksArr;
+import DataSci.judicature.domain.CaseMsg;
 import DataSci.judicature.service.WordService;
 import DataSci.judicature.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +34,16 @@ public class FileOutPutController {
      * @return 返回案件信息的json文件
      */
     @RequestMapping("/json")
-    public CaseMarks json(CaseMarks caseMarks, HttpServletResponse response) {
+    public CaseMarks json(CaseMsg caseMsg, HttpServletResponse response) {
+        System.out.println("传进来了");
+        System.out.println(caseMsg);
+
         response.reset();
         response.setContentType("application/octet-stream");// 设置强制下载不打开
         response.setCharacterEncoding("utf8");
         response.addHeader("Content-Disposition", "attachment;fileName=" + new String("标注.json".getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
 
-        return caseMarks;
+        return wordService.toJSON(caseMsg);
     }
 
     /**
@@ -67,18 +71,19 @@ public class FileOutPutController {
                 e.printStackTrace();
             }
         }
+        System.out.println("开始下载了");
         return null;
     }
 
     /**
      * 案件文本前端展示
      */
-    @RequestMapping(value="/view",produces = "text/html;charset=utf-8")
+    @RequestMapping(value = "/view", produces = "text/html;charset=utf-8")
     private String txtView(HttpServletResponse response, HttpSession session) {
         response.setCharacterEncoding("utf-8");
         String downloadFilePath = (String) session.getAttribute("userUploadFile");
         String name = (String) session.getAttribute("filename");
-        String format= (String) session.getAttribute("format");
+        String format = (String) session.getAttribute("format");
 
         if (downloadFilePath == null) {
             return "请先上传文书!";
@@ -86,7 +91,7 @@ public class FileOutPutController {
         File file = new File(downloadFilePath);
         if (file.exists()) {
             try {
-                fileUtil.show(downloadFilePath, response, name,format);
+                fileUtil.show(downloadFilePath, response, name, format);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -96,19 +101,25 @@ public class FileOutPutController {
 
     @RequestMapping("/fenci")
     public CaseMarksArr fenci(HttpSession session) {
+        System.out.println("开始分词了");
         String downloadFilePath = (String) session.getAttribute("userUploadFile");
+        System.out.println(downloadFilePath);
         String type = (String) session.getAttribute("category");
+        System.out.println(type);
+
         if (downloadFilePath == null) {//还没上传文件，session里没有记录
             return null;
         }
 
         CaseMarksArr caseSet;
         try {//分词 返回的是set类型的实体类
-            caseSet = wordService.extract(downloadFilePath, type.substring(0, type.length() - 2));// 去掉\\
+            caseSet = wordService.extract(downloadFilePath, session);
         } catch (IOException e) {
             return null;
         }
 
+        System.out.println("结束分词了");
+        System.out.println(caseSet);
         //criminals, gender, ethnicity, birthplace, accusation, courts
         return caseSet;
     }
