@@ -136,12 +136,13 @@ public class FileUtil {
                 for (String doc : list) {
                     if (new File(wordPath + doc).isFile()) {//是文件才操作
                         String txt = doc.split("\\.")[0] + ".txt";
-                        if (!new File(txtPath + txt).exists())
+                        if (!new File(txtPath + txt).exists())//不存在才生成
                             word2txt(wordPath + doc, txtPath + txt, 7);
                     }
                 }
-        } else
+        } else if (!new File(txtPath).exists()) {//不存在才生成
             word2txt(wordPath, txtPath, 7);//单个文件就直接转
+        }
     }
 
     /**
