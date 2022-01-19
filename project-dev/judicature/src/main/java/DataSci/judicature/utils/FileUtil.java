@@ -10,6 +10,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
@@ -252,20 +253,17 @@ public class FileUtil {
      */
     private void classify(File file, String dirPath) throws IOException {
         String filename = file.getName();
-        int i = filename.lastIndexOf(".");
-        String name = filename.substring(0, i);
-        String ver = name.substring(name.length() - 3);
-        if ("裁定书".equals(ver)) {
+        if (filename.contains("裁定书")) {
             readAndWrite(file, dirPath + "adjudication\\" + file.getName());
-        } else if ("判决书".equals(ver)) {
+        } else if (filename.contains("判决书")) {
             readAndWrite(file, dirPath + "judgment\\" + file.getName());
-        } else if ("调解书".equals(ver)) {
+        } else if (filename.contains("调解书")) {
             readAndWrite(file, dirPath + "mediate\\" + file.getName());
-        } else if ("通知书".equals(ver)) {
+        } else if (filename.contains("通知书")) {
             readAndWrite(file, dirPath + "notification\\" + file.getName());
-        } else if ("决定书".equals(ver)) {
+        } else if (filename.contains("决定书")) {
             readAndWrite(file, dirPath + "decision\\" + file.getName());
-        } else if ("支付令".equals(ver)) {
+        } else if (filename.contains("支付令")) {
             readAndWrite(file, dirPath + "order\\" + file.getName());
         } else {
             readAndWrite(file, dirPath + "else\\" + file.getName());
@@ -293,6 +291,34 @@ public class FileUtil {
 
         bos.close();
         bis.close();
+    }
+
+    /**
+     * 识别编码
+     */
+    public String getEncoding(File file) throws IOException {
+
+        BufferedReader br;
+
+        List<Charset> encodes = new java.util.ArrayList<>();
+        encodes.add(Charset.forName("GBK")); //兼容gb2312  21886个
+        encodes.add(StandardCharsets.UTF_8);
+        encodes.add(StandardCharsets.US_ASCII);
+        encodes.add(StandardCharsets.ISO_8859_1);
+        encodes.add(StandardCharsets.UTF_16BE);
+        encodes.add(StandardCharsets.UTF_16LE);
+        encodes.add(StandardCharsets.UTF_16);
+
+        for (Charset charset : encodes) {
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charset));
+            String str;
+            while ((str = br.readLine()) != null && str.matches("[\\s]"));
+            br.close();
+                if (charset.newEncoder().canEncode(str)) {
+                    return charset.name();
+                }
+        }
+        return "unknown";
     }
 
 }

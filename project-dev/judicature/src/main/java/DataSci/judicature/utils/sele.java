@@ -8,28 +8,83 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class sele {
     public static void main(String[] args) throws InterruptedException {
         WebDriver driver = new ChromeDriver();
-        driver.get("https://www.pkulaw.com/case/");
-        Thread.sleep(2000);
-        driver.findElement(By.id("CaseGradeport_40_a")).click();//选择普通文书案例
-        Thread.sleep(2000);
-        driver.findElement(By.id("choose-all")).click();//全选
+        try {
+            driver.get("https://www.pkulaw.com/case/");
+            Thread.sleep(2000);
 
-        driver.findElement(By.className("down-all")).click();//下载
-        Thread.sleep(500);
-        driver.findElement(By.id("tool-txt")).click();//下载为txt
+            try {
+                driver.findElement(By.id("newloginbtn")).click();
+            } catch (Exception ignored) {
+            }
 
-        Thread.sleep(100);
-        driver.findElement(By.id("batchDownload")).click();//确定
+            driver.get("https://www.pkulaw.com/case/adv");//查询界面
+            Thread.sleep(2000);
+
+            driver.findElement(By.id("LastInstanceDate1")).sendKeys("2014.01.10");//开始日期
+            driver.findElement(By.id("LastInstanceDate2")).sendKeys("2022.01.10");//结束日期
+
+            Thread.sleep(800);
+
+            driver.findElement(By.id("advsearchbtn")).click();//点击搜索
+
+            Thread.sleep(3000);
+
+            driver.findElement(By.partialLinkText("普通案例")).click();
+            //driver.findElement(By.cssSelector("form#form > span > input")
+            //driver.findElement(By.cssSelector("div#recordPage > dl > dd[filter_value='100']")).click();
 
 
-
-        String title = driver.getTitle();
-        System.out.println(title);
+            String url = "https://www.pkulaw.com/case/search/RecordSearch";
 
 
-        Thread.sleep(10000);
-       // driver.close();
-
-
+            // Thread.sleep(20000);
+            int i = 0;
+            while (i < 100) {
+                i += 10;
+                Thread.sleep(4000);
+                try {
+                    driver.findElement(By.id("choose-all")).click();//全选
+                } catch (Exception e) {
+                    Thread.sleep(2000);
+                    driver.findElement(By.id("choose-all")).click();//全选
+                }
+                Thread.sleep(1000);
+                try {
+                    driver.findElement(By.className("down-all")).click();//下载
+                } catch (Exception e) {
+                    Thread.sleep(2000);
+                    driver.findElement(By.className("down-all")).click();//下载
+                }
+                Thread.sleep(2000);
+                try {
+                    driver.findElement(By.id("tool-txt")).click();//下载为txt
+                } catch (Exception e) {
+                    Thread.sleep(2000);
+                    try {
+                        driver.findElement(By.id("tool-txt")).click();
+                    } catch (Exception exception) {
+                        Thread.sleep(2000);
+                        driver.findElement(By.id("tool-txt")).click();
+                    }
+                }
+                Thread.sleep(1000);
+                try {
+                    driver.findElement(By.id("batchDownload")).click();//确定
+                } catch (Exception e) {
+                    Thread.sleep(2000);
+                    driver.findElement(By.id("batchDownload")).click();
+                }
+                Thread.sleep(800);
+                try {
+                    driver.findElement(By.linkText("下一页")).click();
+                } catch (Exception e) {
+                    Thread.sleep(3000);
+                    driver.findElement(By.linkText("下一页")).click();
+                }
+            }
+        } catch (InterruptedException e) {
+            driver.close();
+        }
+        driver.close();
     }
 }

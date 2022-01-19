@@ -13,7 +13,7 @@ public interface PythonService {
     /**
      * 分词
      */
-    Words recommend(File file);
+    void recommend(String filePath);
 
 
 }

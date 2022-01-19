@@ -171,7 +171,20 @@ public class WordTest {
         String[] files = dir.list();
         assert files != null;
         for (String file : files) {
-            CaseInfoSets marks = wordService.extract(dir.getAbsolutePath() + "\\" + file);
+          /*  CaseInfoSets marks = wordService.extract(dir.getAbsolutePath() + "\\" + file);
+            System.out.println(marks);*/
+        }
+    }
+
+    @Test
+    void testFenci() throws IOException {
+        String type = "adjudication";
+        File dir = new File(location + "txt\\" + type);
+
+        String[] files = dir.list();
+        assert files != null;
+        for (String file : files) {
+            CaseMarksArr marks = wordService.extract(dir.getAbsolutePath() + "\\" + file);
             System.out.println(marks);
         }
     }

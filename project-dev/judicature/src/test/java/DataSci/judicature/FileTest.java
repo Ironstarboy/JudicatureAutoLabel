@@ -60,7 +60,7 @@ public class FileTest {
 
     @Test
     void testTransfer() throws IOException {
-        fileUtil.transfer(location + "doc\\");
+        fileUtil.transfer(location + "txt\\");
     }
 
     @Test

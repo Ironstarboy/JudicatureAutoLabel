@@ -18,9 +18,9 @@ public class PythonServiceImpl implements PythonService {
 
 
     @Override
-    public Words recommend(File file) {
-        //todo 相似案例的推荐
-        return null;
+    public void recommend(String filePath) {
+        
+
     }
 
     /**
