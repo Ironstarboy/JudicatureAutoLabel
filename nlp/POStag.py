@@ -104,7 +104,7 @@ def saveTag():
             dic = {'fileName':file}
             dongCi,xingRongCi=hanlpPOS(readfile(tfidfDir + file))
             dic['动词'] = dongCi
-            dongCi, xingRongCi = shortPos(my_IO.readfile(originDir + file))
+            dongCi, xingRongCi = shortPos(my_IO.readFile(originDir + file))
             dic['形容词']=xingRongCi
             outFileName='{}/{}/{}'.format(outRootPath,type,file).replace('txt','json')
             outPath='{}/{}'.format(outRootPath,type)

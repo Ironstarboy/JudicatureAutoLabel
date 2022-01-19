@@ -1,5 +1,6 @@
 import os
-def readfile(filename):
+import CaseType
+def readFile(filename):
     content = ''
     encodings = ['utf-8', 'GBK', 'gb2312']
     index = 0
@@ -20,12 +21,13 @@ def readfile(filename):
         print('{}读取失败'.format(filename))
     return content
 
-def mkdir(dirPath):
+def mkDir(dirPath):
     if not os.path.exists(dirPath):
         os.makedirs(dirPath)
+    return dirPath
 
 # 获取文件列表，该目录下放着一同个类别的文档,数量为几百份。不进行递归获取
-def getFilelist(path):
+def getFileNameList(path):
     filelist = []
     files = os.listdir(path)
     for f in files:
@@ -38,3 +40,6 @@ def getFilelist(path):
 def saveFile(file_path, content:str):
     with open(file_path,'w',encoding='utf-8') as f:
         f.write(content)
+
+def getTypeNameList()->list:
+    return [type for type, member in CaseType.CaseType.__members__.items()]

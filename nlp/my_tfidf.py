@@ -25,7 +25,7 @@ def fenci(srcPath,srcFile, typePath):
     stop_words=stop_words+law_stop
 
     filename = srcPath + '\\' + srcFile
-    content=my_IO.readfile(filename)
+    content=my_IO.readFile(filename)
     # 对文档进行分词处理，采用默认模式
     seg_list = jieba.cut(content, cut_all=True)
 
@@ -46,7 +46,7 @@ def fenci(srcPath,srcFile, typePath):
 # 读取几百份份已分词好的文档，进行TF-IDF计算
 def Tfidf(type,srcPath):
     corpus = []  # 存取100份文档的分词结果,稀疏矩阵
-    fileList=my_IO.getFilelist(srcPath)
+    fileList=my_IO.getFileNameList(srcPath)
     names=[]
     for fname in fileList:
         fpath=srcPath+'\\'+fname
