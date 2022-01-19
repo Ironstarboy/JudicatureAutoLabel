@@ -3,24 +3,30 @@
 
 
 #%%
-import os;
-import numpy;
-import os.path;
-import codecs;
+import os
+import numpy
+import os.path
+import codecs
 import my_IO
+import pandas
+import re
+import jieba
+from sklearn.metrics import pairwise_distances
+from sklearn.feature_extraction.text import CountVectorizer
+
 #首先构建语料库
 filePaths = []
 fileContents = []
 for root, dirs, files in os.walk(
-    "../project-dev/judicature/src/main/resources/case/txt/judgment"
+    "../project-dev/judicature/src/main/resources/case/txt" # 也不不应该按类别推荐
 ):
     for name in files:
         filePath = os.path.join(root, name)
         filePaths.append(filePath)
-        fileContent = my_IO.readfile(filePath)
+        fileContent = my_IO.readFile(filePath)
         fileContents.append(fileContent)
 
-import pandas
+
 corpos = pandas.DataFrame({
     'filePath': filePaths,
     'fileContent': fileContents
@@ -28,11 +34,9 @@ corpos = pandas.DataFrame({
 
 
 # 接着进行分词处理，提取中文词
-import re
 
 zhPattern = re.compile(u'[\u4e00-\u9fa5]+')
 
-import jieba
 #分词
 segments = []
 filePaths = []
@@ -50,9 +54,8 @@ for index, row in corpos.iterrows():
 
 
 # 过滤停用词，用sklearn包生成词频矩阵
-from sklearn.feature_extraction.text import CountVectorizer
-#导入停用词
 
+#导入停用词
 #保留长度大于0的词，过滤停用词
 countVectorizer = CountVectorizer(
     stop_words= [w.strip() for w in open('哈工大停用词表.txt', encoding='utf-8').readlines()],
@@ -64,7 +67,7 @@ textVector = countVectorizer.fit_transform(
 )
 # 接着计算每篇文章之间的余弦相似度，用到的包是sklearn.metrics
 #计算每行之间的余弦距离
-from sklearn.metrics import pairwise_distances# 该方法用来计算余弦相似度
+# 该方法用来计算余弦相似度
 #余弦相似度计算得到每篇文章之间的余弦距离矩阵，数值越小代表越相似
 distance_matrix = pairwise_distances(
     textVector,
@@ -80,7 +83,7 @@ sort = numpy.argsort(distance_matrix, axis=1)[:,1:6]
 similarity5 = pandas.Index(filePaths)[sort].values
 #最后结果生成数据框格式
 similarityDF = pandas.DataFrame({
-    'filePath':corpos.filePath,
+    'currentCasePath':corpos.filePath,
     's1': similarity5[:, 0],
     's2': similarity5[:, 1],
     's3': similarity5[:, 2],

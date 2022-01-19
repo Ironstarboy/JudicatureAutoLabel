@@ -10,18 +10,6 @@ from sklearn import feature_extraction
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import CountVectorizer
 
-# 获取文件列表，该目录下放着一同个类别的文档,数量为几百份。不进行递归获取
-def getFilelist(path):
-    filelist = []
-    files = os.listdir(path)
-    for f in files:
-        if (f[0] == '.'):
-            pass
-        else:
-            filelist.append(f)
-    return filelist
-
-
 
 # 对一个类别的文档进行分词处理,分词结果存在segPath里面
 
@@ -37,7 +25,7 @@ def fenci(srcPath,srcFile, typePath):
     stop_words=stop_words+law_stop
 
     filename = srcPath + '\\' + srcFile
-    content=readfile(filename)
+    content=my_IO.readFile(filename)
     # 对文档进行分词处理，采用默认模式
     seg_list = jieba.cut(content, cut_all=True)
 
@@ -58,7 +46,7 @@ def fenci(srcPath,srcFile, typePath):
 # 读取几百份份已分词好的文档，进行TF-IDF计算
 def Tfidf(type,srcPath):
     corpus = []  # 存取100份文档的分词结果,稀疏矩阵
-    fileList=getFilelist(srcPath)
+    fileList=my_IO.getFileNameList(srcPath)
     names=[]
     for fname in fileList:
         fpath=srcPath+'\\'+fname
@@ -103,7 +91,7 @@ def seg():
         for fname in allfile:
             fenci(src_path,fname, typePath)
 if __name__ == "__main__":
-    # seg()
+    seg()
     for type,member in CaseType.CaseType.__members__.items():
         src_path = r'./segfile/' + type
         Tfidf(type,src_path)

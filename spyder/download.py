@@ -82,13 +82,13 @@ class wenshu:
         self.chrome.refresh()
         self.chrome.implicitly_wait(10)
         # 跳出验证码
-
+        self.downpage()
         # 翻页
-        i=0
-        while(i<5):
-            sleep(5)
-            self.next_page()
-            i+=1
+        # i=0
+        # while(i<5):
+        #     sleep(5)
+        #     self.next_page()
+        #     i+=1
         return self.chrome.get_cookies()
 
 
