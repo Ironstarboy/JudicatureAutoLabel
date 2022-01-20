@@ -20,7 +20,7 @@ import org.springframework.mock.web.MockHttpSession;
 
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.util.List;
+import java.util.*;
 
 @SpringBootTest
 public class WordTest {
@@ -186,6 +186,36 @@ public class WordTest {
         for (String file : files) {
             CaseMarksArr marks = wordService.extract(dir.getAbsolutePath() + "\\" + file);
             System.out.println(marks);
+        }
+    }
+
+    /**
+     * 贼垃圾
+     */
+    @Test
+    void testBiaozhu() throws IOException {
+        String type = "adjudication";
+        File dir = new File(location + "txt\\" + type);
+
+        String[] files = dir.list();
+        assert files != null;
+        BufferedReader br;
+        Set<String> arr;
+        for (String file : files) {
+            arr = new HashSet<>();
+            String encoding = fileUtil.getEncoding(new File(dir.getAbsolutePath() + "\\" + file));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(dir.getAbsolutePath() + "\\" + file), encoding));
+            String line;
+            StringBuilder sb = new StringBuilder();
+            while ((line = br.readLine()) != null)
+                sb.append(line);
+            br.close();
+            List<Term> seg = nlp.seg(sb.toString());
+            for (Term term : seg) {
+                if (term.nature.toString().equals("a"))
+                    arr.add(term.word);
+            }
+            System.out.println(arr);
         }
     }
 

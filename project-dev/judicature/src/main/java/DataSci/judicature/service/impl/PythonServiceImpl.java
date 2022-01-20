@@ -19,8 +19,18 @@ public class PythonServiceImpl implements PythonService {
 
     @Override
     public void recommend(String filePath) {
-        
+        String path = PATH + "nlp\\caseRecommend.py";
+        String[] args = {"python", path, filePath};
+        exec(args, "GBK");
 
+        //todo 把拿到的推荐用实体类封装后返回
+    }
+
+    @Override
+    public String sentence(String filePath) {
+
+        return null;
+        //todo 也没实现
     }
 
     /**

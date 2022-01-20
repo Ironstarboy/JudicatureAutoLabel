@@ -51,6 +51,8 @@
 				processData: false,
 				contentType: false,
 				success: function (data) {//后端给前端
+					alert("here")
+					console.log(data)
 					$('#demo7').val(data);//显示
 				}
 			});
@@ -62,7 +64,43 @@
 				alert(data)
 			}, "text")
 		}
+		function function2() {
+			$.ajax({
+				type: "POST",
+				url: '/download/info',
+				processData: false,
+				contentType: false,
+				success: function (data) {
+					var last = JSON.stringify(data)//js对象转json字符串
+					//设置localStorage，将json字符串传给分词页
+					window.localStorage.setItem('info',last);
+				}
+			});
+			document.getElementById("3cases").src = "基本信息展示页.html"
+		}
 
+		function spyder(){
+			var srt = $("#start_date").val();
+			var end = $("#end_date").val();
+			var num = $("#number").val();
+
+			if (num > 100){
+				alert("请联系我们升级为vip会员");
+			}else {
+				var len = num.length;
+				num = num.substring(0,len-1)+'0';
+
+				var msg = "start="+srt+"&end="+end+"&num="+num;
+				alert(msg)
+				var url = "/download/spyder?" + msg;
+				var a = document.createElement("a");
+				a.href = url;
+				a.click();
+			}
+
+
+
+		}
 		</script>
 	<style>
 		#demo7-textarea mark {
@@ -149,7 +187,7 @@
 													</span>
 												</a>
 												<ul class="sub-menu">
-													<li><a href="高频案件.html">高频案件</a></li>
+													<li><a href="自动摘要.html">高频案件</a></li>
 													<li><a href="法条推荐.html">法条推荐</a></li>
 												</ul>
 											</li>
@@ -195,32 +233,33 @@
 	<div class="col-lg-12" style="margin-bottom: -25px">
 		<form action="服务器地址" method="get"></form>
 		<p>
-			<button type="submit">爬取案件</button>
+			<button type="submit" onclick="spyder()">爬取案件</button>
 			&nbsp;开始日期：
-			<input type="date" name="start_date" id="start_date" value="2021-12-10" style="border: 1px solid #ddd">
+			<input type="date" name="start_date" id="start_date" value="2022-01-22" style="border: 1px solid #ddd">
 			&nbsp;结束日期：
-			<input type="date" name="end_date" id="end_date" value="2021-12-10" style="border: 1px solid #ddd">
+			<input type="date" name="end_date" id="end_date" value="2022-01-22" style="border: 1px solid #ddd">
+			&nbsp;文书数量：
+			<input type="number" step="10" min="0" max="100" name="number" id="number" value="0" style="border: 1px solid #ddd">
 			</form>
 		</p>
 
 		<p>
-			<input type="submit" value="上传" onclick="submit2();" />
-			<input id="file" type="file" />
+			<input type="submit" value="上传" onclick="submit2();"/>
+			<input id="file" type="file"/>
 
-			<input type="submit" value="提交" onclick="submitTXT()" />
+			<input type="submit" value="提交" onclick="submitTXT()"/>
 			<span class="popular-tag">
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span><a href="">摘要生成</a></span>
 				<span><a href="JavaScript:function2();">基本信息</a></span>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<span><a href="JavaScript:function3();">自动分词</a></span>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<span><a href="JavaScript:function4();">法律依据</a></span>
+				<span><a href="JavaScript:function4();">相似案件</a></span>
 			</span>
 
 
 		</p>
 	</div>
-	<div id="demo7-tools" style="margin-left: 75%;height: 3%;margin-bottom: 4px;">
+	<div id="demo7-tools" style="margin-left: 78.5%;height: 3%;margin-bottom: 4px;">
 		<a href="#" class="disable">隐藏高亮 </a> |
 		<a href="#" class="enable">显示高亮</a>
 	</div>
@@ -229,7 +268,8 @@
 		<div class="comments-form">
 			<div class="row">
 				<div class="col-lg-12">
-					<textarea name="message" id="demo7" style="width: 100%; border: 1px solid #ddd"></textarea>
+					<textarea name="message" id="demo7" style="width: 74%; border: 1px solid #ddd"></textarea>
+					<textarea name="message" id="demo6" style="width: 24%; border: 1px solid #ddd"></textarea>
 				</div>
 			</div>
 		</div>
@@ -259,7 +299,7 @@
 							<li>
 								<a href="文书分析.html">文书分析</a>
 								<a href="数据展示.html">数据展示</a>
-								<a href="高频案件.html">高频案件</a>
+								<a href="自动摘要.html">高频案件</a>
 								<a href="法条推荐.html">法条推荐</a>
 								<a href="联系我们.html">联系我们</a>
 							</li>
@@ -300,29 +340,11 @@
 				//设置localStorage，将json字符串传给分词页
 				window.localStorage.setItem('user',last);
 				data1 = data.gender.concat(data.criminals).concat(data.ethnicity).concat(data.birthplace).concat(data.accusation).concat(data.courts)
-				document.getElementById("3cases").src = "分词页.html"
 				test()
 				}
 			});
-
+			document.getElementById("3cases").src = "分词页.html"
 		}
-
-		function function2() {
-			$.ajax({
-				type: "POST",
-				url: '/download/info',
-				processData: false,
-				contentType: false,
-				success: function (data) {
-					var last = JSON.stringify(data)//js对象转json字符串
-					//设置localStorage，将json字符串传给分词页
-					window.localStorage.setItem('info',last);
-					document.getElementById("3cases").src = "基本信息展示页.html"
-				}
-			});
-
-		}
-
 		function appendScript(src, callback) {
 			var head = document.getElementsByTagName('head')[0];
 

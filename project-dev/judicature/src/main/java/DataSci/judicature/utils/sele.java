@@ -3,11 +3,33 @@ package DataSci.judicature.utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import java.util.HashMap;
 
 
 public class sele {
     public static void main(String[] args) throws InterruptedException {
-        WebDriver driver = new ChromeDriver();
+// 2.新的下载地址为桌面（可以弄成某个文件夹路径而不要直接弄成死的静态路径）
+        String downloadPath = "D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\project-dev\\judicature\\src\\main\\resources\\case\\zip\\";
+
+// 3.HashMap 中保存下载地址信息
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("download.default_directory", downloadPath);
+
+// 4.ChromeOptions 中设置下载路径信息，需要传入保存有下载路径的 HashMap
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.setExperimentalOption("prefs", hashMap);
+
+// 依据 ChromeOptions 来产生 DesiredCapbilities，这时 DesiredCapbilities 就也具备了下载路径的信息了
+        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+        desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+
+// 5.依据 ChromeOptions 产生驱动，此时的 driver 已经具备了新的下载路径的
+        WebDriver driver = new ChromeDriver(desiredCapabilities);
+
+
         try {
             driver.get("https://www.pkulaw.com/case/");
             Thread.sleep(2000);
@@ -27,7 +49,7 @@ public class sele {
 
             driver.findElement(By.id("advsearchbtn")).click();//点击搜索
 
-            Thread.sleep(3000);
+            Thread.sleep(5000);
 
             driver.findElement(By.partialLinkText("普通案例")).click();
             //driver.findElement(By.cssSelector("form#form > span > input")
@@ -48,7 +70,7 @@ public class sele {
                     Thread.sleep(2000);
                     driver.findElement(By.id("choose-all")).click();//全选
                 }
-                Thread.sleep(1000);
+                Thread.sleep(2000);
                 try {
                     driver.findElement(By.className("down-all")).click();//下载
                 } catch (Exception e) {
@@ -85,6 +107,7 @@ public class sele {
         } catch (InterruptedException e) {
             driver.close();
         }
+        Thread.sleep(3000);
         driver.close();
     }
 }

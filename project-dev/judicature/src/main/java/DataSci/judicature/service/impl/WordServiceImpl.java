@@ -710,7 +710,7 @@ public class WordServiceImpl implements WordService {
             line = line.replaceAll("\\)", "）");
             line = line.replaceAll("[\\s\\p{Zs}]", "");
 
-            if (line.length() == 0 || !line.contains("法院")) {
+            if (lineNo == 1 && (line.length() == 0 || !line.contains("法院"))) {
                 if (line.contains("裁定书") || line.contains("通知书")
                         || line.contains("判决书") || line.contains("调解书")
                         || line.contains("支付令") || line.contains("决定书")) {
@@ -728,6 +728,7 @@ public class WordServiceImpl implements WordService {
                         }
                     }
                 }
+                continue;
             }
 
 

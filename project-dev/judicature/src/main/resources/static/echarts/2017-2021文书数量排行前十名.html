@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态排序柱状图</title>
+
+    <script src="js/echarts.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="main" style="height: 600px;width: 100%;"></div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
+    <script>
+        var myChart = echarts.init(document.getElementById('main'));
+        var updateFrequency = 2500;
+        var month = [];
+        var startIndex = 0;
+        var newArr = [
+            {
+                cdate: "2017",
+                cname: "最高人民法院,北京市,天津市,河北省,山西省,内蒙古自治区,辽宁省,吉林省,黑龙江省,上海市,江苏省,浙江省,安徽省,福建省,江西省,山东省,河南省,湖北省,湖南省,广东省,广西壮族自治区,海南省,重庆市,四川省,贵州省,云南省,西藏自治区,陕西省,甘肃省,青海省,宁夏回族自治区,新疆维吾尔自治区,新疆维吾尔自治区高级人民法院生产建设兵团分院",
+                cut: "15824,433605,299481,670693,329466,454260,497115,416641,479013,504407,1009487,1239328,829716,711846,441620,979373,1300372,612280,660912,1038345,381705,71654,546266,1052930,234815,497967,12740,460529,216401,79707,143001,160345,29248"
+            },
+            {
+                cdate: "2018",
+                cname: "最高人民法院,北京市,天津市,河北省,山西省,内蒙古自治区,辽宁省,吉林省,黑龙江省,上海市,江苏省,浙江省,安徽省,福建省,江西省,山东省,河南省,湖北省,湖南省,广东省,广西壮族自治区,海南省,重庆市,四川省,贵州省,云南省,西藏自治区,陕西省,甘肃省,青海省,宁夏回族自治区,新疆维吾尔自治区,新疆维吾尔自治区高级人民法院生产建设兵团分院",
+                cut: "20665,816364,292217,896484,357769,467661,685419,424533,525060,501584,1109502,1398713,921922,668118,531523,1144181,1415889,709512,870847,1209359,418629,57425,609254,1133805,312342,620975,16470,548376,284158,84227,154623,151028,25530"
+            },
+            {
+                cdate: "2019",
+                cname: "最高人民法院,北京市,天津市,河北省,山西省,内蒙古自治区,辽宁省,吉林省,黑龙江省,上海市,江苏省,浙江省,安徽省,福建省,江西省,山东省,河南省,湖北省,湖南省,广东省,广西壮族自治区,海南省,重庆市,四川省,贵州省,云南省,西藏自治区,陕西省,甘肃省,青海省,宁夏回族自治区,新疆维吾尔自治区,新疆维吾尔自治区高级人民法院生产建设兵团分院",
+                cut: "26108,720412,305369,1025478,423329,517746,910700,508597,635872,693990,1393995,1372010,1121214,671274,615273,1626801,1772606,830856,1152494,1476205,532703,71530,648718,1284035,417011,655744,19867,696220,336478,99116,178339,259013,29820"
+            },
+            {
+                cdate: "2020",
+                cname: "最高人民法院,北京市,天津市,河北省,山西省,内蒙古自治区,辽宁省,吉林省,黑龙江省,上海市,江苏省,浙江省,安徽省,福建省,江西省,山东省,河南省,湖北省,湖南省,广东省,广西壮族自治区,海南省,重庆市,四川省,贵州省,云南省,西藏自治区,陕西省,甘肃省,青海省,宁夏回族自治区,新疆维吾尔自治区,新疆维吾尔自治区高级人民法院生产建设兵团分院",
+                cut: "27866,611175,298185,860937,400259,399325,1494020,442468,523155,583050,1325185,1315075,1136891,632574,604727,1846828,1801982,769359,1013399,1775107,628433,41192,608662,1265737,632237,633871,23679,693557,310533,110264,150779,371817,27946"
+            },
+            {
+                cdate: "2021",
+                cname: "最高人民法院,北京市,天津市,河北省,山西省,内蒙古自治区,辽宁省,吉林省,黑龙江省,上海市,江苏省,浙江省,安徽省,福建省,江西省,山东省,河南省,湖北省,湖南省,广东省,广西壮族自治区,海南省,重庆市,四川省,贵州省,云南省,西藏自治区,陕西省,甘肃省,青海省,宁夏回族自治区,新疆维吾尔自治区,新疆维吾尔自治区高级人民法院生产建设兵团分院",
+                cut: "8018,396013,212280,395084,205163,150906,1356367,431619,367750,385667,830001,521841,627392,305431,239536,1036694,989398,266874,849307,1003182,364490,10606,318806,830630,527575,240001,17620,599571,214189,80822,79523,316649,23639"
+            },
+        ]
+        for (var i = 0; i < newArr.length; ++i) {
+            if (month.length == 0) {
+                month.push(newArr[i])
+            }
+        }
+        var startMonth = month[startIndex].cdate;//cdate
+        var startName = month[startIndex].cname.split(',');//cname
+        var startCut = month[startIndex].cut.split(',');//cut
+        var option = {
+            title: {
+                text: "2017-2021文书数量排行前十名",
+            },
+            grid: {
+                top: 40,
+                bottom: 30,
+                left: 120,
+                right: 60
+            },
+            xAxis: {
+                max: 'dataMax',
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        type: 'dashed'
+                    }
+                }
+            },
+            dataset: {
+                source: newArr
+            },
+            yAxis: {
+                type: 'category',
+                inverse: true,
+                data: startName,
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        fontSize: 14
+                    },
+                    rich: {
+                        flag: {
+                            fontSize: 25,
+                            padding: 5
+                        }
+                    }
+                },
+                animationDuration: 0,
+                animationDurationUpdate: 150,
+                max: 10
+            },
+            series: [{
+                realtimeSort: true,
+                seriesLayoutBy: 'column',
+                type: 'bar',
+                label: {
+                    show: true,
+                    precision: 1,
+                    position: 'right',
+                    valueAnimation: true,
+                    fontFamily: 'monospace',
+                },
+                data: startCut
+            }],
+            animationDuration: 0,
+            animationDurationUpdate: 1000,
+            animationEasing: 'linear',
+            animationEasingUpdate: 'linear',
+            graphic: {
+                elements: [{
+                    type: 'text',
+                    right: 30,
+                    bottom: 60,
+                    style: {
+                        text: startMonth,
+                        font: '20px monospace',
+                        fill: 'rgba(96,96,96)'
+                    },
+                    z: 100
+                }]
+            }
+        };
+        myChart.setOption(option)
+        for (var i = startIndex; i < newArr.length - 1; ++i) {
+            (function (i) {
+                setTimeout(function () {
+                    updateYear(newArr[i + 1]);
+                }, (i + 1) * updateFrequency);
+            })(i);
+        }
+
+        function updateYear(year) {
+            option.yAxis.data = year.cname.split(',');
+            option.series[0].data = year.cut.split(',');
+            option.graphic.elements[0].style.text = year.cdate;
+            myChart.setOption(option);
+        }
+
+
+    </script>
+</body>
+
+</html>

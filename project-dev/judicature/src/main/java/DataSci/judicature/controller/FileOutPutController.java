@@ -4,6 +4,8 @@ import DataSci.judicature.domain.CaseInfoSets;
 import DataSci.judicature.domain.CaseMarks;
 import DataSci.judicature.domain.CaseMarksArr;
 import DataSci.judicature.domain.CaseMsg;
+import DataSci.judicature.service.PythonService;
+import DataSci.judicature.service.SpyderService;
 import DataSci.judicature.service.WordService;
 import DataSci.judicature.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 文件输出控制器
@@ -31,11 +35,17 @@ public class FileOutPutController {
     @Autowired
     private WordService wordService;
 
+    @Autowired
+    private PythonService pythonService;
+
+    @Autowired
+    private SpyderService spyderService;
+
     /**
      * @return 返回案件信息的json文件
      */
     @RequestMapping("/json")
-    public CaseMarks json(CaseMsg caseMsg, HttpServletResponse response,HttpSession session) {
+    public CaseMarks json(CaseMsg caseMsg, HttpServletResponse response, HttpSession session) {
         System.out.println("传进来了");
         System.out.println(caseMsg);
 
@@ -46,7 +56,7 @@ public class FileOutPutController {
         response.addHeader("Content-Disposition", "attachment;fileName=" + new String("标注.json".getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
 
         CaseMarks marks = wordService.toJSON(caseMsg);
-        session.setAttribute("cassMarks",marks);//加进session里
+        session.setAttribute("cassMarks", marks);//加进session里
         return marks;
     }
 
@@ -121,7 +131,7 @@ public class FileOutPutController {
         CaseMarksArr caseSet;
         try {//分词 返回的是set类型的实体类
             caseSet = wordService.extract(downloadFilePath, session);
-            session.setAttribute("caseSet",caseSet);//把分好词封装类的加入到session里
+            session.setAttribute("caseSet", caseSet);//把分好词封装类的加入到session里
         } catch (IOException e) {
             return null;
         }
@@ -151,7 +161,7 @@ public class FileOutPutController {
         CaseInfoSets caseInfo;
         try {//分词 返回的是set类型的实体类
             caseInfo = wordService.proInfo(downloadFilePath, session);
-            session.setAttribute("caseInfo",caseInfo);//把分好词封装类的加入到session里
+            session.setAttribute("caseInfo", caseInfo);//把分好词封装类的加入到session里
         } catch (IOException e) {
             return null;
         }
@@ -162,4 +172,76 @@ public class FileOutPutController {
         return caseInfo;
     }
 
+    /**
+     * 相似案例推荐
+     */
+    @RequestMapping("/recommend")
+    public String caseRecommend(HttpSession session) {
+        String downloadFilePath = (String) session.getAttribute("userUploadFile");
+        System.out.println(downloadFilePath);
+        String type = (String) session.getAttribute("category");
+        System.out.println(type);
+
+        if (downloadFilePath == null) {//还没上传文件，session里没有记录
+            return null;
+        }
+
+        pythonService.recommend(downloadFilePath);
+        //todo 返回值，读取类型都没确定好
+        return null;
+    }
+
+    /**
+     * 爬虫
+     */
+    @RequestMapping("/spyder")
+    public String spyder(String start, String end, int num, HttpSession session, HttpServletResponse response) {
+
+
+        response.reset();
+        response.setContentType("application/octet-stream");// 设置强制下载不打开
+        response.setCharacterEncoding("utf8");
+        response.addHeader("Content-Disposition", "attachment;fileName=" + new String("爬取文书.zip".getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
+
+
+        String tag = new Date().getTime() + "";
+        session.setAttribute("tag", tag);
+        String path;
+        try {
+            path = spyderService.spyder(start, end, num, tag);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.reset();
+            return "当前网络拥堵，请稍后再试!";
+        }
+
+        File file = new File(path);
+        if (file.exists()) {
+            try {
+                fileUtil.download(path, response);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * 自动摘要
+     */
+    @RequestMapping("/sentence")
+    public String sentence(HttpSession session) {
+        String downloadFilePath = (String) session.getAttribute("userUploadFile");
+        System.out.println(downloadFilePath);
+        String type = (String) session.getAttribute("category");
+        System.out.println(type);
+
+        if (downloadFilePath == null) {//还没上传文件，session里没有记录
+            return null;
+        }
+
+        String sentence = pythonService.sentence(downloadFilePath);
+        return sentence;
+    }
 }

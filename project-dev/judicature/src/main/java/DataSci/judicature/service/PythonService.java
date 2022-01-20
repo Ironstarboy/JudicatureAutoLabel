@@ -15,5 +15,7 @@ public interface PythonService {
      */
     void recommend(String filePath);
 
+    String sentence(String filePath);
+
 
 }

@@ -8,8 +8,8 @@
     <title>Document</title>
     <script src="js/main_page.js"></script>
 
-    <link href="css/bootstrap_966.css" rel='stylesheet' type='text/css'/>
-    <link href="css/style_966.css" rel='stylesheet' type='text/css'/>
+    <link href="css/bootstrap_966.css" rel='stylesheet' type='text/css' />
+    <link href="css/style_966.css" rel='stylesheet' type='text/css' />
     <script src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap_966.js"></script>
 
@@ -27,9 +27,7 @@
             init_accusation(obj.accusation)
             init_courts(obj.courts)
         }
-
         window.onload = getcookie
-
         function downloadtxt() {
             var url = "/download/txt";
             var a = document.createElement("a");
@@ -55,8 +53,6 @@
             a.click();
 
         }
-
-
     </script>
 </head>
 
@@ -67,8 +63,7 @@
             <!-- tabs -->
             <ul id="myTab" class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#criminals" id="criminals-tab" role="tab"
-                                                          data-toggle="tab" aria-controls="criminals"
-                                                          aria-expanded="true">当事人</a></li>
+                                                          data-toggle="tab" aria-controls="criminals" aria-expanded="true">当事人</a></li>
                 <li role="presentation"><a href="#gender" role="tab" id="gender-tab" data-toggle="tab"
                                            aria-controls="gender">性别</a></li>
                 <li role="presentation"><a href="#ethnicity" role="tab" id="ethnicity-tab" data-toggle="tab"
@@ -142,8 +137,6 @@
                                                                             style="width:70%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button
                             type="submit" onclick="downloadjson()">保存标注
                     </button>
-                    </p>
-
                     </p>
                 </div>
             </div>
