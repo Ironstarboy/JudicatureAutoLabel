@@ -1,7 +1,7 @@
 # https://blog.csdn.net/FontThrone/article/details/82792377
 from jieba import analyse
 import docx
-from nlp import doc2docx
+
 import jieba.posseg
 import os
 import csv
@@ -109,6 +109,6 @@ def saveTag():
             outFileName='{}/{}/{}'.format(outRootPath,type,file).replace('txt','json')
             outPath='{}/{}'.format(outRootPath,type)
             save_dic_as_json(outPath,outFileName,dic)
-    print('分词完成')
+    print('分词词性标注完成')
 if __name__=='__main__':
     saveTag()

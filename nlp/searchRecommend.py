@@ -2,6 +2,23 @@
 搜索内容实时推荐 文书标题
 其实也能根据文书内容推荐，看下计算速度吧
 '''
+import time
+from functools import wraps
+def func_timer(function):
+    '''
+    用装饰器实现函数计时
+    :param function: 需要计时的函数
+    :return: None
+    '''
+    @wraps(function)
+    def function_timer(*args, **kwargs):
+        print('[Function: {name} start...]'.format(name = function.__name__))
+        t0 = time.time()
+        result = function(*args, **kwargs)
+        t1 = time.time()
+        print('[Function: {name} finished, spent time: {time:.2f}s]'.format(name = function.__name__,time = t1 - t0))
+        return result
+    return function_timer
 
 # 对单一文书，进行分词，并去除停用词
 # 在my_tfidf里，用fenci() 和seg()已经存储好分好词的文档了
@@ -19,49 +36,77 @@ def tokenization(content):
     return result
 
 # 读取所有分词后的文件内容或者文件名，生成文本集
-import my_IO
+from my_package import my_IO
 import os
 from gensim import corpora, models, similarities
-
-
-def saveRawContent(fatherDir='segfile', varPath='caseNameContentDic.pkl'):
+my_IO.mkDir('searchRec')
+def saveFilePath(fatherDir='segfile', varPath='searchRec/filePath.pkl'):
     if not os.path.exists(varPath):
         filePaths, fileNames = my_IO.recusiveGetFilePathList(fatherDir)
-        fileName:list = [i.replace('.txt', '') for i in fileNames]
-        rawCotent:list=[filePath for filePath in filePaths]  # 可改成按照文章内容的的list
-        my_IO.dumpVar(rawCotent,varPath)
+        filePath:list=[filePath for filePath in filePaths]
+        my_IO.dumpVar(filePath,varPath)
 
-
-def loadRawText(varPath='caseNameContentDic.pkl'):
+# @func_timer
+def loadFilePath(varPath='searchRec/filePath.pkl'):
     if not os.path.exists(varPath):
-        saveRawContent()
+        saveFilePath()
+    return my_IO.loadVar(varPath)
+
+def saveSegContent(fatherDir='segfile', varPath='searchRec/fileContent.pkl'):
+    '''
+    fileContent 可以是文件名，也可以是文件内容
+    :param fatherDir:
+    :param varPath:
+    :return:
+    '''
+    if not os.path.exists(varPath):
+        filePaths, fileNames = my_IO.recusiveGetFilePathList(fatherDir)
+
+        # fileContent:list = [my_IO.readFile(filePath) for filePath in filePaths] # 文书内容,已经分词且去除停用词语了
+        # fileCleanName=[' '.join(tokenization(i.replace('.txt',''))) for i in fileNames] # 文件名
+        # fileContent=list(map(lambda x,y:x+y,fileContent,fileCleanName))
+        fileContent=[i.replace('.txt','') for i in fileNames]
+        my_IO.dumpVar(fileContent,varPath)
+
+def loadSegContent(varPath='searchRec/fileContent.pkl'):
+    if not os.path.exists(varPath):
+        saveSegContent()
+    return my_IO.loadVar(varPath)
+
+# @func_timer
+def loadContent(varPath='searchRec/fileContent.pkl'):
+    if not os.path.exists(varPath):
+        saveSegContent()
     return my_IO.loadVar(varPath)
 
 
-def saveCorpus(varPath='corpus.pkl'):
-    rawContent=loadRawText()
+def saveCorpus(varPath='searchRec/corpus.pkl'):
+    content=loadContent()
     if not os.path.exists(varPath):
         # 不存在就写
-        corpus = [tokenization(name) for name in rawContent]
+        corpus = [tokenization(name) for name in content]
+
         my_IO.dumpVar(corpus,varPath)
 
-def loadCorpus(varPath='corpus.pkl'):
+# @func_timer
+def loadCorpus(varPath='searchRec/corpus.pkl'):
     if not os.path.exists(varPath):
         saveCorpus(varPath)
     return my_IO.loadVar(varPath)
 
-def saveDictionary(varPath='dictionary.pkl'):
+def saveDictionary(varPath='searchRec/dictionary.pkl'):
     corpus=loadCorpus()
     if not os.path.exists(varPath):
         dictionary = corpora.Dictionary(corpus)
         my_IO.dumpVar(dictionary,varPath)
 
-def loadDictionary(varPath='dictionary.pkl'):
+# @func_timer
+def loadDictionary(varPath='searchRec/dictionary.pkl'):
     if not os.path.exists(varPath):
         saveDictionary(varPath)
     return my_IO.loadVar(varPath)
 
-def saveDocVec(varPath='doc_vectors.pkl'):
+def saveDocVec(varPath='searchRec/doc_vectors.pkl'):
     dictionary=loadDictionary()
     corpus = loadCorpus()
     # 提取词典特征数
@@ -71,18 +116,20 @@ def saveDocVec(varPath='doc_vectors.pkl'):
         doc_vectors = [dictionary.doc2bow(text) for text in corpus]
         my_IO.dumpVar(doc_vectors,varPath)
 
-def loadDocVec(varPath='doc_vectors.pkl'):
+# @func_timer
+def loadDocVec(varPath='searchRec/doc_vectors.pkl'):
     if not os.path.exists(varPath):
         saveDocVec(varPath)
     return my_IO.loadVar(varPath)
 
+# @func_timer
 def textSet(keyword):
     doc_vectors = loadDocVec()
     dictionary = loadDictionary()
     # corpus = loadCorpus()
     kw_vector = dictionary.doc2bow(jieba.lcut(keyword))
     feature_cnt = len(dictionary.token2id)
-    fileNames=loadRawText()
+    fileNames=loadFilePath()
     # 用向量形式的语料库训练tf-idf
     tfidf = models.TfidfModel(doc_vectors)  # TF-IDF模型对语料库建模
     # 相似度计算
@@ -103,9 +150,15 @@ def textSet(keyword):
             count+=1
         if count==5:
             break
-while 1:
-    s = input()
-    if s=='\n':
-        break
 
-    textSet(s)
+import sys
+if __name__=='__main__':
+    print(sys.path)  ## 查看环境变量
+    sys.path.append(r"my_IO.py")
+    a = []
+
+    for i in range(1, len(sys.argv)):
+        a.append(sys.argv[i])
+
+    textSet(a[0])
+    print("结束")
