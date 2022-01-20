@@ -2,3 +2,5 @@
 import my_IO
 my_IO.mkDir('caseRec')
 
+# 分词
+# 已经分好了，存在segfile里面

@@ -36,7 +36,7 @@ def tokenization(content):
     return result
 
 # 读取所有分词后的文件内容或者文件名，生成文本集
-import my_IO
+from my_package import my_IO
 import os
 from gensim import corpora, models, similarities
 my_IO.mkDir('searchRec')
@@ -153,6 +153,8 @@ def textSet(keyword):
 
 import sys
 if __name__=='__main__':
+    print(sys.path)  ## 查看环境变量
+    sys.path.append(r"my_IO.py")
     a = []
 
     for i in range(1, len(sys.argv)):
