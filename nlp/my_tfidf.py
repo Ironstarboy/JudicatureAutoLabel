@@ -35,9 +35,8 @@ def fenci(srcPath,srcFile, typePath):
             result.append(seg)
 
     # 将分词后的结果用空格隔开，保存至本地。比如"我来到北京清华大学"，分词结果写入为："我 来到 北京 清华大学"
-    f = open(typePath+'\\'+ srcFile, "w+")
-    f.write(' '.join(result))
-    f.close()
+    my_IO.saveFile(typePath+'\\'+ srcFile,' '.join(result))
+
 
 
 
@@ -49,9 +48,7 @@ def Tfidf(type,srcPath):
     for fname in fileList:
         fpath=srcPath+'\\'+fname
         names.append(fname)
-        f = open(fpath, 'r+')
-        content = f.read() # TODO 没有过滤停用词
-        f.close()
+        content=my_IO.readFile(fpath)# TODO 没有过滤停用词
         corpus.append(content)
 
     vectorizer = CountVectorizer()
@@ -83,7 +80,7 @@ def seg():
         typePath = 'segfile' + '\\' + type
         if not os.path.exists(typePath):
             os.mkdir(typePath)
-        allfile = my_IO.getFileList(src_path)
+        allfile = my_IO.getFileNameList(src_path)
         for fname in allfile:
             fenci(src_path,fname, typePath)
 

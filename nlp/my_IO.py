@@ -45,7 +45,7 @@ def recusiveGetFilePathList(dir):
     for root, dirs, files in os.walk(dir):
         for file in files:
             res.append(os.path.join(root, file))
-            fileNames.extend(files)
+        fileNames.extend(files)
     return res,fileNames
 
 
