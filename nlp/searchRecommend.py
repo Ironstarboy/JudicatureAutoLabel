@@ -37,99 +37,112 @@ def tokenization(content):
 
 # 读取所有分词后的文件内容或者文件名，生成文本集
 from my_package import my_IO
+from varSavePath import Vars
 import os
 from gensim import corpora, models, similarities
-my_IO.mkDir('searchRec')
-def saveFilePath(fatherDir='segfile', varPath='searchRec/filePath.pkl'):
-    if not os.path.exists(varPath):
+
+rootPath='searchRec'
+my_IO.mkDir(rootPath)
+def saveFilePath(rootPath,fatherDir='segfile'):
+    outFilePath=rootPath+'/'+Vars.filePath.value
+    if not os.path.exists(outFilePath):
         filePaths, fileNames = my_IO.recusiveGetFilePathList(fatherDir)
         filePath:list=[filePath for filePath in filePaths]
-        my_IO.dumpVar(filePath,varPath)
+        my_IO.dumpVar(fileNames, outFilePath)
 
 # @func_timer
-def loadFilePath(varPath='searchRec/filePath.pkl'):
-    if not os.path.exists(varPath):
-        saveFilePath()
-    return my_IO.loadVar(varPath)
+def loadFilePath(rootPath='searchRec'):
+    filePath=rootPath+'/'+Vars.filePath.value
+    if not os.path.exists(filePath):
+        saveFilePath(rootPath)
+    return my_IO.loadVar(filePath)
+import globarVar
 
-def saveSegContent(fatherDir='segfile', varPath='searchRec/fileContent.pkl'):
+def saveSegContent(rootPath='searchRec',fatherDir='segfile'):
+    # 设计的时候没考虑到这边个函数会重写，所以没写成对象
     '''
     fileContent 可以是文件名，也可以是文件内容
     :param fatherDir:
-    :param varPath:
+    :param contentPath:
     :return:
     '''
-    if not os.path.exists(varPath):
+    contentPath=rootPath+'/'+Vars.fileContent.value
+    if not os.path.exists(contentPath):
         filePaths, fileNames = my_IO.recusiveGetFilePathList(fatherDir)
-
-        # fileContent:list = [my_IO.readFile(filePath) for filePath in filePaths] # 文书内容,已经分词且去除停用词语了
+        a=globarVar.get('overWrite')
+        if a:
+            fileContent:list = [my_IO.readFile(filePath) for filePath in filePaths] # 文书内容,已经分词且去除停用词语了 不分类别全部作为语料
         # fileCleanName=[' '.join(tokenization(i.replace('.txt',''))) for i in fileNames] # 文件名
         # fileContent=list(map(lambda x,y:x+y,fileContent,fileCleanName))
-        fileContent=[i.replace('.txt','') for i in fileNames]
-        my_IO.dumpVar(fileContent,varPath)
+        else:
+            fileContent=[i.replace('.txt','') for i in fileNames]
+        my_IO.dumpVar(fileContent, contentPath)
 
-def loadSegContent(varPath='searchRec/fileContent.pkl'):
-    if not os.path.exists(varPath):
-        saveSegContent()
-    return my_IO.loadVar(varPath)
+
 
 # @func_timer
-def loadContent(varPath='searchRec/fileContent.pkl'):
-    if not os.path.exists(varPath):
-        saveSegContent()
-    return my_IO.loadVar(varPath)
+def loadContent(rootPath='searchRec'):
+    contentPath = rootPath + '/' + Vars.fileContent.value
+    if not os.path.exists(contentPath):
+        saveSegContent(rootPath)
+    return my_IO.loadVar(contentPath)
 
 
-def saveCorpus(varPath='searchRec/corpus.pkl'):
-    content=loadContent()
-    if not os.path.exists(varPath):
+def saveCorpus(rootPath='searchRec'):
+    corpusPath = rootPath + '/' + Vars.corpus.value
+    content=loadContent(rootPath)
+    if not os.path.exists(corpusPath):
         # 不存在就写
         corpus = [tokenization(name) for name in content]
 
-        my_IO.dumpVar(corpus,varPath)
+        my_IO.dumpVar(corpus, corpusPath)
 
 # @func_timer
-def loadCorpus(varPath='searchRec/corpus.pkl'):
-    if not os.path.exists(varPath):
-        saveCorpus(varPath)
-    return my_IO.loadVar(varPath)
+def loadCorpus(rootPath='searchRec'):
+    corpusPath = rootPath + '/' + Vars.corpus.value
+    if not os.path.exists(corpusPath):
+        saveCorpus(rootPath)
+    return my_IO.loadVar(corpusPath)
 
-def saveDictionary(varPath='searchRec/dictionary.pkl'):
-    corpus=loadCorpus()
-    if not os.path.exists(varPath):
+def saveDictionary(rootPath='searchRec',corpus=loadCorpus(rootPath)):
+    dicPath = rootPath+'/'+Vars.dic.value
+    corpus=loadCorpus(rootPath)
+    if not os.path.exists(dicPath):
         dictionary = corpora.Dictionary(corpus)
-        my_IO.dumpVar(dictionary,varPath)
+        my_IO.dumpVar(dictionary, dicPath)
 
 # @func_timer
-def loadDictionary(varPath='searchRec/dictionary.pkl'):
-    if not os.path.exists(varPath):
-        saveDictionary(varPath)
-    return my_IO.loadVar(varPath)
+def loadDictionary(rootPath='searchRec'):
+    dicPath=rootPath+'/'+Vars.dic.value
+    if not os.path.exists(dicPath):
+        saveDictionary(rootPath)
+    return my_IO.loadVar(dicPath)
 
-def saveDocVec(varPath='searchRec/doc_vectors.pkl'):
-    dictionary=loadDictionary()
-    corpus = loadCorpus()
+def saveDocVec(rootPath='searchRec'):
+    docVecPath =rootPath +'/'+Vars.docVectors.value
+    dictionary=loadDictionary(rootPath)
+    corpus = loadCorpus(rootPath)
     # 提取词典特征数
     feature_cnt = len(dictionary.token2id)
     # 基于语料库，生成词向量
-    if not os.path.exists(varPath):
+    if not os.path.exists(docVecPath):
         doc_vectors = [dictionary.doc2bow(text) for text in corpus]
-        my_IO.dumpVar(doc_vectors,varPath)
+        my_IO.dumpVar(doc_vectors, docVecPath)
 
 # @func_timer
-def loadDocVec(varPath='searchRec/doc_vectors.pkl'):
-    if not os.path.exists(varPath):
-        saveDocVec(varPath)
-    return my_IO.loadVar(varPath)
+def loadDocVec(rootPath='searchRec'):
+    docVecPath=rootPath+'/'+Vars.docVectors.value
+    if not os.path.exists(docVecPath):
+        saveDocVec(rootPath)
+    return my_IO.loadVar(docVecPath)
 
 # @func_timer
-def textSet(keyword):
-    doc_vectors = loadDocVec()
-    dictionary = loadDictionary()
-    # corpus = loadCorpus()
+def textSet(keyword,rootPath='searchRec'):
+    doc_vectors = loadDocVec(rootPath)
+    dictionary = loadDictionary(rootPath)
     kw_vector = dictionary.doc2bow(jieba.lcut(keyword))
     feature_cnt = len(dictionary.token2id)
-    fileNames=loadFilePath()
+    fileNames=loadFilePath(rootPath)
     # 用向量形式的语料库训练tf-idf
     tfidf = models.TfidfModel(doc_vectors)  # TF-IDF模型对语料库建模
     # 相似度计算

@@ -6,3 +6,4 @@ class CaseType(Enum):
     mediate='mediate'
     notification='notification'
     order='order'
+

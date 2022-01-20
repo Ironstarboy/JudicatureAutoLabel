@@ -1,5 +1,7 @@
 import os
 import CaseType
+import varSavePath
+
 def readFile(filename):
     content = ''
     encodings = ['utf-8', 'GBK', 'gb2312']
@@ -58,6 +60,7 @@ def saveFile(filePath, content:str, mode='w'):
 def getTypeNameList()->list:
     return [type for type, member in CaseType.CaseType.__members__.items()]
 
+
 import pickle
 def dumpVar(var,filePath):
     if not os.path.exists(filePath):
@@ -68,4 +71,10 @@ def dumpVar(var,filePath):
 def loadVar(filePath):
     with open(filePath,'rb') as f:
         res=pickle.load(f)
+    return res
+
+def readBits(filePath):
+    res=None
+    with open(filePath,'rb') as f:
+        res=f.read()
     return res
