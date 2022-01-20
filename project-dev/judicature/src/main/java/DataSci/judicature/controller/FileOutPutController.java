@@ -244,4 +244,13 @@ public class FileOutPutController {
         String sentence = pythonService.sentence(downloadFilePath);
         return sentence;
     }
+
+    /**
+     * 搜索推荐实现
+     */
+    @RequestMapping("/search")
+    public String search(String str,HttpSession session) {
+         //return "文件名1,文件名2,文件名3";
+        return pythonService.search(str);
+    }
 }

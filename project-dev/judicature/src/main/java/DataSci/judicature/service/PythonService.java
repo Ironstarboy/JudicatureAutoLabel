@@ -17,5 +17,7 @@ public interface PythonService {
 
     String sentence(String filePath);
 
+    String search(String str);
+
 
 }

@@ -40,10 +40,12 @@ public class SpyderServiceImpl implements SpyderService {
         String et = timeTrans(end);
 
 
-        String downloadPath = location + "zip\\" + tag + "\\download\\";
+        //TODO 做测试
+       /* String downloadPath = location + "zip\\" + tag + "\\download\\";
         File f = new File(downloadPath);
         f.getParentFile().mkdir();
-        f.mkdir();
+        f.mkdir();*/
+        String downloadPath = location + "zip\\";
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("download.default_directory", downloadPath);
@@ -150,8 +152,8 @@ public class SpyderServiceImpl implements SpyderService {
 
     //todo 时间转换
     public String timeTrans(String time) {
-        String newTime = "";
-        return time;
+        String newTime = time.replaceAll("-",".");
+        return newTime;
     }
 
     //解压和打包

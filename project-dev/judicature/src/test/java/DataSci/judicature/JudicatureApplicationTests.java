@@ -1,6 +1,7 @@
 package DataSci.judicature;
 
 import DataSci.judicature.service.FileService;
+import DataSci.judicature.service.PythonService;
 import DataSci.judicature.service.SpyderService;
 import DataSci.judicature.service.impl.FileServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,9 @@ class JudicatureApplicationTests {
 
     @Autowired
     private SpyderService spyderService;
+
+    @Autowired
+    private PythonService pythonService;
 
     @Test
     void contextLoads() {
@@ -73,5 +77,7 @@ class JudicatureApplicationTests {
 
         spyderService.spyder(srt,end, 10,tag);
     }
+
+
 
 }
