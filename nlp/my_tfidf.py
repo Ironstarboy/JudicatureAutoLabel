@@ -11,15 +11,13 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import CountVectorizer
 
 
-# 对一个类别的文档进行分词处理,分词结果存在segPath里面
-
+# 对一个类别的单一文档进行分词处理,分词结果存在segPath里面
 def fenci(srcPath,srcFile, typePath):
     '''
     :param srcFile: 要读取的判断文书
     :param typePath: 文书六大类别目录
     :return:
     '''
-
     stop_words = [w.strip() for w in open('哈工大停用词表.txt', encoding='utf-8').readlines()]
     law_stop=['有限公司','有限','公司','诉讼','最高']
     stop_words=stop_words+law_stop
@@ -77,19 +75,18 @@ def Tfidf(type,srcPath):
         f.write(','.join([i[0] for i in out]))
         f.close()
 
-
+# 对所有文档都分词一遍
 def seg():
-
     for type,member in CaseType.CaseType.__members__.items():
-
         src_path = r'../project-dev/judicature/src/main/resources/case/txt/' + type
         # 保存分词结果的目录
         typePath = 'segfile' + '\\' + type
         if not os.path.exists(typePath):
             os.mkdir(typePath)
-        allfile = getFilelist(src_path)
+        allfile = my_IO.getFileList(src_path)
         for fname in allfile:
             fenci(src_path,fname, typePath)
+
 if __name__ == "__main__":
     seg()
     for type,member in CaseType.CaseType.__members__.items():

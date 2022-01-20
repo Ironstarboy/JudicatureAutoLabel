@@ -23,3 +23,7 @@ autoAbstract文件，不分类别读取所有文章，直接运行，摘要目�
 基于余弦相似度。
 
 运行caseRecommedation.py，读取所有文章作为语料库，输出''相似文章.xlsx"，表格单元存着文书路径
+
+# 实时搜索建议
+
+searchRecommend.py
