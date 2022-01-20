@@ -50,8 +50,9 @@ def recusiveGetFilePathList(dir):
 
 
 
-def saveFile(file_path, content:str,mode='w'):
-    with open(file_path,mode,encoding='utf-8') as f:
+def saveFile(filePath, content:str, mode='w'):
+
+    with open(filePath, mode,encoding='utf-8') as f:
         f.write(content)
 
 def getTypeNameList()->list:

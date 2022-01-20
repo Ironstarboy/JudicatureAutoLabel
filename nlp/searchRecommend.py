@@ -39,19 +39,20 @@ def tokenization(content):
 import my_IO
 import os
 from gensim import corpora, models, similarities
-def saveFilePath(fatherDir='segfile', varPath='filePath.pkl'):
+my_IO.mkDir('searchRec')
+def saveFilePath(fatherDir='segfile', varPath='searchRec/filePath.pkl'):
     if not os.path.exists(varPath):
         filePaths, fileNames = my_IO.recusiveGetFilePathList(fatherDir)
         filePath:list=[filePath for filePath in filePaths]
         my_IO.dumpVar(filePath,varPath)
 
 # @func_timer
-def loadFilePath(varPath='filePath.pkl'):
+def loadFilePath(varPath='searchRec/filePath.pkl'):
     if not os.path.exists(varPath):
         saveFilePath()
     return my_IO.loadVar(varPath)
 
-def saveSegContent(fatherDir='segfile', varPath='fileContent.pkl'):
+def saveSegContent(fatherDir='segfile', varPath='searchRec/fileContent.pkl'):
     '''
     fileContent 可以是文件名，也可以是文件内容
     :param fatherDir:
@@ -67,19 +68,19 @@ def saveSegContent(fatherDir='segfile', varPath='fileContent.pkl'):
         fileContent=[i.replace('.txt','') for i in fileNames]
         my_IO.dumpVar(fileContent,varPath)
 
-def loadSegContent(varPath='fileContent.pkl'):
+def loadSegContent(varPath='searchRec/fileContent.pkl'):
     if not os.path.exists(varPath):
         saveSegContent()
     return my_IO.loadVar(varPath)
 
 # @func_timer
-def loadContent(varPath='fileContent.pkl'):
+def loadContent(varPath='searchRec/fileContent.pkl'):
     if not os.path.exists(varPath):
         saveSegContent()
     return my_IO.loadVar(varPath)
 
 
-def saveCorpus(varPath='corpus.pkl'):
+def saveCorpus(varPath='searchRec/corpus.pkl'):
     content=loadContent()
     if not os.path.exists(varPath):
         # 不存在就写
@@ -88,24 +89,24 @@ def saveCorpus(varPath='corpus.pkl'):
         my_IO.dumpVar(corpus,varPath)
 
 # @func_timer
-def loadCorpus(varPath='corpus.pkl'):
+def loadCorpus(varPath='searchRec/corpus.pkl'):
     if not os.path.exists(varPath):
         saveCorpus(varPath)
     return my_IO.loadVar(varPath)
 
-def saveDictionary(varPath='dictionary.pkl'):
+def saveDictionary(varPath='searchRec/dictionary.pkl'):
     corpus=loadCorpus()
     if not os.path.exists(varPath):
         dictionary = corpora.Dictionary(corpus)
         my_IO.dumpVar(dictionary,varPath)
 
 # @func_timer
-def loadDictionary(varPath='dictionary.pkl'):
+def loadDictionary(varPath='searchRec/dictionary.pkl'):
     if not os.path.exists(varPath):
         saveDictionary(varPath)
     return my_IO.loadVar(varPath)
 
-def saveDocVec(varPath='doc_vectors.pkl'):
+def saveDocVec(varPath='searchRec/doc_vectors.pkl'):
     dictionary=loadDictionary()
     corpus = loadCorpus()
     # 提取词典特征数
@@ -116,12 +117,12 @@ def saveDocVec(varPath='doc_vectors.pkl'):
         my_IO.dumpVar(doc_vectors,varPath)
 
 # @func_timer
-def loadDocVec(varPath='doc_vectors.pkl'):
+def loadDocVec(varPath='searchRec/doc_vectors.pkl'):
     if not os.path.exists(varPath):
         saveDocVec(varPath)
     return my_IO.loadVar(varPath)
 
-@func_timer
+# @func_timer
 def textSet(keyword):
     doc_vectors = loadDocVec()
     dictionary = loadDictionary()
@@ -149,9 +150,13 @@ def textSet(keyword):
             count+=1
         if count==5:
             break
-while 1:
-    s = input()
-    if s=='q':
-        break
 
-    textSet(s)
+import sys
+if __name__=='__main__':
+    a = []
+
+    for i in range(1, len(sys.argv)):
+        a.append(sys.argv[i])
+
+    textSet(a[0])
+    print("结束")
