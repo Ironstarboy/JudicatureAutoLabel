@@ -37,6 +37,8 @@ public class PythonServiceImpl implements PythonService {
 
     /**
      * 搜索推荐
+     * 每键入一个字发一个ajax
+     * 废弃
      */
     @Override
     public String search(String str) {

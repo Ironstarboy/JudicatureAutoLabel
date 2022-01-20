@@ -87,6 +87,7 @@ public class FileInputController {
 
         if (flag) {
             // return "上传成功！";
+            session.setAttribute("static",false);//设为动态资源
             request.getRequestDispatcher("/download/view").forward(request, response);//转发
         } else
             return "上传失败！";
@@ -129,6 +130,7 @@ public class FileInputController {
         session.setAttribute("format", "txt");
         session.setAttribute("userUploadFile", f.getAbsolutePath());
         session.setAttribute("category", "else\\");
+        session.setAttribute("static",false);//设为动态资源
 
         boolean success = fileService.transferTXT(session, true);
 

@@ -198,17 +198,34 @@ public class FileUtil {
     /**
      * 文件展示 和文件下载不同点就是要展示题目
      */
-    public void show(String filename, HttpServletResponse res, String name, String format) throws IOException {
+    public void show(String filename, HttpServletResponse res, String name) throws IOException {
         // 发送给客户端的数据
         res.setCharacterEncoding("UTF-8");
         PrintWriter writer = res.getWriter();
         writer.write(name + System.lineSeparator());
 
         BufferedReader br;
-        if ("doc".equals(format))
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(filename), "GBK"));
-        else
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(filename), StandardCharsets.UTF_8));
+        String encoding = getEncoding(new File(filename));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(filename), encoding));
+
+        String line;
+        while ((line = br.readLine()) != null) {
+            System.out.println(new String(line.getBytes(StandardCharsets.UTF_8)));
+            writer.write(new String(line.getBytes(StandardCharsets.UTF_8)) + System.lineSeparator());
+            writer.flush();
+        }
+        writer.close();
+        br.close();
+    }
+
+    public void showWithoutTitle(String filename, HttpServletResponse res) throws IOException {
+        // 发送给客户端的数据
+        res.setCharacterEncoding("UTF-8");
+        PrintWriter writer = res.getWriter();
+
+        BufferedReader br;
+        String encoding = getEncoding(new File(filename));
+        br = new BufferedReader(new InputStreamReader(new FileInputStream(filename), encoding));
 
         String line;
         while ((line = br.readLine()) != null) {
@@ -218,6 +235,7 @@ public class FileUtil {
         writer.close();
         br.close();
     }
+
 
     public void transfer(String fileName, String path) throws IOException {
         File file = new File(fileName);

@@ -11,7 +11,7 @@ public class test {
 
         BufferedReader b = new BufferedReader(new InputStreamReader(System.in));
         String line;
-        Process proc = Runtime.getRuntime().exec("python searchRecommend.py 合同", null, new File("D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\nlp\\"));
+        Process proc = Runtime.getRuntime().exec("python searchRecommend.py", null, new File("D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\nlp\\"));
         BufferedWriter br = new BufferedWriter(new OutputStreamWriter(proc.getOutputStream(), "GBK"));
         BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream(), "GBK"));
 
