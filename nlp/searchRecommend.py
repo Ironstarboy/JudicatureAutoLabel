@@ -144,21 +144,17 @@ def textSet(keyword):
     fileSimDic:dict=dict(zip(fileNames,sim))
     fileSimDic=sorted(fileSimDic.items(),key=lambda x:x[1],reverse=True) # 从大到小排
     count=0
+    caseRecommendReslut=[]
     for k,v in fileSimDic:
         if v>0:
-            print(k,v)
+            caseRecommendReslut.append(k)
+            # print(k,v)
             count+=1
         if count==5:
             break
+    return caseRecommendReslut
 
 import sys
 if __name__=='__main__':
-    print(sys.path)  ## 查看环境变量
-    sys.path.append(r"my_IO.py")
-    a = []
-
-    for i in range(1, len(sys.argv)):
-        a.append(sys.argv[i])
-
-    textSet(a[0])
-    print("结束")
+    res=textSet('公司')
+    print('done')
