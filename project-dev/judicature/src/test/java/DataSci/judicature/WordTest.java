@@ -261,4 +261,39 @@ public class WordTest {
         br.close();
     }
 
+    @Test
+    void clear() throws IOException {
+        File f = new File(location + "txt\\");
+        File[] dir = f.listFiles();
+        assert dir != null;
+        BufferedReader br;
+        BufferedWriter bw;
+        StringBuffer sb ;
+        String line;
+        for (File file : dir) {
+            File[] sons = file.listFiles();
+            assert sons != null;
+            for (File son : sons) {
+                if (son.getName().matches("(.*)FBM-CL(.*)")){
+                    br = new BufferedReader(new FileReader(son));
+                    sb=new StringBuffer();
+                    int i = 1 ;
+                    while ((line = br.readLine()) != null) {
+                        if (i>3){
+                            sb.append(line).append(System.lineSeparator());
+                        }
+
+                        i++;
+                    }
+                    br.close();
+
+                    bw = new BufferedWriter(new FileWriter(son));
+                    bw.write(sb.toString());
+                    bw.flush();
+                    bw.close();
+                }
+            }
+        }
+    }
+
 }

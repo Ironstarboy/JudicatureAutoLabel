@@ -42,9 +42,10 @@ public class PythonServiceImpl implements PythonService {
     public String search(String str) {
         //TODO 这里先把内容写死
         //String path = PATH + "nlp\\searchRecommend.py";
-        String path = "D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\" + "nlp\\searchRecommend.py";
-        String[] args = {"python", path, str};
-        List<String> arr = execWithReturn(args, "GBK");
+        //D:\java\DataSci\lqf\JudicatureAutoLabel\nlp\searchRecommend.py
+        String path = /*"D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\" + "nlp\\*/"searchRecommend.py";
+        String[] args = {"cmd d: && cd D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\nlp\\ && python", path, str};
+        List<String> arr = execWithReturn("python searchRecommend.py " + str, "GBK");
         System.out.println(arr);
         String res = "";
         String s;
@@ -135,4 +136,40 @@ public class PythonServiceImpl implements PythonService {
 
         return arr;
     }
+
+    private List<String> execWithReturn(String s, String charset) {
+        List<String> arr = new ArrayList<>();
+        Process proc;
+        if (charset == null || charset.length() == 0)
+            charset = "GBK";
+        try {
+            proc = Runtime.getRuntime().exec(s, null, new File("D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\nlp\\"));
+            //proc = Runtime.getRuntime().exec(s);// 执行py文件
+            //用输入输出流来截取结果
+            BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream(), charset));
+            //获取错误流
+            BufferedReader err = new BufferedReader(new InputStreamReader(proc.getErrorStream(), charset));
+
+            String line;
+            while ((line = in.readLine()) != null) {
+                System.out.println(line);
+                arr.add(line);
+            }
+            String error;
+            while ((error = err.readLine()) != null) {
+                System.err.println(error);
+            }
+
+            in.close();
+            err.close();
+            proc.waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            System.out.println("IO异常");
+        }
+
+        return arr;
+    }
+
+
 }

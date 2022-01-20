@@ -156,5 +156,11 @@ def textSet(keyword):
 
 import sys
 if __name__=='__main__':
-    res=textSet('公司')
-    print('done')
+    while 1:
+        s = input()
+        if s == "q":
+            break
+        res=textSet(s)
+        print(res)
+
+    print("我结束了")
