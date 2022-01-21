@@ -10,7 +10,7 @@ import json
 from pyhanlp import *
 import pandas as pd
 import re
-import my_IO
+from my_package import my_IO
 def readfile(file):
     text=''
     with open(file,encoding='utf-8') as f:
@@ -80,8 +80,7 @@ def save_dic_as_json(path,fileName, dic):
     # 先将字典对象转化为可写入文本的字符串
     dic = json.dumps(dic,ensure_ascii=False)
     dic=json.loads(dic)
-    if not os.path.exists(path):
-        os.mkdir(path)
+    my_IO.mkDir(path)
     try:
         with open(fileName, "w", encoding='utf-8') as f:
             json.dump(dic, f, indent=4, ensure_ascii=False)
@@ -110,5 +109,25 @@ def saveTag():
             outPath='{}/{}'.format(outRootPath,type)
             save_dic_as_json(outPath,outFileName,dic)
     print('分词词性标注完成')
+
+def sigleFilePos(userCasePath):
+
+    fileContent=my_IO.readFile(userCasePath)
+    dic = {'fileName': userCasePath}
+    dongCi, xingRongCi = hanlpPOS(fileContent)
+    dic['动词'] = dongCi
+    dic['形容词'] = xingRongCi
+
+    outPath = '词性标注/用户上传'
+    outFileName=userCasePath[userCasePath.rindex('/'):]
+    outFileName = '{}/{}'.format(outPath,outFileName)
+    save_dic_as_json(outPath, outFileName, dic)
+
+
 if __name__=='__main__':
-    saveTag()
+    # 下面是给本地已有的百份文档进行标注的函数
+    # saveTag()
+
+    # 根据用户上传内容，进行词性标注
+    userCasePath='../project-dev/judicature/src/main/resources/case/txt/adjudication/中欧汽车电器有限公司吴国琳等合伙协议纠纷股权转让纠纷其他民事民事裁定书.txt'
+    sigleFilePos(userCasePath)

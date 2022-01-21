@@ -10,7 +10,6 @@ globarVar.set('overWrite',1)
 
 def caseReccommend(casePath,rootPath):
     content = my_IO.readFile(casePath)
-
     doc_vectors = sr.loadDocVec(rootPath)
     dictionary = sr.loadDictionary(rootPath)
     kw_vector = dictionary.doc2bow(filter(
