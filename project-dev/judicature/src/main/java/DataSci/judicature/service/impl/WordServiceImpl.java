@@ -174,8 +174,10 @@ public class WordServiceImpl implements WordService {
                     marks.setCourts(line);
                 }
             } else if (lineNo == 2 || lineNo == 3) {
-                //通 知 书
-                //（2021）最高法刑申155号
+                if (line.matches("(.*)\\d+(.*)号(.*)")) {
+                    lineNo = 4;
+                    continue;
+                }
             } else if (lineNo == 4 && line.endsWith("：")) {
                 isNormal = true;//是正常的
 
@@ -322,8 +324,10 @@ public class WordServiceImpl implements WordService {
                     marks.setCourts(line);
                 }
             } else if (lineNo == 2 || lineNo == 3) {
-                //通 知 书
-                //（2021）最高法刑申155号
+                if (line.matches("(.*)\\d+(.*)号(.*)")) {
+                    lineNo = 4;
+                    continue;
+                }
             } else {
                 if ((line.matches(regEx) && !line.matches(NO_regEx) && line.length() < 80)) {
 
@@ -465,8 +469,10 @@ public class WordServiceImpl implements WordService {
                     marks.setCourts(line);
                 }
             } else if (lineNo == 2 || lineNo == 3) {
-                //民 事 裁 定 书
-                //（2021）最高法民申5039号
+                if (line.matches("(.*)\\d+(.*)号(.*)")) {
+                    lineNo = 4;
+                    continue;
+                }
             } else {
                 //重庆市渝中区人民检察院指控被告人王风、于思佳犯诈骗罪、非法拘禁罪一案，本院经审查，依照《中华人民共和国刑事诉讼法》第二十七条的规定，决定如下：
 
@@ -755,6 +761,17 @@ public class WordServiceImpl implements WordService {
                         flag = addType(info, term.word);
                     }
                 }
+                //执行裁定书(2021)浙0106执3834号之一
+                if (line.matches("(.*)\\d+(.*)号(.*)")) {
+                    line = line.replaceAll("\\(", "（").replaceAll("\\)", "）");
+                    int i = line.indexOf('(');
+                    info.setCaseno(line.substring(i));
+
+                    lineNo = 4;
+                    continue;
+                }
+
+
             } else if (lineNo == 3) {
                 //（2021）最高法民申5039号
                 info.setCaseno(line);

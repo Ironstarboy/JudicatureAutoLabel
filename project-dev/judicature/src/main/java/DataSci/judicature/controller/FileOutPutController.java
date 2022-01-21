@@ -201,9 +201,15 @@ public class FileOutPutController {
             }
         }
 
-        pythonService.recommend(downloadFilePath);
-        //todo 返回值，读取类型都没确定好
-        return null;
+        String recommend;
+        try {
+             recommend = pythonService.recommend(downloadFilePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "返回失败！";
+        }
+
+        return recommend;
     }
 
     /**
