@@ -183,7 +183,7 @@ public class FileOutPutController {
      * 相似案例推荐
      */
     @RequestMapping("/recommend")
-    public String caseRecommend(HttpSession session, HttpServletRequest request, HttpServletResponse response)  {
+    public String caseRecommend(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         String downloadFilePath = (String) session.getAttribute("userUploadFile");
         System.out.println(downloadFilePath);
         String type = (String) session.getAttribute("category");
@@ -193,9 +193,10 @@ public class FileOutPutController {
             return null;
         }
 
-        if ((boolean)session.getAttribute("static")){//静态资源 直接跳转
+        if ((boolean) session.getAttribute("static")) {//静态资源 直接跳转
             try {
                 request.getRequestDispatcher("/static/recommend").forward(request, response);//转发
+                return null;
             } catch (ServletException | IOException e) {
                 return "返回失败！";
             }
@@ -203,7 +204,7 @@ public class FileOutPutController {
 
         String recommend;
         try {
-             recommend = pythonService.recommend(downloadFilePath);
+            recommend = pythonService.recommend(downloadFilePath);
         } catch (Exception e) {
             e.printStackTrace();
             return "返回失败！";
@@ -252,7 +253,7 @@ public class FileOutPutController {
      * 自动摘要
      */
     @RequestMapping(value = "/sentence", produces = "text/html;charset=utf-8")
-    public String sentence(HttpSession session, HttpServletRequest request, HttpServletResponse response)  {
+    public String sentence(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         response.setCharacterEncoding("utf-8");
         String downloadFilePath = (String) session.getAttribute("userUploadFile");
         System.out.println(downloadFilePath);
@@ -262,16 +263,17 @@ public class FileOutPutController {
         if (downloadFilePath == null) {//还没上传文件，session里没有记录
             return null;
         }
-        if ((boolean)session.getAttribute("static")){//静态资源 直接跳转
+        if ((boolean) session.getAttribute("static")) {//静态资源 直接跳转
             try {
                 request.getRequestDispatcher("/static/sentence").forward(request, response);//转发
+                return null;
             } catch (ServletException | IOException e) {
                 return "返回失败！";
             }
         }
         String sentence = null;
         try {
-            sentence = pythonService.sentence(downloadFilePath);
+            sentence = pythonService.sentence(session);
         } catch (Exception e) {
             e.printStackTrace();
             return "分析失败！";
@@ -285,10 +287,10 @@ public class FileOutPutController {
      * 搜索推荐实现
      */
     @RequestMapping("/search")
-    public String search(String name,String time) {
+    public String search(String name, String time) {
         System.out.println(name);
         System.out.println(time);
-         //return "文件名1,文件名2,文件名3";
+        //return "文件名1,文件名2,文件名3";
         return searchService.search(name);
     }
 
@@ -296,7 +298,7 @@ public class FileOutPutController {
      * 动词，形容词
      */
     @RequestMapping("/vadj")
-    public String vadj(HttpSession session, HttpServletRequest request, HttpServletResponse response)  {
+    public String vadj(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         String downloadFilePath = (String) session.getAttribute("userUploadFile");
         System.out.println(downloadFilePath);
         String type = (String) session.getAttribute("category");
@@ -306,20 +308,23 @@ public class FileOutPutController {
             return null;
         }
 
-        if ((boolean)session.getAttribute("static")){//静态资源 直接跳转
+        if ((boolean) session.getAttribute("static")) {//静态资源 直接跳转
             try {
                 request.getRequestDispatcher("/static/vadj").forward(request, response);//转发
+                return null;
             } catch (ServletException | IOException e) {
                 return "返回失败！";
             }
         }
 
-        //todo 现场案件摘要实现
-        //pythonService
-        /*{
-            "动词": "裁定,发生,执行,下有,冻结,负责",
-            "形容词": "悦"
-        }*/
-        return null;
+        String vadj;
+        try {
+            vadj = pythonService.vadj(session);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "返回失败！";
+        }
+        return vadj;
     }
 }

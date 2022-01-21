@@ -45,7 +45,9 @@ public class SpyderServiceImpl implements SpyderService {
         File f = new File(downloadPath);
         f.getParentFile().mkdir();
         f.mkdir();*/
-        String downloadPath = location + "zip\\";
+        String downloadPath = "C:\\Users\\18933\\Desktop\\DataSciProject\\spyder\\"+ tag;
+        File f = new File(downloadPath);
+        f.mkdir();
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("download.default_directory", downloadPath);
@@ -55,8 +57,8 @@ public class SpyderServiceImpl implements SpyderService {
 
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-
         WebDriver driver = new ChromeDriver(desiredCapabilities);
+        //WebDriver driver = new ChromeDriver();
 
         try {
             driver.get("https://www.pkulaw.com/case/");
@@ -80,15 +82,21 @@ public class SpyderServiceImpl implements SpyderService {
             Thread.sleep(3000);
 
             try {
-                driver.findElement(By.partialLinkText("普通案例")).click();
-            } catch (Exception e) {
-                Thread.sleep(5000);
                 try {
                     driver.findElement(By.partialLinkText("普通案例")).click();
-                } catch (Exception exception) {
-                    Thread.sleep(15000);
-                    driver.findElement(By.partialLinkText("普通案例")).click();
+                } catch (Exception e) {
+                    Thread.sleep(5000);
+                    try {
+                        driver.findElement(By.partialLinkText("普通案例")).click();
+                    } catch (Exception exception) {
+                        Thread.sleep(15000);
+                        driver.findElement(By.partialLinkText("普通案例")).click();
+                    }
                 }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                driver.close();
+                return "无相应结果";
             }
 
 
@@ -142,7 +150,7 @@ public class SpyderServiceImpl implements SpyderService {
         }
 
         Thread.sleep(5000);
-        //driver.close();
+        driver.close();
 
         String zipPath = location + "zip\\" + tag + "\\爬虫.zip";
         zip(downloadPath, location + "zip\\" + tag + "\\txt\\",zipPath);

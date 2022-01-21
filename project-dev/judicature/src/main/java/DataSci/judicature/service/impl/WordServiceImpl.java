@@ -134,9 +134,18 @@ public class WordServiceImpl implements WordService {
             }
         }
 
-        BufferedReader br;
-        String encoding = fileUtil.getEncoding(new File(fileName));
-
+        BufferedReader br;/*
+        String encoding = fileUtil.getEncoding(new File(fileName));*/
+        String encoding = "UTF8";
+        if (!(boolean)session.getAttribute("static")){//用户上传 就是utf8
+            encoding ="UTF8";
+        }else {
+            if (((String)session.getAttribute("filename")).matches("(.*)FBM(.*)")){
+                encoding ="UTF8";
+            }else {
+                encoding ="GBK";
+            }
+        }
         br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), encoding));
 
         String line;
@@ -279,9 +288,18 @@ public class WordServiceImpl implements WordService {
             }
         }
 
-        BufferedReader br;
-        String encoding = fileUtil.getEncoding(new File(fileName));
-
+        BufferedReader br;/*
+        String encoding = fileUtil.getEncoding(new File(fileName));*/
+        String encoding = "UTF8";
+        if (!(boolean)session.getAttribute("static")){//用户上传 就是utf8
+            encoding ="UTF8";
+        }else {
+            if (((String)session.getAttribute("filename")).matches("(.*)FBM(.*)")){
+                encoding ="UTF8";
+            }else {
+                encoding ="GBK";
+            }
+        }
         br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), encoding));
 
         String line;
@@ -424,10 +442,18 @@ public class WordServiceImpl implements WordService {
             }
         }
 
-        BufferedReader br;
-
-        String encoding = fileUtil.getEncoding(new File(fileName));
-
+        BufferedReader br;/*
+        String encoding = fileUtil.getEncoding(new File(fileName));*/
+        String encoding = "UTF8";
+        if (!(boolean)session.getAttribute("static")){//用户上传 就是utf8
+            encoding ="UTF8";
+        }else {
+            if (((String)session.getAttribute("filename")).matches("(.*)FBM(.*)")){
+                encoding ="UTF8";
+            }else {
+                encoding ="GBK";
+            }
+        }
         br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), encoding));
 
         String line;
@@ -701,8 +727,18 @@ public class WordServiceImpl implements WordService {
             }
         }
 
-        BufferedReader br;
-        String encoding = fileUtil.getEncoding(new File(fileName));
+        BufferedReader br;/*
+        String encoding = fileUtil.getEncoding(new File(fileName));*/
+        String encoding = "UTF8";
+        if (!(boolean)session.getAttribute("static")){//用户上传 就是utf8
+            encoding ="UTF8";
+        }else {
+            if (((String)session.getAttribute("filename")).matches("(.*)FBM(.*)")){
+                encoding ="UTF8";
+            }else {
+                encoding ="GBK";
+            }
+        }
 
         br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), encoding));
 
@@ -748,10 +784,14 @@ public class WordServiceImpl implements WordService {
                 //民 事 裁 定 书
                 //todo 可能出问题
                 line = line.replaceAll(" ", "");
-                String category = line.substring(Math.max(line.length() - 3, 0));
-                if (cat.contains(category)) {
-                    info.setCategory(category);
-                } else {
+                for (String s : cat) {
+                    if (line.contains(s)){
+                        info.setCategory(s);
+                        break;
+                    }
+
+                }
+                if (info.getCategory().isEmpty()) {
                     info.setCategory("其他");
                 }
 
@@ -764,7 +804,7 @@ public class WordServiceImpl implements WordService {
                 //执行裁定书(2021)浙0106执3834号之一
                 if (line.matches("(.*)\\d+(.*)号(.*)")) {
                     line = line.replaceAll("\\(", "（").replaceAll("\\)", "）");
-                    int i = line.indexOf('(');
+                    int i = line.indexOf('（');
                     info.setCaseno(line.substring(i));
 
                     lineNo = 4;

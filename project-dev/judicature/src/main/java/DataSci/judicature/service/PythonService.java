@@ -3,6 +3,7 @@ package DataSci.judicature.service;
 import DataSci.judicature.domain.CaseMsg;
 import DataSci.judicature.domain.Words;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 
 /**
@@ -10,12 +11,21 @@ import java.io.File;
  */
 public interface PythonService {
 
+
     /**
-     * 分词
+     * 相似文书推荐
      */
     String recommend(String filePath) throws Exception;
 
-    String sentence(String filePath) throws Exception;
+    /**
+     * 摘要
+     */
+    String sentence(HttpSession session) throws Exception;
+
+    /**
+     * 动词和形容词
+     */
+    String vadj(HttpSession session) throws Exception;
 
 
 

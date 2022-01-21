@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,18 +16,21 @@ public class PythonServiceImpl implements PythonService {
     @Value("${PATH}")
     private String PATH;
 
+    public PythonServiceImpl() {
+    }
 
     /**
      * 相似案例推荐
+     *
      * @param filePath
      * @throws Exception
      */
     @Override
     public String recommend(String filePath) throws Exception {
+        System.out.println("开始相似案例推荐");
         Process proc;
         BufferedWriter br;
         BufferedReader in;
-
         proc = Runtime.getRuntime().exec("python getCaseRecommendation.py", null, new File("D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\nlp\\"));
         br = new BufferedWriter(new OutputStreamWriter(proc.getOutputStream(), "GBK"));
         in = new BufferedReader(new InputStreamReader(proc.getInputStream(), "GBK"));
@@ -34,51 +38,103 @@ public class PythonServiceImpl implements PythonService {
         br.write(filePath);
         br.flush();
 
-        br.close();
-        in.close();
-        proc.waitFor();
-        proc.destroy();
 
         String[] split = in.readLine().split("---");
         String[] nameList = cleanName(split[0]);
         String[] rateList = cleanRate(split[1]);
 
+        System.out.println(nameList+" "+rateList);
         String[] answerList = new String[nameList.length];
 
         for (int i = 0; i < nameList.length; i++) {
-            answerList[i] = nameList[i] +" "+ rateList[i];
+            answerList[i] = nameList[i] + " " + rateList[i];
         }
 
-        String res= StringUtils.join(answerList,",");
+        String res = StringUtils.join(answerList, ",");
+        System.out.println(res);
         return res;
-
-        //todo 把拿到的推荐用实体类封装后返回
     }
 
+    /**
+     * 自动摘要提取
+     */
     @Override
-    public String sentence(String filePath) throws Exception {
-       /* Process proc;
+    public String sentence(HttpSession session) throws Exception {
+        System.out.println("自动摘要提取");
+        String filePath = (String) session.getAttribute("userUploadFile");
+        String fileName = (String) session.getAttribute("filename");
+        Process proc;
         BufferedWriter br;
-        BufferedReader in;
 
-        proc = Runtime.getRuntime().exec("python getCaseRecommendation.py", null, new File("D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\nlp\\"));
+        proc = Runtime.getRuntime().exec("python autoAbstract.py", null, new File("D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\nlp\\"));
         br = new BufferedWriter(new OutputStreamWriter(proc.getOutputStream(), "GBK"));
-        in = new BufferedReader(new InputStreamReader(proc.getInputStream(), "GBK"));
 
         br.write(filePath);
         br.flush();
 
-        in.readLine();
-*/
+        proc.waitFor();
+        //br.close();
 
+        proc.destroy();
 
+        //D:\java\DataSci\lqf\JudicatureAutoLabel\nlp\摘要\用户上传
 
+        String dirpath = PATH + "\\nlp\\摘要\\用户上传\\" + fileName + ".txt";
+        BufferedReader reader = new BufferedReader(new FileReader(dirpath));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line).append(System.lineSeparator());
+        }
 
-        return null;
-        //todo 也没实现
+        reader.close();
+        System.out.println(sb.toString());
+        return sb.toString();
+    }
+
+    /**
+     * 动词和形容词
+     */
+    @Override
+    public String vadj(HttpSession session) throws Exception {
+        System.out.println("开始形容词动词分类");
+        String filePath = (String) session.getAttribute("userUploadFile");
+        String fileName = (String) session.getAttribute("filename");
+        Process proc;
+        BufferedWriter br;
+
+        proc = Runtime.getRuntime().exec("python POStag.py", null, new File("D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\nlp\\"));
+        br = new BufferedWriter(new OutputStreamWriter(proc.getOutputStream(), "GBK"));
+
+        br.write(filePath);
+        br.flush();
+
+        proc.waitFor();
+        //br.close();
+
+        proc.destroy();
+
+        //D:\java\DataSci\lqf\JudicatureAutoLabel\nlp\词性标注\用户上传
+
+        String dirpath = PATH + "\\nlp\\词性标注\\用户上传\\" + fileName + ".json";
+        BufferedReader reader = new BufferedReader(new FileReader(dirpath));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            if (!line.contains("fileName"))
+                sb.append(line);
+        }
+        reader.close();
+
+        System.out.println(sb.toString());
+        return sb.toString();
     }
 
 
+    //不管了
+    private void init(){
+
+    }
 
     /**
      * 执行python脚本
@@ -178,7 +234,7 @@ public class PythonServiceImpl implements PythonService {
             double rate = Double.parseDouble(d);
             rate *= 100;//十倍根号法调整相似度值
             rate = Math.round(10 * Math.sqrt(rate));
-            ans[i - 1] = (int)rate + "%";
+            ans[i - 1] = (int) rate + "%";
         }
         return ans;
     }

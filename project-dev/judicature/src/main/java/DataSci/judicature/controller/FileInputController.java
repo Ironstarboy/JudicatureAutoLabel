@@ -33,7 +33,6 @@ public class FileInputController {
 
     @RequestMapping("/file")
     public String save(MultipartFile upload, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         boolean flag = true;
 
         if (upload == null || upload.isEmpty()) {

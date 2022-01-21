@@ -3,6 +3,7 @@ package DataSci.judicature;
 import DataSci.judicature.domain.CaseInfoSets;
 import DataSci.judicature.domain.CaseMarksArr;
 import DataSci.judicature.service.ExcelService;
+import DataSci.judicature.service.PythonService;
 import DataSci.judicature.service.WordService;
 import DataSci.judicature.service.impl.ExcelServiceImpl;
 import DataSci.judicature.service.impl.SearchServiceImpl;
@@ -43,7 +44,10 @@ public class WordTest {
     private WordServiceImpl wordService;
 
     @Autowired
-    private ExcelService excelService ;
+    private ExcelService excelService;
+
+    @Autowired
+    private PythonService pythonService;
 
 
 
@@ -314,6 +318,14 @@ public class WordTest {
     void tsest1(){
         String s1 = excelService.proRecommend("史生来谭承天建设工程施工合同纠纷再审审查与审判监督民事裁定书");
         System.out.println(s1);
+    }
+
+    @Test
+    void testpy() throws Exception {
+        String path = "D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\project-dev\\" +
+                "judicature\\src\\main\\resources\\case\\txt\\else\\文本.txt";
+        String s = pythonService.recommend(path);
+        System.out.println(s);
     }
 
 

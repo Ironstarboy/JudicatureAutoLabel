@@ -229,7 +229,7 @@ public class FileUtil {
 
         String line;
         while ((line = br.readLine()) != null) {
-            writer.write(new String(line.getBytes(StandardCharsets.UTF_8)) + System.lineSeparator());
+            writer.write(line + System.lineSeparator());
             writer.flush();
         }
         writer.close();
@@ -314,13 +314,13 @@ public class FileUtil {
     /**
      * 识别编码
      */
-    public String getEncoding(File file) throws IOException {
+    public String getFileEncode(File file) throws IOException {
 
         BufferedReader br;
 
         List<Charset> encodes = new java.util.ArrayList<>();
-        encodes.add(Charset.forName("GBK")); //兼容gb2312  21886个
         encodes.add(StandardCharsets.UTF_8);
+        encodes.add(Charset.forName("GBK")); //兼容gb2312  21886个
         encodes.add(StandardCharsets.US_ASCII);
         encodes.add(StandardCharsets.ISO_8859_1);
         encodes.add(StandardCharsets.UTF_16BE);
@@ -338,5 +338,30 @@ public class FileUtil {
         }
         return "unknown";
     }
+
+    public  String getEncoding(File fileName) {
+        String charSet = "GBK";
+        try {
+            FileInputStream fis = new FileInputStream(fileName);
+            byte[] bf = new byte[3];
+            fis.read(bf);
+            fis.close();
+            if (bf[0] == -17 && bf[1] == -69 && bf[2] == -65) {
+                    charSet = "UTF-8";
+            } else if ((bf[0] == -1 && bf[1] == -2)) {
+                    charSet = "Unicode";
+            } else if ((bf[0] == -2 && bf[1] == -1)) {
+                    charSet = "Unicode big endian";
+            } else {
+                    charSet = "GBK";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return charSet;
+
+    }
+
 
 }

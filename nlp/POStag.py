@@ -129,5 +129,6 @@ if __name__=='__main__':
     # saveTag()
 
     # 根据用户上传内容，进行词性标注
-    userCasePath='../project-dev/judicature/src/main/resources/case/txt/adjudication/中欧汽车电器有限公司吴国琳等合伙协议纠纷股权转让纠纷其他民事民事裁定书.txt'
+    userCasePath=input()
+    #userCasePath='../project-dev/judicature/src/main/resources/case/txt/adjudication/中欧汽车电器有限公司吴国琳等合伙协议纠纷股权转让纠纷其他民事民事裁定书.txt'
     sigleFilePos(userCasePath)

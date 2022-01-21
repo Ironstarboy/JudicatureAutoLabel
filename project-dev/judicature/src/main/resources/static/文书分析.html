@@ -209,7 +209,7 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<span><a href="JavaScript:sentence();">摘要生成</a></span>
 				<span><a href="JavaScript:function2();">基本信息</a></span>
-				<span><a href="JavaScript:function3();">自动分词</a></span>
+				<span><a href="JavaScript:getVadj();function3();">自动分词</a></span>
 				<span><a href="JavaScript:function4();">相似案件</a></span>
 			</span>
 
@@ -293,7 +293,7 @@
 	<a href="#top" class="go-top"><i class="las la-angle-up"></i></a>
 	<script>
 		var data1;
-		function function3() {
+		/*function function3() {
 			//获取名词
 			$.ajax({
 			type: "POST",
@@ -320,7 +320,42 @@
 				}
 			});
 
+		}*/
+
+		function function3() {
+			//获取名词
+			$.ajax({
+				type: "POST",
+				url: '/download/fenci',
+				processData: false,
+				contentType: false,
+				success: function (data) {
+					var last = JSON.stringify(data)//js对象转json字符串
+					window.localStorage.setItem('user',last);
+					data1 = data.gender.concat(data.criminals).concat(data.ethnicity).concat(data.birthplace).concat(data.accusation).concat(data.courts)
+					document.getElementById("3cases").src = "分词页.html"
+					test()//显示高亮
+				}
+			});
+
+			//获取动词形容词
+
 		}
+		function getVadj(){
+			$.ajax({
+				type: "POST",
+				url: '/download/vadj',
+				processData: false,
+				contentType: false,
+				success: function (data) {
+					console.log(data)
+					window.localStorage.setItem('vadj',data);//传的是json字符串
+					/*document.getElementById("3cases").src = "分词页.html"*/
+				}
+			});
+		}
+
+
 		function appendScript(src, callback) {
 			var head = document.getElementsByTagName('head')[0];
 
@@ -445,6 +480,20 @@
 				a.click();
 			}
 		}
+
+		function function4() {
+			$.ajax({
+				type: "POST",
+				url: '/download/recommend',
+				processData: false,
+				contentType: false,
+				success: function (data) {
+					window.localStorage.setItem('recommend',data);
+				}
+			});
+			document.getElementById("3cases").src = "相似案件.html"
+		}
+
 
 		function test() {
 			var jqv = "jquery-1.11.1.min.js";

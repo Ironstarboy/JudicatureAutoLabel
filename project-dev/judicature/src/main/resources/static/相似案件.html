@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title> Pitron | Lawyers & Law Firm HTML Template | ThemeForest</title>
+	<title>相似案件</title>
 
 	<!--Favicon-->
 	<link rel="icon" href="assets/img/favicon.png" type="image/jpg" />
@@ -31,55 +31,53 @@
 
 	<!-- jquery -->
 	<script src="js/jquery-1.12.4.min.js"></script>
+	<script src="js/main_page.js"></script>
+	<script>
+		window.onload = function(){
+			var str = window.localStorage.getItem('recommend');
+			window.localStorage.removeItem('recommend');//清除字符串
+			init_recommend(str)
+		}
+		function submitRecommend(x){
+			window.localStorage.setItem('search',x);//这里只传了文件名，没有读取txt里的内容
+			window.parent.location.href='文书分析.html';
+		}
+		function init_recommend(x){
+			x = x.split(',')
+			var recommend_str = '';
+			var temp = '';
+			for(var i in x){
+				temp = x[i].trim().split(/\s+/)
+				recommend_str += `<a href="javascript:void(0)" onclick="submitRecommend(this.id);return false;" id="${temp[0]}">${temp[0]}</a>&nbsp;&nbsp;&nbsp;&nbsp;相似度${temp[1]}<br>`;
+			}
+			document.querySelector('#recommend').innerHTML = recommend_str
+		}
 
+	</script>
 
 </head>
 
 <body>
-
-
-
-
 
 	<!-- Frequently Asked Question -->
 
 	<div class="container">
 		<div class="styled-faq">
 			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-
-				<div class="panel panel-default">
-					<div class="panel-heading" role="tab" id="headingTwo">
-						<h6 class="panel-title">
-							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
-								href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-								<h4 style="color: #25283a;"><b>法律依据</b></h4>
-								<i class="fa fa-angle-up"></i>
-								<i class="fa fa-angle-down"></i>
-							</a>
-						</h6>
-					</div>
-					<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-						<div class="panel-body">
-							<a href="case.html"></a>
-							<a href="case.html">最高人民法院关于适用《中华人民共和国民事诉讼法》的解释</a>&nbsp;&nbsp;第四百条第一款
-						</div>
-					</div>
-				</div>
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab" id="headingOne">
 						<h6 class="panel-title">
 							<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
 								aria-expanded="false" aria-controls="collapseOne">
-								<h4 style="color: #25283a;"><b>相关案情推荐</b></h4>
+								<h4 style="color: #25283a;"><b>相似案件推荐</b></h4>
 								<i class="fa fa-angle-up"></i>
 								<i class="fa fa-angle-down"></i>
 							</a>
 						</h6>
 					</div>
 					<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-						<div class="panel-body">
-							<a href="case.html">高英凯抢劫死刑复核刑事裁定书</a>&nbsp;&nbsp;相似度99%<br>
-							<a href="case.html">王水山抢劫死刑复核刑事裁定书</a>&nbsp;&nbsp;相似度90%
+						<div class="panel-body" id="recommend">
+
 						</div>
 					</div>
 				</div>

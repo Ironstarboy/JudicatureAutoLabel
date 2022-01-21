@@ -64,5 +64,6 @@ if __name__ == '__main__':
     # print('{} done'.format(__file__))
 
     # 根据用户上传文件生成摘要
-    userFilePath='../project-dev/judicature/src/main/resources/case/txt/adjudication/中欧汽车电器有限公司吴国琳等合伙协议纠纷股权转让纠纷其他民事民事裁定书.txt'
+    userFilePath = input()
+    #userFilePath='../project-dev/judicature/src/main/resources/case/txt/adjudication/中欧汽车电器有限公司吴国琳等合伙协议纠纷股权转让纠纷其他民事民事裁定书.txt'
     sigleFileAbstract(userFilePath)

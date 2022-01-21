@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
@@ -34,7 +33,7 @@ public class StaticController {
     private FileUtil fileUtil;
 
     @Autowired
-    private ExcelService  excelService;
+    private ExcelService excelService;
 
 
     /**
@@ -54,6 +53,7 @@ public class StaticController {
         }
         return modelAndView;
     }
+
 
     private boolean getFile(File dir, HttpSession session, String name, String fileName) {
         for (File sonDir : Objects.requireNonNull(dir.listFiles())) {
@@ -75,14 +75,17 @@ public class StaticController {
      */
     @ResponseBody
     @RequestMapping(value = "/view", produces = "text/html;charset=utf-8")
-    public void view(HttpSession session,  HttpServletResponse response) {
+    public void view(HttpSession session, HttpServletResponse response) {
         response.setCharacterEncoding("UTF8");
         StringBuilder sb = new StringBuilder();
         String encoding = "GBK";
         try {
             String path = (String) session.getAttribute("userUploadFile");
             BufferedReader br;
-            encoding = fileUtil.getEncoding(new File(path));
+            /*encoding = fileUtil.getEncoding(new File(path));
+            System.out.println(encoding);*/
+            if (((String)session.getAttribute("filename")).matches("(.*)FBM(.*)"))
+                encoding = "UTF8";
             br = new BufferedReader(new InputStreamReader(new FileInputStream(path), encoding));
             String line;
             while ((line = br.readLine()) != null) {
@@ -92,13 +95,14 @@ public class StaticController {
         } catch (Exception e) {
             e.printStackTrace();
             try {
-                 response.getWriter().write("加载失败！");
+                response.getWriter().write("加载失败！");
             } catch (Exception ioException) {
                 ioException.printStackTrace();
             }
         }
         try {
             response.getWriter().write(sb.toString());
+            response.getWriter().close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -108,6 +112,7 @@ public class StaticController {
     /**
      * 相似案例推荐
      */
+    @ResponseBody
     @RequestMapping("/recommend")
     public String caseRecommend(HttpSession session) {
         String downloadFilePath = (String) session.getAttribute("userUploadFile");
@@ -141,19 +146,35 @@ public class StaticController {
             return null;
         }
 
+        response.setCharacterEncoding("utf-8");
+        StringBuilder sb = new StringBuilder();
+        String encoding = "GBK";
         File f = new File(PATH + "nlp\\summarise\\" + type + fileName + ".txt");
         try {
-            fileUtil.showWithoutTitle(f.getAbsolutePath(), response);
-        } catch (IOException e) {
+            BufferedReader br;/*
+            encoding = fileUtil.getEncoding(f);*/
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(f), StandardCharsets.UTF_8));
+            //System.out.println(encoding);
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line).append(System.lineSeparator());
+            }
+            br.close();
+        } catch (Exception e) {
             e.printStackTrace();
-            return "展示失败！";
+            try {
+                return "加载失败！";
+            } catch (Exception ioException) {
+                ioException.printStackTrace();
+            }
         }
-        return null;
+        return sb.toString();
     }
 
     /**
      * 动词，形容词
      */
+    @ResponseBody
     @RequestMapping("/vadj")
     public String vadj(HttpSession session) {
         String downloadFilePath = (String) session.getAttribute("userUploadFile");
@@ -181,10 +202,5 @@ public class StaticController {
             return "返回失败！";
         }
         return sb.toString();
-
-        //{
-        //    "动词": "裁定,发生,执行,下有,冻结,负责",
-        //    "形容词": "悦"
-        //}
     }
 }
