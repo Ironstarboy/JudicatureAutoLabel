@@ -56,12 +56,12 @@ def loadFilePath(rootPath='searchRec'):
     if not os.path.exists(filePath):
         saveFilePath(rootPath)
     return my_IO.loadVar(filePath)
-import globarVar
 
+import globarVar
 def saveSegContent(rootPath='searchRec',fatherDir='segfile'):
-    # 设计的时候没考虑到这边个函数会重写，所以没写成对象
+    # 设计的时候没考虑到这个函数会重写，所以没写成对象
     '''
-    fileContent 可以是文件名，也可以是文件内容
+    fileContent 可以是文件名，也可以是文件内容,就看需要什么作为语料库了
     :param fatherDir:
     :param contentPath:
     :return:
