@@ -14,7 +14,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 
-@Service
+@Service("service1")
 public class FileServiceImpl implements FileService {
 
     @Autowired
@@ -23,13 +23,6 @@ public class FileServiceImpl implements FileService {
 
     @Value("${spring.servlet.multipart.location}")
     private String location;
-
-
-    //todo 生成案例信息的实现
-    @Override
-    public CaseMsg proCaseMsg(String[] words) {
-        return null;
-    }
 
     /**
      * 根据文件名分类，顺带转移

@@ -18,8 +18,8 @@ public class PythonServiceImpl implements PythonService {
 
 
     @Override
-    public Words jieba(File file) {
-        //todo 分词的实现
+    public Words recommend(File file) {
+        //todo 相似案例的推荐
         return null;
     }
 

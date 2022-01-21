@@ -13,7 +13,7 @@ public interface PythonService {
     /**
      * 分词
      */
-    Words jieba(File file);
+    Words recommend(File file);
 
 
 }

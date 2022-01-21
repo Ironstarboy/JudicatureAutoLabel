@@ -30,6 +30,24 @@
     <!-- jquery -->
     <script src="js/jquery-1.12.4.min.js"></script>
     <script src="js/main_page.js"></script>
+
+    <script>
+        function getcookie() {
+            //获取传递过来的localStorage 可以用obj.来访问
+            var str = window.localStorage.getItem('info');
+            // window.localStorage.removeItem('info');//清除字符串
+            var obj = JSON.parse(str)
+            info_courts(obj.courts)
+            info_type(obj.type)
+            info_accusation(obj.accusation)
+            info_category(obj.category)
+            info_date(obj.date)
+            info_caseno(obj.caseno)
+        }
+        window.onload = getcookie
+
+
+    </script>
 </head>
 
 <body>
@@ -37,12 +55,12 @@
         <div class="col-lg-4" style="float:left">
             <div class="case-info">
                 <h5>基本信息</h5>
-                <p><b>审理法院:</b><span>最高人民法院</span></p>
-                <p><b>案件类型:</b><span>刑事案件</span></p>
-                <p><b>案由:</b><span>抢劫</span></p>
-                <p><b>审理程序:</b><span>刑事二审</span></p>
-                <p><b>裁判日期:</b><span>2020-12-28</span></p>
-                <p><b>当事人:</b><span>周永华</span></p>
+                <p><b>审理法院:</b><span id="info_courts"></span></p>
+                <p><b>案件类型:</b><span id="info_type"></span></p>
+                <p><b>案由:</b><span id="info_accusation"></span></p>
+                <p><b>文书类型</b><span id="info_category"></span></p>
+                <p><b>裁判日期:</b><span id="info_date"></span></p>
+                <p><b>案号:</b><span id="info_caseno"></span></p>
                 <div class="main-btn"><a href="JavaScript:function10();">可视化</a></div>
             </div>
         </div>

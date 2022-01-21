@@ -1,5 +1,6 @@
 package DataSci.judicature.service;
 
+import DataSci.judicature.domain.CaseInfoSets;
 import DataSci.judicature.domain.CaseMarks;
 import DataSci.judicature.domain.CaseMarksArr;
 import DataSci.judicature.domain.CaseMsg;
@@ -13,4 +14,6 @@ public interface WordService {
     CaseMarksArr extract(String fileName, HttpSession session) throws IOException;
 
     CaseMarks toJSON(CaseMsg caseMsg);
+
+    CaseInfoSets proInfo(String fileName, HttpSession session) throws IOException;
 }
