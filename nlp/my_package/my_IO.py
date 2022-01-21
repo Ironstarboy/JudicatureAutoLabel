@@ -39,6 +39,10 @@ def getFileNameList(path):
             filelist.append(f)
     return filelist
 
+def getFileName(filePath):
+    """ 输入的文件名，输出文件名以及后缀 """
+    return os.path.basename(filePath)
+
 # 可递归获取置顶目录下的文件路径
 def recusiveGetFilePathList(dir):
     res=[]
