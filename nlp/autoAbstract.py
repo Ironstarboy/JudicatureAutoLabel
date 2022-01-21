@@ -1,5 +1,5 @@
 from textrank4zh import TextRank4Keyword, TextRank4Sentence
-import my_IO
+from my_package import my_IO
 import CaseType
 
 def keywords(text):
@@ -48,7 +48,21 @@ def get_abstract(srcRootPath):
             abstract=keysentence(my_IO.readFile('{}/{}/{}'.format(srcRootPath, type, file)))
             my_IO.saveFile(outRootPath + '/' + file, abstract)
 
+
+def sigleFileAbstract(userFilePath):
+    outRootPath='摘要/用户上传'
+    my_IO.mkDir(outRootPath)
+    fileContent=my_IO.readFile(userFilePath)
+    abstract=keysentence(fileContent)
+    fileName=my_IO.getFileName(userFilePath)
+    my_IO.saveFile(outRootPath+'/'+fileName,abstract)
+
 if __name__ == '__main__':
-    srcRootPath='../project-dev/judicature/src/main/resources/case/txt'
-    get_abstract(srcRootPath)
-    print('{} done'.format(__file__))
+    # 以下是生成本地已有文件摘要的代码
+    # srcRootPath='../project-dev/judicature/src/main/resources/case/txt'
+    # get_abstract(srcRootPath)
+    # print('{} done'.format(__file__))
+
+    # 根据用户上传文件生成摘要
+    userFilePath='../project-dev/judicature/src/main/resources/case/txt/adjudication/中欧汽车电器有限公司吴国琳等合伙协议纠纷股权转让纠纷其他民事民事裁定书.txt'
+    sigleFileAbstract(userFilePath)

@@ -119,7 +119,7 @@ def sigleFilePos(userCasePath):
     dic['形容词'] = xingRongCi
 
     outPath = '词性标注/用户上传'
-    outFileName=userCasePath[userCasePath.rindex('/'):]
+    outFileName=my_IO.getFileName(userCasePath)
     outFileName = '{}/{}'.format(outPath,outFileName)
     save_dic_as_json(outPath, outFileName, dic)
 

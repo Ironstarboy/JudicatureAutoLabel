@@ -76,7 +76,7 @@ if __name__=='__main__':
     # saveRecommend()
     # print('{} done'.format(__file__))
 
-    # 输入当个文章，给出推荐文章路径列表和分数
+    # 输入单个文章，给出推荐文章路径列表和分数
     rootPath='caseRec'
     casePath=input()
     #casePath='../project-dev/judicature/src/main/resources/case/txt/adjudication/中欧汽车电器有限公司吴国琳等合伙协议纠纷股权转让纠纷其他民事民事裁定书.txt'
