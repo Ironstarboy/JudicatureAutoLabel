@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Date;
 
 @SpringBootTest
@@ -76,6 +74,19 @@ class JudicatureApplicationTests {
         String tag = new Date().getTime()+"";
 
         spyderService.spyder(srt,end, 10,tag);
+    }
+
+    @Test
+    void execExcel() throws IOException {
+        String path = "D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\nlp\\相似文章路径.xlsx";
+
+        BufferedReader br =new BufferedReader(new FileReader(path));
+        String line;
+        while ((line = br.readLine())!=null){
+            System.out.println(line);
+        }
+
+        br.close();
     }
 
 

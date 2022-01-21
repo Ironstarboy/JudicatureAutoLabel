@@ -70,6 +70,7 @@ def saveRecommend():
 
 def loadRecommend():
     pass
+
 if __name__=='__main__':
     # 以下是生成本地已有文章的相似文章xlsx
     # 我已经生成好了，最好不要取消注释运行。如果运行了就等运行完，我在控制台做了进度输出
@@ -78,7 +79,8 @@ if __name__=='__main__':
 
     # 输入当个文章，给出推荐文章路径列表和分数
     rootPath='caseRec'
-    casePath='../project-dev/judicature/src/main/resources/case/txt/adjudication/中欧汽车电器有限公司吴国琳等合伙协议纠纷股权转让纠纷其他民事民事裁定书.txt'
+    casePath=input()
+    #casePath='../project-dev/judicature/src/main/resources/case/txt/adjudication/中欧汽车电器有限公司吴国琳等合伙协议纠纷股权转让纠纷其他民事民事裁定书.txt'
     recFilename,recFileScore=caseReccommend(casePath, rootPath)
-    print(recFilename,recFileScore)
+    print("{}---{}".format(recFilename,recFileScore))
 

@@ -64,6 +64,12 @@ public class SearchServiceImpl implements SearchService {
              proc = Runtime.getRuntime().exec("python searchRecommend.py", null, new File("D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\nlp\\"));
              br = new BufferedWriter(new OutputStreamWriter(proc.getOutputStream(), "GBK"));
              in = new BufferedReader(new InputStreamReader(proc.getInputStream(), "GBK"));
+
+           /* br.write("测试");
+            br.flush();
+
+            String msg = in.readLine();
+            System.out.println(msg);*/
         }catch (Exception e){
             e.printStackTrace();
         }

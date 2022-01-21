@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>司法大数据</title>
+	<title>案例库</title>
 
 	<!--Favicon-->
 	<link rel="icon" href="assets/img/favicon.png" type="image/jpg" />
@@ -42,7 +42,7 @@
 					return ;
 				}
 				//由于浏览器的缓存机制 所以我们每次传入一个时间
-				 var time=new Date().getTime();
+				var time=new Date().getTime();
 				//如果有内容，发给后端
 				$.ajax({
 					type:"get",
@@ -117,27 +117,6 @@
 			</div>
 		</div>
 	</div>
-
-	<!-- Header Top Area -->
-
-	<div class="header-top">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-6 col-md-12 col-sm-12">
-					<div class="contact-info">
-						2021秋数据科学大作业 |
-						<i class="las la-map-marker"></i> 南京大学软件学院
-					</div>
-				</div>
-				<div class="col-lg-6 col-md-12 col-sm-12 text-right">
-					<div class="site-info">
-						丛进，鲁权锋，刘玥骁
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<!-- Header Area -->
 
 	<header id="header-2" class="header-area absolute-header pt-50">
@@ -217,199 +196,46 @@
 		</div>
 	</header>
 
-	<!-- Hero Area -->
+	<!-- Breadcroumb Area -->
 
-	<div id="home-2" class="homepage-slides owl-carousel">
-		<div class="single-slide-item bg-cover">
-			<div class="overlay"></div>
-			<div class="hero-area-content">
-				<div class="container">
-					<div class="row justify-content-center">
-						<div class="col-lg-12 wow fadeInUp animated" data-wow-delay=".3s">
-							<div class="section-title">
-								<h1>我们是司法大数据的<br><b>分析者</b></h1>
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="single-slide-item hero-area-bg-2">
-			<div class="overlay"></div>
-			<div class="hero-area-content">
-				<div class="container">
-					<div class="row justify-content-center">
-						<div class="col-lg-12 wow fadeInUp animated" data-wow-delay=".3s">
-							<div class="section-title">
-								<h1>我们希望用数据创造<br>更<b>公正</b>的明天</h1>
-							</div>
-
-						</div>
+	<div class="breadcroumb-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcroumb-title">
+						<h1>案例库</h1>
+						<h6><a href="首页.html">首页</a> / 案例库</h6>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-
-<!--	搜索框-->
-	<div class="section-title col-lg-8" style="margin-top: 100px;margin-bottom: -15px;margin-left: 28%;">
-		热门搜索：合同 纠纷 公司 房屋 劳动
-	</div>
-	<!--搜索框-->
-	<div class="col-lg-12" style="margin-bottom: 20%">
-		<p class="section-title offset-lg-2 col-lg-8" style="font-size: 20px">案例检索>
-			<input type="text" name="name" class="inputtable" value="" placeholder="输入你想了解的案例关键词" id="name" style="width: 70%;"/>
-			<input type="submit" value="跳转" onclick="submitContent()"/>
-		<div id="context1" style="background-color:white; border: 1px solid grey;width:43.85%;position: absolute;top: 85.7px;left:336.5px;display:none">
-		</div>
-
-		</p>
-	</div>
-	<!--Process Area -->
 	<div id="service-2" class="services-area section-padding pb-50">
 		<div class="container">
 			<div class="row">
 				<div class="offset-lg-2 col-lg-8 text-center">
 					<div class="section-title">
-						<h6>功能</h6>
-						<h2>我们可以做<b>什么</b></h2>
+						<h2>本案例库共收录了<b>472</b>件案例</h2>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-	<div class="featured-process-area">
-		<div class="container">
-		</div>
-		<div class="content-area">
-			<div class="process-grids bg-cover clearfix">
-				<div class="overlay-2"></div>
-				<div class="grid wow fadeInUp" data-wow-delay=".2s">
-					<div class="inner">
-						<span class="count">01.</span>
-						<h3>文书分析</h3>
-						<a href="文书分析.html">
-							<p>可获取一段时间内的文书。上传某一文书可获得摘要、基本信息、自动分词并生成标注，还有相似案件的智能推荐。</p>
-						</a>
-					</div>
-				</div>
-
-				<div class="grid wow fadeInUp" data-wow-delay=".4s">
-					<div class="inner">
-						<span class="count">02.</span>
-						<h3>案例库</h3>
-						<a href="案例库.html">
-							<p>了解典型案例的文书全文、摘要、关键词等信息。</p>
-						</a>
-					</div>
-				</div>
-				<div class="grid wow fadeInUp" data-wow-delay=".6s">
-					<div class="inner">
-						<span class="count">03.</span>
-						<h3>数据展示</h3>
-						<a href="数据展示.html">
-							<p>根据文书信息统计结果，绘制而成的可视化图表。</p>
-						</a>
-					</div>
-				</div>
-				<div class="grid wow fadeInUp" data-wow-delay=".8s">
-					<div class="inner">
-						<span class="count">04.</span>
-						<h3>法条推荐</h3>
-						<a href="法条推荐.html">
-							<p>进行法条分类、高频引用条文和依据的科普。</p>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
+	<div class="col-lg-12 section-title offset-lg-2 col-lg-8" style="margin-bottom: -15px;margin-left: 28%;">
+		热门搜索：合同 纠纷 公司 房屋 劳动
+	</div>
+	<!--搜索框-->
+	<div class="col-lg-12" style="margin-bottom: 20%">
+		<p class="section-title offset-lg-2 col-lg-8" style="font-size: 20px">案例检索>
+			<input type="text" name="name" class="inputtable" value="输入你想了解的案例关键词" id="name" style="width: 70%;"/>
+			<input type="submit" value="跳转" onclick="submitContent()"/>
+			<div id="context1" style="background-color:white; border: 1px solid grey;width:43.85%;position: absolute;top: 85.7px;left:336.5px;display:none">
 	</div>
 
-	<div class="case-area pb-50">
-		<div class="container">
-			<div class="offset-lg-2 col-lg-8 text-center">
-				<div class="section-title">
-					<h2>涉及领域</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-4 col-md-6 col-12 wow fadeInLeft" data-wow-delay=".2s">
-					<div class="single-case-item mb-50 bg-cover case-bg-6">
-						<div class="case-inner">
-							<a href="高频法条.html" class="case-icon">
-								<i class="las la-plus"></i>
-							</a>
-							<div class="hover-info">
-								<h6>宪法</h6>
-								<h4>国家的根本大法</h4>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-12 wow fadeInUp" data-wow-delay=".4s">
-					<div class="single-case-item mb-50 bg-cover case-bg-2">
-						<div class="case-inner">
-							<a href="高频法条.html" class="case-icon">
-								<i class="las la-plus"></i>
-							</a>
-							<div class="hover-info">
-								<h6>民事</h6>
-								<h4>民法通则、民事诉讼法等</h4>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-12 wow fadeInRight" data-wow-delay=".4s">
-					<div class="single-case-item mb-50 bg-cover case-bg-5">
-						<div class="case-inner">
-							<a href="高频法条.html" class="case-icon">
-								<i class="las la-plus"></i>
-							</a>
-							<div class="hover-info">
-								<h6>刑事</h6>
-								<h4>实体法与程序法</h4>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-12 wow fadeInLeft" data-wow-delay=".6s">
-					<div class="single-case-item mb-50 bg-cover case-bg-3">
-						<div class="case-inner">
-							<a href="高频法条.html" class="case-icon">
-								<i class="las la-plus"></i>
-							</a>
-							<div class="hover-info">
-								<h6>行政</h6>
-								<h4>劳动法、安全法等</h4>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-lg-4 col-md-6 col-12 wow fadeInRight" data-wow-delay=".6s">
-					<div class="single-case-item mb-50 bg-cover case-bg">
-						<div class="case-inner">
-							<a href="高频法条.html" class="case-icon">
-								<i class="las la-plus"></i>
-							</a>
-							<div class="hover-info">
-								<h6>经济</h6>
-								<h4>合同法、税法等</h4>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		</p>
 	</div>
-
 
 	<!-- Footer Area -->
-
 	<footer class="footer-area dark-bg wow fadeIn" data-wow-delay=".3s">
 		<div class="container">
 			<div class="footer-up">
@@ -458,15 +284,12 @@
 		</div>
 	</footer>
 
-
-
 	<!-- Scroll Top Area -->
 	<a href="#top" class="go-top"><i class="las la-angle-up"></i></a>
 
 
 	<!-- Popper JS -->
 	<script src="js/popper.min.js"></script>
-	<!-- Bootstrap JS -->
 	<script src="js/bootstrap.min.js"></script>
 	<!-- Wow JS -->
 	<script src="js/wow.min.js"></script>

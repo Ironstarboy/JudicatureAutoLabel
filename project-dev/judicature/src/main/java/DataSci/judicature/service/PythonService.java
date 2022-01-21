@@ -13,11 +13,10 @@ public interface PythonService {
     /**
      * 分词
      */
-    void recommend(String filePath);
+    String recommend(String filePath) throws Exception;
 
-    String sentence(String filePath);
+    String sentence(String filePath) throws Exception;
 
-    String search(String str);
 
 
 }

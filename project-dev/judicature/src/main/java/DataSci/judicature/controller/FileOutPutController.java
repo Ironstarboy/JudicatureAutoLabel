@@ -5,6 +5,7 @@ import DataSci.judicature.domain.CaseMarks;
 import DataSci.judicature.domain.CaseMarksArr;
 import DataSci.judicature.domain.CaseMsg;
 import DataSci.judicature.service.PythonService;
+import DataSci.judicature.service.SearchService;
 import DataSci.judicature.service.SpyderService;
 import DataSci.judicature.service.WordService;
 import DataSci.judicature.utils.FileUtil;
@@ -16,7 +17,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -42,6 +45,9 @@ public class FileOutPutController {
 
     @Autowired
     private SpyderService spyderService;
+
+    @Autowired
+    private SearchService searchService;
 
     /**
      * @return 返回案件信息的json文件
@@ -239,8 +245,9 @@ public class FileOutPutController {
     /**
      * 自动摘要
      */
-    @RequestMapping("/sentence")
+    @RequestMapping(value = "/sentence", produces = "text/html;charset=utf-8")
     public String sentence(HttpSession session, HttpServletRequest request, HttpServletResponse response)  {
+        response.setCharacterEncoding("utf-8");
         String downloadFilePath = (String) session.getAttribute("userUploadFile");
         System.out.println(downloadFilePath);
         String type = (String) session.getAttribute("category");
@@ -256,9 +263,15 @@ public class FileOutPutController {
                 return "返回失败！";
             }
         }
+        String sentence = null;
+        try {
+            sentence = pythonService.sentence(downloadFilePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "分析失败！";
+        }
 
-
-        String sentence = pythonService.sentence(downloadFilePath);
+        //这边返回的是一个字符串，和案件文本展示一样
         return sentence;
     }
 
@@ -267,7 +280,40 @@ public class FileOutPutController {
      */
     @RequestMapping("/search")
     public String search(String name,String time) {
+        System.out.println(name);
+        System.out.println(time);
          //return "文件名1,文件名2,文件名3";
-        return pythonService.search(name);
+        return searchService.search(name);
+    }
+
+    /**
+     * 动词，形容词
+     */
+    @RequestMapping("/vadj")
+    public String vadj(HttpSession session, HttpServletRequest request, HttpServletResponse response)  {
+        String downloadFilePath = (String) session.getAttribute("userUploadFile");
+        System.out.println(downloadFilePath);
+        String type = (String) session.getAttribute("category");
+        System.out.println(type);
+
+        if (downloadFilePath == null) {//还没上传文件，session里没有记录
+            return null;
+        }
+
+        if ((boolean)session.getAttribute("static")){//静态资源 直接跳转
+            try {
+                request.getRequestDispatcher("/static/vadj").forward(request, response);//转发
+            } catch (ServletException | IOException e) {
+                return "返回失败！";
+            }
+        }
+
+        //todo 现场案件摘要实现
+        //pythonService
+        /*{
+            "动词": "裁定,发生,执行,下有,冻结,负责",
+            "形容词": "悦"
+        }*/
+        return null;
     }
 }

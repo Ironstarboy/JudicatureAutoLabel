@@ -262,6 +262,26 @@ function init_courts(keys) {
         `</p></div>`
     document.querySelector('#courts').innerHTML = courts_str
 }
+function init_else(keys1,keys2) {
+    keys1 = keys1.split(",")
+    keys2 = keys2.split(",")
+    var else_str = "动词："
+    for (var i in keys1) {
+        else_str += `
+        <label for="else_${keys1[i]}"><input id="else_${keys1[i]}" type="checkbox" value="${keys1[i]}" onclick="function24(this.value)"/>${keys1[i]}</label>&nbsp;&nbsp;&nbsp;&nbsp;`
+    }
+    else_str += `<br>` + "形容词："
+    for (var i in keys2) {
+        else_str += `
+        <label for="else_${keys2[i]}"><input id="else_${keys2[i]}" type="checkbox" value="${keys2[i]}" onclick="function24(this.value)"/>${keys2[i]}</label>&nbsp;&nbsp;&nbsp;&nbsp;`
+    }
+    //拼接完字符串数组后用innerHTML把它渲染到父元素中
+    else_str = `<div role = "tabpanel" class="tab-pane fade in" id = "else" aria - labelledby="else-tab">
+        <p>` +
+        else_str +
+        `</p></div>`
+    document.querySelector('#else').innerHTML = else_str
+}
 function info_courts(keys) {
     var courts_str = ''
     for (var i in keys) {
@@ -361,4 +381,27 @@ function function23() {
         `<a href="http://www.pkulaw.cn/fulltext_form.aspx?Db=chl&Gid=497d709c9225b1e3bdfb&keyword=%e8%a1%8c%e6%94%bf%e5%a4%8d%e8%ae%ae&EncodingName=&Search_Mode=accurate&Search_IsTitle=0">`+"中华人民共和国行政复议法(2017修正)"+`</a><br>`+
         `<a href="http://www.pkulaw.cn/fulltext_form.aspx?Db=chl&Gid=c8054098b4b25952bdfb&keyword=%e5%85%ac%e5%8a%a1%e5%91%98%e6%b3%95&EncodingName=&Search_Mode=accurate&Search_IsTitle=0">`+"中华人民共和国公务员法(2018修订)"+`</a><br>`;
     document.querySelector('#fre2').innerHTML = str2
+}
+function function24(x) {
+    var str = $('#else_text').val();//先获取用显示div的内容，然后把当前复选框内容拼接，再把拼接内容在show中
+    if ($("#else_" + x).is(':checked')) {//选中时，看是否已有数据
+        if (str.indexOf(x) == -1) {//如果不含该串
+            if (str.length != 0) {
+                str += "，" + x;
+            } else {
+                str += x;//拼接当前值val
+            }
+        }
+    } else {//取消复选框时，str有且仅有一个x，删除即可
+        if (str == x) {//若只有这一个字符串
+            str = null
+        } else {
+            if (str.startsWith(x)) {//如果在开头
+                str = str.replace(x + "，", '')
+            } else {
+                str = str.replace("，" + x, '')
+            }
+        }
+    }
+    $('#else_text').val(str);//显示
 }

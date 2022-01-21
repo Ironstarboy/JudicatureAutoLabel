@@ -2,7 +2,9 @@ package DataSci.judicature;
 
 import DataSci.judicature.domain.CaseInfoSets;
 import DataSci.judicature.domain.CaseMarksArr;
+import DataSci.judicature.service.ExcelService;
 import DataSci.judicature.service.WordService;
+import DataSci.judicature.service.impl.ExcelServiceImpl;
 import DataSci.judicature.service.impl.SearchServiceImpl;
 import DataSci.judicature.service.impl.WordServiceImpl;
 import DataSci.judicature.utils.FileUtil;
@@ -39,6 +41,10 @@ public class WordTest {
 
     @Autowired
     private WordServiceImpl wordService;
+
+    @Autowired
+    private ExcelService excelService ;
+
 
 
     private static Segment nlp = null;
@@ -303,5 +309,13 @@ public class WordTest {
         String s1 = s.clear("['segfile\\\\judgment\\\\李某与杨某离婚纠纷一审民事判决书.txt', 'segfile\\\\adjudication\\\\中欧汽车电器有限公司吴国琳等合伙协议纠纷股权转让纠纷其他民事民事裁定书.txt', 'segfile\\\\decision\\\\赵鹏飞合同纠纷执行决定书.txt', 'segfile\\\\mediate\\\\李某、张某离婚纠纷民事一审民事调解书(FBM-CLI-C-407872141).txt', 'segfile\\\\decision\\\\刘帅新租赁合同纠纷执行决定书.txt']");
         System.out.println(s1);
     }
+
+    @Test
+    void tsest1(){
+        String s1 = excelService.proRecommend("史生来谭承天建设工程施工合同纠纷再审审查与审判监督民事裁定书");
+        System.out.println(s1);
+    }
+
+
 
 }
