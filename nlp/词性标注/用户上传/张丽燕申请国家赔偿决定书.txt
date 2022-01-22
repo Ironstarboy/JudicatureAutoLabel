@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\张丽燕申请国家赔偿决定书.txt",
-    "动词": "赔,定,审查,送达,无,解释,委托,请求,为由,决定,审理,如,作出,诉讼,符合,驳回,可,申请,不服,应当,提出,赔偿",
-    "形容词": "艳,黑"
-}

@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\多杰才仁、王有仁借款合同纠纷执行实施执行裁定书(FBM-CLI-C-408459613).txt",
-    "动词": "执,申请,实施,约定,达成,如,并列,裁定,自愿,采取,给付,送达,和解,执行,履行",
-    "形容词": "仁,青"
-}

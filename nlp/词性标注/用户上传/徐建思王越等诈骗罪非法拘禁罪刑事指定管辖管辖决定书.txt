@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\徐建思王越等诈骗罪非法拘禁罪刑事指定管辖管辖决定书.txt",
-    "动词": "进行,审查,管,指,定,犯,审判,指控,指定,辖,决定",
-    "形容词": "最高"
-}

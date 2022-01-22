@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\刘畅通民事首次执行执行裁定书(FBM-CLI-C-408413535).txt",
-    "动词": "确认,查封,执,履行,扣押,解释,执行,冻结,裁定",
-    "形容词": "畅通"
-}

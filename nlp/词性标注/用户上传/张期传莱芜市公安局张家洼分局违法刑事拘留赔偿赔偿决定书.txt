@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\张期传莱芜市公安局张家洼分局违法刑事拘留赔偿赔偿决定书.txt",
-    "动词": "审理,违法,赔,请求,提出,决定,定,复议,不服,会,作出,申请,赔偿,审查,撤回,认为,传,委托,准许",
-    "形容词": "自由"
-}

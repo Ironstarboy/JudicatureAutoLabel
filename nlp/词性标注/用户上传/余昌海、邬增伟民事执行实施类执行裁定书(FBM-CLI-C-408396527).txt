@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\余昌海、邬增伟民事执行实施类执行裁定书(FBM-CLI-C-408396527).txt",
-    "动词": "调解,标,违反,损害,执行,诉讼,确认,和解,执,依,达成,实施,申请,送达,归还,撤回,准许,作出,裁定,审理,支付,系,应予,为由,发生",
-    "形容词": "特,勇"
-}

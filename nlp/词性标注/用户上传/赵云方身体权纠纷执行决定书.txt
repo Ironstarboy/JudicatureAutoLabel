@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\赵云方身体权纠纷执行决定书.txt",
-    "动词": "决定,执行,收到,履行,如,复议,停止,即,应当,责令,不服,出生于,拒绝,确定,令,拘留,发出,可以,定,申请,查明,执",
-    "形容词": "恢,徐"
-}

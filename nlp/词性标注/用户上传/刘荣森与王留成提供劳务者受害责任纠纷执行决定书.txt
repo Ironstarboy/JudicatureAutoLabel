@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\刘荣森与王留成提供劳务者受害责任纠纷执行决定书.txt",
-    "动词": "收到,查明,决定,拘留,如,停止,执行,确定,可以,定,提供,不服,复议,申请,给付,执,生于",
-    "形容词": ""
-}

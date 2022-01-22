@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\朱双喜盗窃抗诉再审决定书.txt",
-    "动词": "符合,作出,无,逮捕,判决,定,盗窃,出生于,执行,再审,判处,犯,提出,抗诉,审,计算,审理,组成,并处,现已,解释,决定,发生,停止,进行,认定,指定,抗,监视居住",
-    "形容词": "黑,朱,明"
-}

@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\黄志伟姜闯等诈骗罪非法拘禁罪诈骗罪刑事指定管辖管辖决定书.txt",
-    "动词": "进行,指控,审查,定,犯,审判,指,指定,决定,管,辖",
-    "形容词": "最高"
-}

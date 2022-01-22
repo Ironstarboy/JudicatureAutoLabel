@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\杨海和吴满云凌英杨景现杨景芳申请国家司法救助一案司法救助决定书.txt",
-    "动词": "助,受理,系,赔偿,救,救助,相关,撤回,违背,定,审查,决定,准许,附带,申请,表示",
-    "形容词": "真实"
-}

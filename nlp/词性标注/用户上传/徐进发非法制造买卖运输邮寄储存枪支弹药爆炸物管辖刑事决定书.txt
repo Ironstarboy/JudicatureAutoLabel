@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\徐进发非法制造买卖运输邮寄储存枪支弹药爆炸物管辖刑事决定书.txt",
-    "动词": "定,辖,指控,管,犯,进行,审判,指定,决定,制造,指,审查",
-    "形容词": "最高"
-}

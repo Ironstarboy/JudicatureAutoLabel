@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\龙云根、邓浩加工合同纠纷一审民事调解书(FBM-CLI-C-408425112).txt",
-    "动词": "申请,达成,期于,包括,收取,扣除,执行,具有,主持,即,加工,确认,调解,自愿,支付,端",
-    "形容词": ""
-}

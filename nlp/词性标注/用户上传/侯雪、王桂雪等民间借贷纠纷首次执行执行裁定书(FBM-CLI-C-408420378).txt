@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\侯雪、王桂雪等民间借贷纠纷首次执行执行裁定书(FBM-CLI-C-408420378).txt",
-    "动词": "扣押,解释,确定,冻结,查明,履行,裁定,执行,查封,申请,执,借贷",
-    "形容词": ""
-}

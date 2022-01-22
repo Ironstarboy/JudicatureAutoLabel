@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\赵鹏飞合同纠纷执行决定书.txt",
-    "动词": "责令,不服,停止,定,查明,执行,履行,即,拘留,复议,执,令,收到,如,发出,决定,申请,确定,拒绝,应当,可以",
-    "形容词": "恢"
-}

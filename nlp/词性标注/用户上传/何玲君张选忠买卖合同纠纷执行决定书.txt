@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\何玲君张选忠买卖合同纠纷执行决定书.txt",
-    "动词": "执行,执,可以,收到,定,选,拘留,购销,申请,查明,确定,如,不服,复议,决定,停止,生于,给付",
-    "形容词": "恢"
-}

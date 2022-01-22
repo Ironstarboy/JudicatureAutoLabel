@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\李建超建占五民间借贷纠纷执行决定书.txt",
-    "动词": "定,执,确定,申请,收到,给付,拘留,不服,停止,决定,如,借贷,生于,建,可以,占,查明,复议,执行",
-    "形容词": "恢"
-}

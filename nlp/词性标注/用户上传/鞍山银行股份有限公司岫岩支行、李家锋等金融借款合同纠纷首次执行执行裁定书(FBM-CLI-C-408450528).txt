@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\鞍山银行股份有限公司岫岩支行、李家锋等金融借款合同纠纷首次执行执行裁定书(FBM-CLI-C-408450528).txt",
-    "动词": "委托,审理,位于,进行,执,系,偿还,用于,缴纳,申请,开发,作出,交付给,执行,剩余,发生,拍卖,达成,临街,中的",
-    "形容词": "一致,密"
-}

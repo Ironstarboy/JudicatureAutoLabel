@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\冯某、潘某同居关系子女抚养纠纷民事一审民事调解书(FBM-CLI-C-408259469).txt",
-    "动词": "调解,教育,确认,审理,请求,自愿,进行,收取,审,主持,承担,抚养,记,诉称,负责,达成,具有,判,即",
-    "形容词": "普通,长"
-}

@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\蔡翠姑高凯民间借贷纠纷执行决定书.txt",
-    "动词": "确定,停止,即,履行,定,不服,可以,执行,复议,生于,查明,借贷,拒绝,发出,执,拘留,应当,申请,如,责令,收到,令,决定",
-    "形容词": ""
-}

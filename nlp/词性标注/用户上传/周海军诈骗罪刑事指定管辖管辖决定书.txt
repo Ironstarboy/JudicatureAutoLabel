@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\周海军诈骗罪刑事指定管辖管辖决定书.txt",
-    "动词": "审查,犯,管,辖,指控,指定,决定,进行,指,审判,定",
-    "形容词": "最高"
-}

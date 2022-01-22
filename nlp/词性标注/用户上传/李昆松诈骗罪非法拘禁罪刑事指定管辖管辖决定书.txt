@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\李昆松诈骗罪非法拘禁罪刑事指定管辖管辖决定书.txt",
-    "动词": "定,犯,进行,指,审查,辖,管,决定,指控,指定,审判",
-    "形容词": "最高"
-}

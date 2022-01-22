@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\苏建立劳务合同纠纷首次执行执行裁定书(FBM-CLI-C-408391223).txt",
-    "动词": "扣押,查封,确认,冻结,执行,执,履行,解释,裁定,建立",
-    "形容词": ""
-}

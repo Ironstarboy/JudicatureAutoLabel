@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\刘帅新租赁合同纠纷执行决定书.txt",
-    "动词": "如,拘留,履行,确定,生,不服,发出,拒绝,停止,租赁,复议,定,执,责令,可以,执行,查明,令,决定,收到,申请",
-    "形容词": "新"
-}

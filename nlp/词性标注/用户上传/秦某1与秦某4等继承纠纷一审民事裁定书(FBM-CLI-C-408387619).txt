@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\秦某1与秦某4等继承纠纷一审民事裁定书(FBM-CLI-C-408387619).txt",
-    "动词": "申请,准许,自愿,审理,诉讼,调解,继承,担任,裁定,违反,记录,撤回,委托,起诉",
-    "形容词": "朱"
-}

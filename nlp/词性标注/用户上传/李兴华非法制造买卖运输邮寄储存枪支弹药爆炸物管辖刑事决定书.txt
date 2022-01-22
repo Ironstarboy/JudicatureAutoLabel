@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\李兴华非法制造买卖运输邮寄储存枪支弹药爆炸物管辖刑事决定书.txt",
-    "动词": "指定,犯,制造,审查,指,定,管,决定,审判,指控,进行,辖",
-    "形容词": "最高"
-}

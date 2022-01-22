@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\房某某、周某某等买卖合同纠纷民事一审民事调解书(FBM-CLI-C-407877225).txt",
-    "动词": "",
-    "形容词": ""
-}

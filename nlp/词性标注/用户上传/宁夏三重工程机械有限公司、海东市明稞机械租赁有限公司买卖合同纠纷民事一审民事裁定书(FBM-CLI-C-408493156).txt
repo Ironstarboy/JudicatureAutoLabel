@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\宁夏三重工程机械有限公司、海东市明稞机械租赁有限公司买卖合同纠纷民事一审民事裁定书(FBM-CLI-C-408493156).txt",
-    "动词": "是否,审,收取,判,裁定,租赁,准许,记",
-    "形容词": "宁,重,明"
-}

@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\赵冬梅、互助县艺泽美容美发会所一分店劳动争议、人事争议执行实施执行裁定书(FBM-CLI-C-408439312).txt",
-    "动词": "申请,裁定,受理,提出,争议,仲裁,实施,美容美发,撤销,审查,执行,劳动,驳回,执,送达",
-    "形容词": "属实,青,泽"
-}

@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\青海海东平安农村商业银行股份有限公司、海东信融融资担保集团有限公司等借款合同纠纷执行实施执行裁定书(FBM-CLI-C-408258396).txt",
-    "动词": "裁定,统一,创业,申请,执,融资,撤销,实施,达成,提交,和解,开发,表示,准许,担保,执行,审查,符合,送达",
-    "形容词": "康,平安,勇,青,真实"
-}

@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\罪犯房某某受贿罪暂予监外执行决定书.txt",
-    "动词": "应该,不宜,存在,作出,所附,起至,鉴定,治疗,判决,判处,患有,执行,犯,继续,无法,结束,需,决定,执,定,报送,止,符合,复查,认定,到",
-    "形容词": "严重,危险"
-}

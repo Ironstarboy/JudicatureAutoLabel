@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\弓长岭区国成汽车修理厂、张树睿等修理合同纠纷其他民事民事调解书(FBM-CLI-C-408196582).txt",
-    "动词": "达成,确定,审,调解,具有,审理,违反,承担,给付,判,修理,成,委托,付,记,主持,自愿,诉讼",
-    "形容词": "新,洋"
-}

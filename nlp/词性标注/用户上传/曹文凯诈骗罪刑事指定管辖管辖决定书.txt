@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\曹文凯诈骗罪刑事指定管辖管辖决定书.txt",
-    "动词": "管,审查,指控,辖,犯,指定,定,审判,决定,进行,指",
-    "形容词": "最高"
-}

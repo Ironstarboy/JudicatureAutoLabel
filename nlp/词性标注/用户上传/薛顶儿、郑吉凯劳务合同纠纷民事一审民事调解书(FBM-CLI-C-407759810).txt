@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\薛顶儿、郑吉凯劳务合同纠纷民事一审民事调解书(FBM-CLI-C-407759810).txt",
-    "动词": "即,止,指定,审理,主持,支付,付清,确认,如,欠,收取,达成,申请,了结,计算,执,执行,违反,应当,给付,自愿,扣除,调解,起至,起诉,承担,履行",
-    "形容词": ""
-}

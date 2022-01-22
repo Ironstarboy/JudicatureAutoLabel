@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\白世禄、祁丰录提供劳务者受害责任纠纷执行实施执行裁定书(FBM-CLI-C-408437942).txt",
-    "动词": "缴纳,实施,申请,送达,裁定,还款,达成,执,即,发生,剩余,提供,执行",
-    "形容词": "青"
-}

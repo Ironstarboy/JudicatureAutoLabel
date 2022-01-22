@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\邢红强诈骗罪非法拘禁罪刑事指定管辖管辖决定书.txt",
-    "动词": "指控,审判,决定,进行,管,犯,辖,定,指定,指,审查",
-    "形容词": "最高"
-}

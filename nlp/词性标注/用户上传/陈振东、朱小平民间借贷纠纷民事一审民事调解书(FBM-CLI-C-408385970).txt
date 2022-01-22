@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\陈振东、朱小平民间借贷纠纷民事一审民事调解书(FBM-CLI-C-408385970).txt",
-    "动词": "约定,承担,未果,收取,偿还,自愿,还款,进行,违反,讨债,为由,给付,同意,催要,现已,急需,还清,确认,交,诉称,调解,具有,提出,借贷,剩余,主持,审理,转账",
-    "形容词": "公开,甘"
-}

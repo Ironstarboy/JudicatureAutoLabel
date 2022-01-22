@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\重庆格亿涂装工程有限公司与重庆鼎冀装饰工程有限公司建设工程合同纠纷一审民事裁定书(FBM-CLI-C-408392503).txt",
-    "动词": "符合,附,审理,自愿,负,装饰,起诉,准许,裁定,审,判,收取,提出,统一,涂装,撤回,胜,申请",
-    "形容词": "香,华贵"
-}

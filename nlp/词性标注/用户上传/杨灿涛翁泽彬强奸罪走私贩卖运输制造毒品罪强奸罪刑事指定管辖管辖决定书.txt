@@ -1,5 +1,0 @@
-{
-    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\杨灿涛翁泽彬强奸罪走私贩卖运输制造毒品罪强奸罪刑事指定管辖管辖决定书.txt",
-    "动词": "决定,管,定,审查,指定,进行,指控,指,犯,辖,审判",
-    "形容词": "最高"
-}
