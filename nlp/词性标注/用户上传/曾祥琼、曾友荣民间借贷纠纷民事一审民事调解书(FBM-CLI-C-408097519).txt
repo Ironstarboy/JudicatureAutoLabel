@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\曾祥琼、曾友荣民间借贷纠纷民事一审民事调解书(FBM-CLI-C-408097519).txt",
+    "动词": "不在,借贷,公布,调解",
+    "形容词": ""
+}

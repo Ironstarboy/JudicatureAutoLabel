@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\notification\\故意伤害刑事通知书.txt",
+    "动词": "不服,再审,审查,符合,申诉,提出,通,审判,附带,决定,知,提起",
+    "形容词": "新,最高"
+}

@@ -10,7 +10,7 @@
     </parent>
     <groupId>DataSci</groupId>
     <artifactId>judicature</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-RELEASE</version>
     <name>judicature</name>
     <description>Cj-Lqf-Lyx group&apos;s project of Data Science Basic curriculum.</description>
     <properties>

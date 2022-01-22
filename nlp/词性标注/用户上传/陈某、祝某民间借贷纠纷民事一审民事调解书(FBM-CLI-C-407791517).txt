@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\陈某、祝某民间借贷纠纷民事一审民事调解书(FBM-CLI-C-407791517).txt",
+    "动词": "提起,诉称,违反,争执,审,审理,无,还清,记,偿还,承担,剩余,确认,未果,达成,请求,借贷,考虑到,调解,主持,进行,放弃,出具,自愿,整,收取,判,归还,还款,同意",
+    "形容词": "公开,困难,甘"
+}

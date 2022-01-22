@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\notification\\非法吸收公众存款刑事通知书.txt",
+    "动词": "应当,提出,通,符合,审判,吸收,审查,犯,不予,审,知,不服,裁定,申诉,认为,判,决定",
+    "形容词": "重,强,最高,新"
+}

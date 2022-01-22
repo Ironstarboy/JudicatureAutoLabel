@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\文某、任某等机动车交通事故责任纠纷民事一审民事调解书(FBM-CLI-C-407764248).txt",
+    "动词": "违反,调解,主持,剩余,含,应,确认,给付,委托,支付,造成,收取,达成,自愿,任,诉讼,垫付,审理,赔偿,承担,放弃,共计,扣除,运",
+    "形容词": "直接"
+}

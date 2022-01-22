@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\黄亚根非法制造买卖运输邮寄储存枪支弹药爆炸物管辖刑事决定书.txt",
+    "动词": "指控,指,犯,审判,指定,定,制造,辖,进行,审查,决定,管",
+    "形容词": "最高"
+}

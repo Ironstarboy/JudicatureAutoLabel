@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\宿佩国、康平民间借贷纠纷民事一审民事调解书(FBM-CLI-C-408120290).txt",
+    "动词": "即,欠,平分,没有,达成,请求,索要,确认,自愿,审,提出,记,调解,共计,收取,具有,偿还,借贷,进行,审理,签收,判,主持,违反",
+    "形容词": "康,公开,佳,长,黑,普通,红"
+}

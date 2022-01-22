@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\安吉县兴华竹制品有限公司、竺勇买卖合同纠纷一审民事调解书(FBM-CLI-C-408147953).txt",
+    "动词": "结算,履行,足额,主持,受理,减,审理,起至,统一,付清,违反,自愿,约定,请求,申请,自任,调解,进行,放弃,达成,支付,承担,给付,确认",
+    "形容词": "直接"
+}

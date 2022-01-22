@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\张旺、逄志国追偿权纠纷恢复执行执行裁定书(FBM-CLI-C-408398370).txt",
+    "动词": "审理,追偿,无,执行,执,恢复,发生,申请",
+    "形容词": "恢"
+}

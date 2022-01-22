@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\姜某、柳某凭样品买卖合同纠纷民事一审民事调解书(FBM-CLI-C-407192901).txt",
+    "动词": "达成,违反,确认,调解,审理,同意,主持,发生,诉称,进行,自愿,请求",
+    "形容词": "公开"
+}

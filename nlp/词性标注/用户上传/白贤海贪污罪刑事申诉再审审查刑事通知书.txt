@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\notification\\白贤海贪污罪刑事申诉再审审查刑事通知书.txt",
+    "动词": "应当,裁定,符合,申诉,知,审判,贪污,通,提出,决定,审查,不服,不予",
+    "形容词": "最高"
+}

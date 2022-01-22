@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\韩某、王某买卖合同纠纷民事一审民事调解书(FBM-CLI-C-407730856).txt",
+    "动词": "委托,成,喜,诉讼",
+    "形容词": "欣悦"
+}

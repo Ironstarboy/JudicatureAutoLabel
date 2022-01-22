@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\杭州某钢结构安装有限公司、某钢构集团有限公司建设工程合同纠纷民事一审民事调解书(FBM-CLI-C-407240904).txt",
+    "动词": "安装,调解",
+    "形容词": "公开"
+}

@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\重庆市璧山区人民法院与左尧举,重庆市联普农业发展股份有限公司等罚金执行裁定书(FBM-CLI-C-408459133).txt",
+    "动词": "无,送达,查封,执,无法,划拨,进行,采取,交纳,能,查询,举有,谭,处置,解释,发现,控制,统一,候,申请,限制,闲,可以,发展,冻结,裁定,扣押,执行",
+    "形容词": "普"
+}

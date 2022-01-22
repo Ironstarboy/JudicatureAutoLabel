@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\林某、王某离婚纠纷民事一审民事调解书(FBM-CLI-C-407180931).txt",
+    "动词": "自愿,进行,请求,达成,诉称,确认,现已,审理,调解,同意,发生,违反,主持",
+    "形容词": "公开"
+}

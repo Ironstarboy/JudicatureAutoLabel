@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\耿德才、陈树桐劳务合同纠纷民事一审民事调解书(FBM-CLI-C-407223225).txt",
+    "动词": "进行,清偿,出具,自愿,调解,诉称,主持,即,违反,诉讼,具有,请求,给付,审理,确认,未获,结算,收取,达成,做,催要",
+    "形容词": ""
+}

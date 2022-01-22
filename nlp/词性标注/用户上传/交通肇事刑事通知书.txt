@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\notification\\交通肇事刑事通知书.txt",
+    "动词": "不予,符合,决定,通,知,申诉,裁定,提出,不服,审判,审查",
+    "形容词": "峻,最高"
+}

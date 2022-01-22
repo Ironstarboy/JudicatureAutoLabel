@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\刘东升、李刚财产保全财产保全执行执行裁定书(FBM-CLI-C-408440207).txt",
+    "动词": "查封,执行,保全,提供,裁定,发生,保,诉前,担保,作出,执",
+    "形容词": "徐"
+}

@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\李某、张某离婚纠纷民事一审民事调解书(FBM-CLI-C-407872141).txt",
+    "动词": "剩余,辩称,审理,承担,解除,约定,主持,偿还,争议,负责,维持,符合,发生,证明,办理,位于,登记,归,请求,可能,调解,达成,磨合,确认,购买,无,现已,诉至,自愿,诉称,抵押,签订,无法,缴,收取,同意,系",
+    "形容词": "富贵,白"
+}

@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\陈某、李某买卖合同纠纷民事一审民事调解书(FBM-CLI-C-407706344).txt",
+    "动词": "诉称,共计,进行,相关,自愿,调解,付,收取,支付,付清,主持,判,无,剩余,达成,记,催要,还款,承担,争执,推诿,符合,出具,系,审理,拖欠,请求,还欠,确认,联系,审",
+    "形容词": "甘,昭"
+}

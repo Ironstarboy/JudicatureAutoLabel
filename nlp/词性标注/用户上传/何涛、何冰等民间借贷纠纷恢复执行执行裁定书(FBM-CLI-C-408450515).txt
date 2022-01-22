@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\何涛、何冰等民间借贷纠纷恢复执行执行裁定书(FBM-CLI-C-408450515).txt",
+    "动词": "裁定,申请,送达,借贷,执,恢复,履行,执行,确定",
+    "形容词": "恢"
+}

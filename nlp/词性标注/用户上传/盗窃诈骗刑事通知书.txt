@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\notification\\盗窃诈骗刑事通知书.txt",
+    "动词": "提出,活,审判,认为,申诉,判,知,审查,符合,通,应当,决定,犯,不予,审,裁定,不服",
+    "形容词": "宁,新,最高,重"
+}

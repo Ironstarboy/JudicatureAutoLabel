@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\郑发兴非法持有私藏枪支弹药再审审查与审判监督刑事决定书.txt",
+    "动词": "判处,执行,停止,审,发生,应当,再审,持有,作出,定,管制,组成,发现,审判,确有,进行,判决,犯,决定",
+    "形容词": ""
+}

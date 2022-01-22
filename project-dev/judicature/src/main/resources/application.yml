@@ -58,7 +58,7 @@ spring:
 
   datasource:
     url:
-    username: 
+    username:
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver
 

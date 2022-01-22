@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\李晶、王岩等房屋买卖合同纠纷首次执行执行裁定书(FBM-CLI-C-408389046).txt",
+    "动词": "得到,确保,确定,拍卖,投资,执行,变卖,能,列,划拨,超过,履行,扣押,执,申请,发生,裁定,开发,查封,应当,扣留,提取,旅游,冻结,另计",
+    "形容词": "全面,及时"
+}

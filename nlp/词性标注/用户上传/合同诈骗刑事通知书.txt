@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\notification\\合同诈骗刑事通知书.txt",
+    "动词": "再审,审查,决定,审判,知,申诉,符合,不予,犯,通,提出,认为,审,不服,判",
+    "形容词": "新,重,最高"
+}

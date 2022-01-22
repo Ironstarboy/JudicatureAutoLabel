@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\孙宝奇、关永红等债权转让合同纠纷恢复执行执行裁定书(FBM-CLI-C-408398942).txt",
+    "动词": "转让,和解,恢复,无,不予,执,作出,履行,附,工作,同意,确定,试行,裁定,相关,审理,执行,申请,援引,达成",
+    "形容词": "恢,豪"
+}

@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\notification\\杜世波劳动争议恢复执行执行通知书(FBM-CLI-C-408428376).txt",
+    "动词": "系,说明,劳动,确定,恢复,共计,标,争议,执行,履行,申请,执,审理,提交,现已",
+    "形容词": "恢"
+}

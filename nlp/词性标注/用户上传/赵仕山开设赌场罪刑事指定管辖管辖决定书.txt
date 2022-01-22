@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\赵仕山开设赌场罪刑事指定管辖管辖决定书.txt",
+    "动词": "犯,指,指定,审判,进行,指控,定,审查,决定,管,辖,开设",
+    "形容词": "最高"
+}

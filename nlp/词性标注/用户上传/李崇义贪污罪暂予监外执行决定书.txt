@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\李崇义贪污罪暂予监外执行决定书.txt",
+    "动词": "继续,证明,诊断,下发,送,执,交付,附,定,作出,即,执行,工作,进行,矫正,联合,患有,判决,提交,起至,止,判处,稽核,决定,表现",
+    "形容词": "宜,属实"
+}

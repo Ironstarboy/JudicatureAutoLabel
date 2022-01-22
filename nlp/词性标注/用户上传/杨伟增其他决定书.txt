@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\杨伟增其他决定书.txt",
+    "动词": "违反,不服,作出,申请,准许,自愿,撤回,定,请求,增,决定,复议,提出,审查,议",
+    "形容词": ""
+}

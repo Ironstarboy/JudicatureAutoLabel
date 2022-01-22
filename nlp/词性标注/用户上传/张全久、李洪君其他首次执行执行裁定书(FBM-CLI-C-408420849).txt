@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\张全久、李洪君其他首次执行执行裁定书(FBM-CLI-C-408420849).txt",
+    "动词": "责令,履行,申请,裁定,发生,冻结,解释,执,确定,执行,作出",
+    "形容词": ""
+}

@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\decision\\韩风英暂予监外执行决定书.txt",
+    "动词": "判处,并处,申请,执,出具,容留,进行,提出,定,犯,患有,执行,不宜,治疗,犯罪,相关,患,作出,取保候审,管制,诊断,为由,决定,需,证明",
+    "形容词": ""
+}

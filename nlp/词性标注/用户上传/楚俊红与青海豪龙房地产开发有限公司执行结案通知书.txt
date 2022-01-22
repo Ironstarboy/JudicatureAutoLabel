@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\notification\\楚俊红与青海豪龙房地产开发有限公司执行结案通知书.txt",
+    "动词": "执,作出,承担,工作,开发,和解,办案,申请,结,生,给付,剩余,执行,发生,确定,达成,未能,整,自愿,通,试行,履行,统一,知",
+    "形容词": "宏伟,豪,青,红"
+}
