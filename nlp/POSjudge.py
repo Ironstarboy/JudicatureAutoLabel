@@ -1,10 +1,5 @@
 import re
-
-"""
-将分词结果转换为区间
-:param segmentation: 商品 和 服务
-:return: [(0, 2), (2, 3), (3, 5)]
-"""
+# 分词效果评判
 
 
 def to_region(segmentation: str) -> list:
