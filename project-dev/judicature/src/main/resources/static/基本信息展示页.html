@@ -45,8 +45,6 @@
             info_caseno(obj.caseno)
         }
         window.onload = getcookie
-
-
     </script>
 </head>
 
@@ -61,7 +59,9 @@
                 <p><b>文书类型</b><span id="info_category"></span></p>
                 <p><b>裁判日期:</b><span id="info_date"></span></p>
                 <p><b>案号:</b><span id="info_caseno"></span></p>
-                <div class="main-btn"><a href="JavaScript:function10();">可视化</a></div>
+                <!--<div class="main-btn"><a href="JavaScript:function10();">可视化</a></div>-->
+                <input type="submit" value="可视化" onclick="function10();" style="margin-left: 30%;">
+
             </div>
         </div>
         <iframe style="width:800px; height:800px;float:right" id="detail" scrolling="no" frameborder="0"></iframe>

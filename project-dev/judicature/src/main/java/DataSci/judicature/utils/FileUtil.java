@@ -10,6 +10,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
@@ -113,6 +114,7 @@ public class FileUtil {
             byte[] buf = new byte[1024];
             while ((len = bis.read(buf)) != -1) {
                 bos.write(buf, 0, len);
+                bos.flush();
             }
             bis.close();
             fos.close();
@@ -197,26 +199,44 @@ public class FileUtil {
     /**
      * 文件展示 和文件下载不同点就是要展示题目
      */
-    public void show(String filename, HttpServletResponse res, String name, String format) throws IOException {
+    public void show(String filename, HttpServletResponse res, String name) throws IOException {
         // 发送给客户端的数据
         res.setCharacterEncoding("UTF-8");
         PrintWriter writer = res.getWriter();
         writer.write(name + System.lineSeparator());
 
         BufferedReader br;
-        if ("doc".equals(format))
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(filename), "GBK"));
-        else
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(filename), StandardCharsets.UTF_8));
+        String encoding = getEncoding(new File(filename));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(filename), encoding));
 
         String line;
         while ((line = br.readLine()) != null) {
+            System.out.println(new String(line.getBytes(StandardCharsets.UTF_8)));
             writer.write(new String(line.getBytes(StandardCharsets.UTF_8)) + System.lineSeparator());
             writer.flush();
         }
         writer.close();
         br.close();
     }
+
+    public void showWithoutTitle(String filename, HttpServletResponse res) throws IOException {
+        // 发送给客户端的数据
+        res.setCharacterEncoding("UTF-8");
+        PrintWriter writer = res.getWriter();
+
+        BufferedReader br;
+        String encoding = getEncoding(new File(filename));
+        br = new BufferedReader(new InputStreamReader(new FileInputStream(filename), encoding));
+
+        String line;
+        while ((line = br.readLine()) != null) {
+            writer.write(line + System.lineSeparator());
+            writer.flush();
+        }
+        writer.close();
+        br.close();
+    }
+
 
     public void transfer(String fileName, String path) throws IOException {
         File file = new File(fileName);
@@ -252,20 +272,17 @@ public class FileUtil {
      */
     private void classify(File file, String dirPath) throws IOException {
         String filename = file.getName();
-        int i = filename.lastIndexOf(".");
-        String name = filename.substring(0, i);
-        String ver = name.substring(name.length() - 3);
-        if ("裁定书".equals(ver)) {
+        if (filename.contains("裁定书")) {
             readAndWrite(file, dirPath + "adjudication\\" + file.getName());
-        } else if ("判决书".equals(ver)) {
+        } else if (filename.contains("判决书")) {
             readAndWrite(file, dirPath + "judgment\\" + file.getName());
-        } else if ("调解书".equals(ver)) {
+        } else if (filename.contains("调解书")) {
             readAndWrite(file, dirPath + "mediate\\" + file.getName());
-        } else if ("通知书".equals(ver)) {
+        } else if (filename.contains("通知书")) {
             readAndWrite(file, dirPath + "notification\\" + file.getName());
-        } else if ("决定书".equals(ver)) {
+        } else if (filename.contains("决定书")) {
             readAndWrite(file, dirPath + "decision\\" + file.getName());
-        } else if ("支付令".equals(ver)) {
+        } else if (filename.contains("支付令")) {
             readAndWrite(file, dirPath + "order\\" + file.getName());
         } else {
             readAndWrite(file, dirPath + "else\\" + file.getName());
@@ -294,5 +311,61 @@ public class FileUtil {
         bos.close();
         bis.close();
     }
+
+    /**
+     * 识别编码
+     */
+    public String getEncoding(File file) throws IOException {
+
+        BufferedReader br;
+
+        List<Charset> encodes = new java.util.ArrayList<>();
+        encodes.add(StandardCharsets.UTF_8);
+        encodes.add(Charset.forName("GBK")); //兼容gb2312  21886个
+        encodes.add(StandardCharsets.US_ASCII);
+        encodes.add(StandardCharsets.ISO_8859_1);
+        encodes.add(StandardCharsets.UTF_16BE);
+        encodes.add(StandardCharsets.UTF_16LE);
+        encodes.add(StandardCharsets.UTF_16);
+
+        for (Charset charset : encodes) {
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charset));
+            String str;
+            br.readLine();
+            br.readLine();
+            br.readLine();
+            while ((str = br.readLine()) != null && str.matches("[\\s]"));
+            br.close();
+                if (charset.newEncoder().canEncode(str)) {
+                    return charset.name();
+                }
+        }
+        return "unknown";
+    }
+
+    public  String getFileEncode(File fileName) {
+        String charSet = "GBK";
+        try {
+            FileInputStream fis = new FileInputStream(fileName);
+            byte[] bf = new byte[3];
+            fis.read(bf);
+            fis.close();
+            if (bf[0] == -17 && bf[1] == -69 && bf[2] == -65) {
+                    charSet = "UTF-8";
+            } else if ((bf[0] == -1 && bf[1] == -2)) {
+                    charSet = "Unicode";
+            } else if ((bf[0] == -2 && bf[1] == -1)) {
+                    charSet = "Unicode big endian";
+            } else {
+                    charSet = "GBK";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return charSet;
+
+    }
+
 
 }

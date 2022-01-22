@@ -1,21 +1,28 @@
 package DataSci.judicature;
 
 import DataSci.judicature.service.FileService;
+import DataSci.judicature.service.PythonService;
+import DataSci.judicature.service.SpyderService;
 import DataSci.judicature.service.impl.FileServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.Date;
 
 @SpringBootTest
 class JudicatureApplicationTests {
 
     @Value("${PATH}")
     private String PATH;
+
+    @Autowired
+    private SpyderService spyderService;
+
+    @Autowired
+    private PythonService pythonService;
 
     @Test
     void contextLoads() {
@@ -59,5 +66,29 @@ class JudicatureApplicationTests {
             e.printStackTrace();
         }
     }
+
+    @Test
+    void execSpy() throws Exception {
+        String srt = "2010.10.10";
+        String end = "2022.1.19";
+        String tag = new Date().getTime()+"";
+
+        spyderService.spyder(srt,end, 10,tag);
+    }
+
+    @Test
+    void execExcel() throws IOException {
+        String path = "D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\nlp\\相似文章路径.xlsx";
+
+        BufferedReader br =new BufferedReader(new FileReader(path));
+        String line;
+        while ((line = br.readLine())!=null){
+            System.out.println(line);
+        }
+
+        br.close();
+    }
+
+
 
 }

@@ -38,30 +38,24 @@
 	<script src="js/main_page.js"></script>
 
 	<script>
-		<!--jquery异步提交数据-->
-		function submit2() {
-			var type = "upload";          //后台接收时需要的参数名称，自定义即可
-			var id = "file";            //即input的id，用来寻找值
-			var formData = new FormData();
-			formData.append(type, $("#" + id)[0].files[0]);    //生成一对表单属性
+		window.onload = function(){
+			var str = window.localStorage.getItem('search');
+			window.localStorage.removeItem('search');//清除字符串
 			$.ajax({
-				type: "POST",           //因为是传输文件，所以必须是post
-				url: '/upload/file',         //对应的后台处理类的地址
-				data: formData, //前端给后端
+				type: "GET",
+				url: '/static/init?fileName='+str,         //对应的后台处理类的地址
+				/*data:{fileName:str},*/
 				processData: false,
 				contentType: false,
 				success: function (data) {//后端给前端
+					console.log(data)
 					$('#demo7').val(data);//显示
 				}
 			});
+			$('#demo7').val(str);//显示
 		}
-		function submitTXT() {
-			var words = $('#demo7').val();
 
-			$.post("/upload/words", {txt: words}, function (data) {
-				alert(data)
-			}, "text")
-		}
+		<!--jquery异步提交数据-->
 
 		</script>
 	<style>
@@ -98,8 +92,8 @@
 
 	<!-- Header Area 迭代：方便文书阅读删除了sticky-area-->
 
-	<header id="header-2" class="header-area absolute-header">
-		<div class="">
+	<header id="header-2" class="header-area absolute-header pt-50">
+		<div class="sticky-area">
 			<div class="navigation">
 				<div class="container-fluid">
 					<div class="row">
@@ -113,15 +107,15 @@
 							<div class="main-menu">
 								<nav class="navbar navbar-expand-lg">
 									<button class="navbar-toggler" type="button" data-toggle="collapse"
-										data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-										aria-expanded="false" aria-label="Toggle navigation">
+											data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+											aria-expanded="false" aria-label="Toggle navigation">
 										<span class="navbar-toggler-icon"></span>
 										<span class="navbar-toggler-icon"></span>
 										<span class="navbar-toggler-icon"></span>
 									</button>
 
 									<div class="collapse navbar-collapse justify-content-center"
-										id="navbarSupportedContent">
+										 id="navbarSupportedContent">
 										<ul class="navbar-nav m-auto">
 											<li class="nav-item">
 												<a class="nav-link active" href="首页.html">首页
@@ -137,19 +131,19 @@
 												</a>
 											</li>
 											<li class="nav-item">
-												<a class="nav-link" href="数据展示.html">数据展示
+												<a class="nav-link" href="案例库.html">案例库
 													<span class="sub-nav-toggler">
 													</span>
 												</a>
 											</li>
 
 											<li class="nav-item">
-												<a class="nav-link" href="#">高频数据
+												<a class="nav-link">相关科普
 													<span class="sub-nav-toggler">
 													</span>
 												</a>
 												<ul class="sub-menu">
-													<li><a href="高频案件.html">高频案件</a></li>
+													<li><a href="数据展示.html">数据展示</a></li>
 													<li><a href="法条推荐.html">法条推荐</a></li>
 												</ul>
 											</li>
@@ -166,7 +160,7 @@
 						<div class="col-lg-3 col-12 text-right">
 							<div class="header-right-content">
 								<a href="https://wenshu.court.gov.cn/website/wenshu/181029CR4M5A62CH/index.html"
-									class="main-btn">更多信息</a>
+								   class="main-btn">更多信息</a>
 							</div>
 						</div>
 					</div>
@@ -195,36 +189,37 @@
 	<div class="col-lg-12" style="margin-bottom: -25px">
 		<form action="服务器地址" method="get"></form>
 		<p>
-			<button type="submit">爬取案件</button>
+			<button type="submit" onclick="spyder()">爬取案件</button>
 			&nbsp;开始日期：
-			<input type="date" name="start_date" id="start_date" value="2021-12-10" style="border: 1px solid #ddd">
+			<input type="date" name="start_date" id="start_date" value="2015-01-22" style="border: 1px solid #ddd">
 			&nbsp;结束日期：
-			<input type="date" name="end_date" id="end_date" value="2021-12-10" style="border: 1px solid #ddd">
+			<input type="date" name="end_date" id="end_date" value="2022-01-22" style="border: 1px solid #ddd">
+			&nbsp;文书数量：
+			<input type="number" step="10" min="0" max="100" name="number" id="number" value="0" style="border: 1px solid #ddd">
 			</form>
 		</p>
 
 		<p>
-			<input type="submit" value="上传" onclick="submit2();" />
-			<input id="file" type="file" />
+			<input type="submit" value="上传" onclick="close();submit2();"/>
+			<input id="file" type="file"/>
 
-			<input type="submit" value="提交" onclick="submitTXT()" />
+			<input type="submit" value="提交" onclick="close();submitTXT()"/>
 			<span class="popular-tag">
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span><a href="JavaScript:sentence();">摘要生成</a></span>
 				<span><a href="JavaScript:function2();">基本信息</a></span>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<span><a href="JavaScript:function3();">自动分词</a></span>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<span><a href="JavaScript:function4();">法律依据</a></span>
+				<span><a href="JavaScript:getVadj();function3();">自动分词</a></span>
+				<span><a href="JavaScript:function4();">相似案件</a></span>
 			</span>
 
 
 		</p>
 	</div>
-	<div id="demo7-tools" style="margin-left: 75%;height: 3%;margin-bottom: 4px;">
+	<div id="demo7-tools" style="margin-left: 82.5%;height: 3%;margin-bottom: 4px;">
 		<a href="#" class="disable">隐藏高亮 </a> |
 		<a href="#" class="enable">显示高亮</a>
 	</div>
-<!--	文书内容显示框-->
+	<!--	文书内容显示框-->
 	<form action="">
 		<div class="comments-form">
 			<div class="row">
@@ -235,6 +230,7 @@
 		</div>
 	</form>
 
+
 	</div>
 
 	<!-- 这里根据三种情况选择展示页面 -->
@@ -243,7 +239,6 @@
 	</iframe>
 
 	<!-- Footer Area -->
-
 	<footer class="footer-area dark-bg wow fadeIn" data-wow-delay=".3s">
 		<div class="container">
 			<div class="footer-up">
@@ -251,6 +246,7 @@
 					<div class="col-lg-3 col-md-6 col-sm-12">
 						<div class="logo">
 							<img src="picture/logo-white.png" alt="expoint-logo">
+							<p>我们是司法大数据的分析者。我们希望用数据创造更公正的明天。</p>
 						</div>
 					</div>
 					<div class="col-lg-2 offset-lg-1 col-md-6 com-sm-12">
@@ -258,8 +254,8 @@
 						<ul>
 							<li>
 								<a href="文书分析.html">文书分析</a>
+								<a href="案例库.html">案例库</a>
 								<a href="数据展示.html">数据展示</a>
-								<a href="高频案件.html">高频案件</a>
 								<a href="法条推荐.html">法条推荐</a>
 								<a href="联系我们.html">联系我们</a>
 							</li>
@@ -269,15 +265,23 @@
 						<h5>涉及领域</h5>
 						<ul>
 							<li>
-								<a href="#"><span>-</span> 宪法</a>
-								<a href="#"><span>-</span> 民事</a>
-								<a href="#"><span>-</span> 刑事 </a>
-								<a href="#"><span>-</span> 经济</a>
-								<a href="#"><span>-</span> 行政</a>
+								<a href="高频法条.html"><span>-</span> 宪法</a>
+								<a href="高频法条.html"><span>-</span> 民事</a>
+								<a href="高频法条.html"><span>-</span> 刑事 </a>
+								<a href="高频法条.html"><span>-</span> 经济</a>
+								<a href="高频法条.html"><span>-</span> 行政</a>
 							</li>
 						</ul>
 					</div>
-
+					<div class="col-lg-3 col-md-6">
+						<div class="subscribe-form">
+							<h5>联系我们</h5>
+							<p>如果你有任何建议，或者像问答机器人等司法大数据的分析灵感，欢迎联系我们。</p>
+							<form action="联系我们.html">
+								<button class="main-btn">联系我们</button>
+							</form>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -287,9 +291,9 @@
 	<!-- Scroll Top Area -->
 	<a href="#top" class="go-top"><i class="las la-angle-up"></i></a>
 	<script>
-		var data1 = ["Lorem ipsum"];
-		function function3() {
-	// var data1 = '{"gender":["test3","vulputate","test1"],"criminals":["lyxnb"],"ethnicity":["han"],"courts":["法院"],"accusation":["抢劫"],"birthplace":["中国"]}'
+		var data1;
+		/*function function3() {
+			//获取名词
 			$.ajax({
 			type: "POST",
 			url: '/download/fenci',
@@ -300,28 +304,56 @@
 				//设置localStorage，将json字符串传给分词页
 				window.localStorage.setItem('user',last);
 				data1 = data.gender.concat(data.criminals).concat(data.ethnicity).concat(data.birthplace).concat(data.accusation).concat(data.courts)
-				document.getElementById("3cases").src = "分词页.html"
-				test()
+				test()//显示高亮
+				}
+			});
+			//获取动词形容词
+			$.ajax({
+				type: "POST",
+				url: '/download/vadj',
+				processData: false,
+				contentType: false,
+				success: function (data) {
+					window.localStorage.setItem('vadj',data);//传的是json字符串
+					document.getElementById("3cases").src = "分词页.html"
 				}
 			});
 
-		}
+		}*/
 
-		function function2() {
+		function function3() {
+			//获取名词
 			$.ajax({
 				type: "POST",
-				url: '/download/info',
+				url: '/download/fenci',
 				processData: false,
 				contentType: false,
 				success: function (data) {
 					var last = JSON.stringify(data)//js对象转json字符串
-					//设置localStorage，将json字符串传给分词页
-					window.localStorage.setItem('info',last);
-					document.getElementById("3cases").src = "基本信息展示页.html"
+					window.localStorage.setItem('user',last);
+					data1 = data.gender.concat(data.criminals).concat(data.ethnicity).concat(data.birthplace).concat(data.accusation).concat(data.courts)
+					document.getElementById("3cases").src = "分词页.html"
+					test()//显示高亮
 				}
 			});
 
+			//获取动词形容词
+
 		}
+		function getVadj(){
+			$.ajax({
+				type: "POST",
+				url: '/download/vadj',
+				processData: false,
+				contentType: false,
+				success: function (data) {
+					console.log(data)
+					window.localStorage.setItem('vadj',data);//传的是json字符串
+					/*document.getElementById("3cases").src = "分词页.html"*/
+				}
+			});
+		}
+
 
 		function appendScript(src, callback) {
 			var head = document.getElementsByTagName('head')[0];
@@ -363,6 +395,13 @@
 			addDemo7Events();
 		}
 
+		function close(){
+			$('#demo7-tools .disable').click(function (e) {
+				$('#demo7').highlightTextarea('disable');
+				e.preventDefault();
+			});
+		}
+
 
 		function addDemo7Events() {
 			$('#demo7-textarea mark')
@@ -373,6 +412,120 @@
 						$('#demo7-last-event').html('Mouseout');
 					});
 		}
+
+		function submit2() {
+				/*$('#demo7').highlightTextarea('disable');*/
+				/*e.preventDefault();*/
+
+
+			var type = "upload";          //后台接收时需要的参数名称，自定义即可
+			var id = "file";            //即input的id，用来寻找值
+			var formData = new FormData();
+			formData.append(type, $("#" + id)[0].files[0]);    //生成一对表单属性
+			$.ajax({
+				type: "POST",           //因为是传输文件，所以必须是post
+				url: '/upload/file',         //对应的后台处理类的地址
+				data: formData, //前端给后端
+				processData: false,
+				contentType: false,
+				success: function (data) {//后端给前端
+					alert("提交成功！")
+					console.log(data)
+					$('#demo7').val(data);//显示
+				}
+			});
+		}
+		function submitTXT() {
+
+				/*$('#demo7').highlightTextarea('disable');*/
+				/*e.preventDefault();*/
+
+
+			var words = $('#demo7').val();
+
+			$.post("/upload/words", {txt: words}, function (data) {
+				alert(data)
+			}, "text")
+		}
+		/*function sentence(){
+			$.ajax({
+				type: "POST",           //因为是传输文件，所以必须是post
+				url: '/download/sentence',         //对应的后台处理类的地址
+				processData: false,
+				contentType: false,
+				success: function (data) {//后端给前端
+
+					console.log(data)
+					$('#demo6').val(data);//显示
+				}
+			});
+		}*/
+		function sentence(){
+			$.ajax({
+				type: "POST",           //因为是传输文件，所以必须是post
+				url: '/download/sentence',         //对应的后台处理类的地址
+				processData: false,
+				contentType: false,
+				success: function (data) {//后端给前端
+					window.localStorage.setItem('summarise',data);
+					document.getElementById("3cases").src = "摘要生成.html"
+				}
+			});
+		}
+
+
+
+		function function2() {
+			$.ajax({
+				type: "POST",
+				url: '/download/info',
+				processData: false,
+				contentType: false,
+				success: function (data) {
+					var last = JSON.stringify(data)//js对象转json字符串
+					//设置localStorage，将json字符串传给分词页
+					window.localStorage.setItem('info',last);
+					document.getElementById("3cases").src = "基本信息展示页.html"
+				}
+			});
+
+		}
+
+		function spyder() {
+			var srt = $("#start_date").val();
+			var end = $("#end_date").val();
+			var num = $("#number").val();
+
+			if (num > 100) {
+				alert("最多只能爬取100份！");
+			} else {
+				var len = num.length;
+				num = num.substring(0, len - 1) + '0';
+
+				var msg = "start=" + srt + "&end=" + end + "&num=" + num;
+				alert("已在后台自动爬取"+num+"份文书，爬取完成将自动下载")
+				var url = "/download/spyder?" + msg;
+				var a = document.createElement("a");
+				a.href = url;
+				a.click();
+			}
+		}
+
+		function function4() {
+			$.ajax({
+				type: "POST",
+				url: '/download/recommend',
+				processData: false,
+				contentType: false,
+				success: function (data) {
+					/*alert("案件推荐来咯！")*/
+					window.localStorage.setItem('recommend',data);
+					document.getElementById("3cases").src = "相似案件.html"
+				}
+			});
+
+		}
+
 
 		function test() {
 			var jqv = "jquery-1.11.1.min.js";

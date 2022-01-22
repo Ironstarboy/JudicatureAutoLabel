@@ -40,17 +40,17 @@ public class FileServiceNotOverWriteImpl implements FileService {
 
             String type;
 
-            if ("裁定书".equals(ver)) {
+            if (name.contains("裁定书")) {
                 type = "adjudication\\";
-            } else if ("判决书".equals(ver)) {
+            } else if (name.contains("判决书")) {
                 type = "judgment\\";
-            } else if ("调解书".equals(ver)) {
+            } else if (name.contains("调解书")) {
                 type = "mediate\\";
-            } else if ("通知书".equals(ver)) {
+            } else if (name.contains("通知书")) {
                 type = "notification\\";
-            } else if ("决定书".equals(ver)) {
+            } else if (name.contains("决定书")) {
                 type = "decision\\";
-            } else if ("支付令".equals(ver)) {
+            } else if (name.contains("支付令")) {
                 type = "order\\";
             } else {
                 type = "else\\";
@@ -111,6 +111,9 @@ public class FileServiceNotOverWriteImpl implements FileService {
                 String line;
                 int index = 1;
                 while ((line = br.readLine()) != null && index < 3) {
+                    if (line.length() == 0 || !line.contains("法院"))
+                        continue;
+
                     String[] words = line.split(" ");
                     line = StringUtils.join(words, "");
                     if (line.contains("裁定书")) {

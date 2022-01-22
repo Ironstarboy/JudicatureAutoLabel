@@ -5,18 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>分词页</title>
     <script src="js/main_page.js"></script>
 
-    <link href="css/bootstrap_966.css" rel='stylesheet' type='text/css'/>
-    <link href="css/style_966.css" rel='stylesheet' type='text/css'/>
+    <link href="css/bootstrap_966.css" rel='stylesheet' type='text/css' />
+    <link href="css/style_966.css" rel='stylesheet' type='text/css' />
     <script src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap_966.js"></script>
 
     <script>
         function getcookie() {
             //获取传递过来的localStorage 可以用obj.来访问
-            // var str = '{"gender":["test3","vulputate","test1"],"criminals":["lyxnb"],"ethnicity":["han"],"courts":["法院"],"accusation":["抢劫"],"birthplace":["中国"]}'
             var str = window.localStorage.getItem('user');
             window.localStorage.removeItem('user');//清除字符串
             var obj = JSON.parse(str)
@@ -26,10 +25,12 @@
             init_birthplace(obj.birthplace)
             init_accusation(obj.accusation)
             init_courts(obj.courts)
+            var str1 = window.localStorage.getItem('vadj');
+            window.localStorage.removeItem('vadj');
+            var obj1 = JSON.parse(str1)
+            init_else(obj1.动词,obj1.形容词)
         }
-
         window.onload = getcookie
-
         function downloadtxt() {
             var url = "/download/txt";
             var a = document.createElement("a");
@@ -48,15 +49,12 @@
                     params += "&";
                 }
             })
-
+           /* alert(params)*/
             var url = "/download/json?" + params;
             var a = document.createElement("a");
             a.href = url;
             a.click();
-
         }
-
-
     </script>
 </head>
 
@@ -67,8 +65,7 @@
             <!-- tabs -->
             <ul id="myTab" class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#criminals" id="criminals-tab" role="tab"
-                                                          data-toggle="tab" aria-controls="criminals"
-                                                          aria-expanded="true">当事人</a></li>
+                                                          data-toggle="tab" aria-controls="criminals" aria-expanded="true">当事人</a></li>
                 <li role="presentation"><a href="#gender" role="tab" id="gender-tab" data-toggle="tab"
                                            aria-controls="gender">性别</a></li>
                 <li role="presentation"><a href="#ethnicity" role="tab" id="ethnicity-tab" data-toggle="tab"
@@ -79,6 +76,8 @@
                                            aria-controls="accusation">案由</a></li>
                 <li role="presentation"><a href="#courts" role="tab" id="courts-tab" data-toggle="tab"
                                            aria-controls="courts">相关法院</a></li>
+                <li role="presentation"><a href="#else" role="tab" id="else-tab" data-toggle="tab"
+                                           aria-controls="else">其他</a></li>
                 <li role="presentation">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </li>
@@ -86,7 +85,7 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </li>
                 <li role="presentation">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </li>
                 <li role="presentation"><a href="#summary" role="tab" id="summary-tab" data-toggle="tab"
                                            aria-controls="summary">标注汇总</a></li>
@@ -109,6 +108,8 @@
                 <div role="tabpanel" class="tab-pane fade" id="accusation" aria-labelledby="accusation-tab">
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="courts" aria-labelledby="courts-tab">
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="else" aria-labelledby="else-tab">
                 </div>
                 <!-- 标注汇总 -->
                 <div role="tabpanel" class="tab-pane fade" id="summary" aria-labelledby="summary-tab">
@@ -138,12 +139,10 @@
                     </button>
                     </p>
                     <p>
-                        其他：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="summary_text" value=""
+                        其他：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="else_text" value=""
                                                                             style="width:70%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button
                             type="submit" onclick="downloadjson()">保存标注
                     </button>
-                    </p>
-
                     </p>
                 </div>
             </div>

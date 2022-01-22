@@ -33,7 +33,6 @@ public class FileInputController {
 
     @RequestMapping("/file")
     public String save(MultipartFile upload, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         boolean flag = true;
 
         if (upload == null || upload.isEmpty()) {
@@ -87,6 +86,7 @@ public class FileInputController {
 
         if (flag) {
             // return "上传成功！";
+            session.setAttribute("static",false);//设为动态资源
             request.getRequestDispatcher("/download/view").forward(request, response);//转发
         } else
             return "上传失败！";
@@ -106,12 +106,6 @@ public class FileInputController {
         String newName = name;
         File f = new File(location + "txt\\else\\" + newName + ".txt");
         //这里传入的就直接覆盖掉
-/*
-        int i = 1;
-        while ((f = new File(location + "txt\\else\\" + newName + ".txt")).exists()) {
-            newName = name + "(" + i + ")";
-            i++;
-        }*/
 
         try {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f.getAbsolutePath())));
@@ -129,6 +123,7 @@ public class FileInputController {
         session.setAttribute("format", "txt");
         session.setAttribute("userUploadFile", f.getAbsolutePath());
         session.setAttribute("category", "else\\");
+        session.setAttribute("static",false);//设为动态资源
 
         boolean success = fileService.transferTXT(session, true);
 

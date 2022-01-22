@@ -32,7 +32,67 @@
 	<!-- jquery -->
 	<script src="js/jquery-1.12.4.min.js"></script>
 	<script src="js/main_page.js"></script>
+	<script>
+		window.onload = function(){
+			$(".inputtable").keyup(function(){
+				var content=$(this).val();
+				//如果当前搜索内容为空，无须进行查询
+				if(content=="" || !isChn(content)){
+					$("#context1").css("display","none");
+					return ;
+				}
+				//由于浏览器的缓存机制 所以我们每次传入一个时间
+				var time=new Date().getTime();
+				//如果有内容，发给后端
+				$.ajax({
+					type:"get",
+					url:'/download/search',
+					data:{name:content,time:time},
+					success:function(data){
+						//拼接html
+						var res=data.split(",");//一个个文件名
+						var html="";
+						for(var i=0;i<res.length;i++){
+							//每一个div还有鼠标移出、移入点击事件
+							html+="<div onclick='setSearch_onclick(this)' onmouseout='changeBackColor_out(this)' onmouseover='changeBackColor_over(this)' style='margin-left:5px;height: 30px;line-height: 170%'>"+res[i]+"</div>";
+						}
+						$("#context1").html(html);
+						//显示为块级元素
+						$("#context1").css("display","block");
+					}
+				});
+			});
+		}
 
+		//判断输入是否为中文
+		function isChn(str) {
+			var reg = /^[\u4E00-\u9FA5]+$/;
+			if (!reg.test(str)) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		//鼠标移动到内容上改变div颜色
+		function changeBackColor_over(div){
+			$(div).css("background-color","#CCCCCC");
+		}
+		//鼠标离开内容恢复div颜色
+		function changeBackColor_out(div){
+			$(div).css("background-color","");
+		}
+		//将点击的内容放到搜索框
+		function setSearch_onclick(div){
+			$(".inputtable").val(div.innerText);//点击的div值赋给文本框
+			$("#context1").css("display","none");//让下拉提示框消失
+		}
+		function submitContent(){
+			var str = $(".inputtable").val();
+			window.localStorage.setItem('search',str);//这里只传了文件名，没有读取txt里的内容
+			window.location.href='文书分析.html';
+		}
+	</script>
 
 </head>
 
@@ -87,7 +147,7 @@
 					<div class="row">
 						<div class="col-lg-3 col-12">
 							<div class="logo">
-								<a class="navbar-brand" href="index.html"><img src="picture/logo-white.png" alt=""></a>
+								<a class="navbar-brand" href="首页.html"><img src="picture/logo-white.png" alt=""></a>
 							</div>
 						</div>
 
@@ -95,15 +155,15 @@
 							<div class="main-menu">
 								<nav class="navbar navbar-expand-lg">
 									<button class="navbar-toggler" type="button" data-toggle="collapse"
-										data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-										aria-expanded="false" aria-label="Toggle navigation">
+											data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+											aria-expanded="false" aria-label="Toggle navigation">
 										<span class="navbar-toggler-icon"></span>
 										<span class="navbar-toggler-icon"></span>
 										<span class="navbar-toggler-icon"></span>
 									</button>
 
 									<div class="collapse navbar-collapse justify-content-center"
-										id="navbarSupportedContent">
+										 id="navbarSupportedContent">
 										<ul class="navbar-nav m-auto">
 											<li class="nav-item">
 												<a class="nav-link active" href="首页.html">首页
@@ -119,19 +179,19 @@
 												</a>
 											</li>
 											<li class="nav-item">
-												<a class="nav-link" href="数据展示.html">数据展示
+												<a class="nav-link" href="案例库.html">案例库
 													<span class="sub-nav-toggler">
 													</span>
 												</a>
 											</li>
 
 											<li class="nav-item">
-												<a class="nav-link" href="#">高频数据
+												<a class="nav-link">相关科普
 													<span class="sub-nav-toggler">
 													</span>
 												</a>
 												<ul class="sub-menu">
-													<li><a href="高频案件.html">高频案件</a></li>
+													<li><a href="数据展示.html">数据展示</a></li>
 													<li><a href="法条推荐.html">法条推荐</a></li>
 												</ul>
 											</li>
@@ -148,7 +208,7 @@
 						<div class="col-lg-3 col-12 text-right">
 							<div class="header-right-content">
 								<a href="https://wenshu.court.gov.cn/website/wenshu/181029CR4M5A62CH/index.html"
-									class="main-btn">更多信息</a>
+								   class="main-btn">更多信息</a>
 							</div>
 						</div>
 					</div>
@@ -193,6 +253,22 @@
 		</div>
 	</div>
 
+
+<!--	搜索框-->
+	<div class="section-title col-lg-8" style="margin-top: 100px;margin-bottom: -15px;margin-left: 28%;">
+		热门搜索：合同 纠纷 公司 房屋 劳动
+	</div>
+	<!--搜索框-->
+	<div class="col-lg-12" style="margin-bottom: 20%">
+		<p class="section-title offset-lg-2 col-lg-8" style="font-size: 20px">案例检索>
+			<input type="text" name="name" class="inputtable" placeholder="输入你想了解的案例关键词" id="name" style="width: 70%;"/>
+			<input type="submit" value="搜索" onclick="submitContent()"/>
+		<!--<div id="context1" style="background-color:white; border: 1px solid grey;width:43.85%;position: absolute;top: 85.7px;left:336.5px;display:none">-->
+		<div id="context1" style="background-color:white; border: 1px solid grey;width: 44.3%; position: absolute; top: 85.7px; left: 25%;display:none">
+		</div>
+
+		</p>
+	</div>
 	<!--Process Area -->
 	<div id="service-2" class="services-area section-padding pb-50">
 		<div class="container">
@@ -218,7 +294,7 @@
 						<span class="count">01.</span>
 						<h3>文书分析</h3>
 						<a href="文书分析.html">
-							<p>获取一段时间内的文书，上传某一文书可获得基本信息、自动分词并生成标注，还有相似案件、法条的智能推荐。</p>
+							<p>可获取一段时间内的文书。上传某一文书可获得摘要、基本信息、自动分词并生成标注，还有相似案件的智能推荐。</p>
 						</a>
 					</div>
 				</div>
@@ -226,27 +302,27 @@
 				<div class="grid wow fadeInUp" data-wow-delay=".4s">
 					<div class="inner">
 						<span class="count">02.</span>
-						<h3>数据展示</h3>
-						<a href="数据展示.html">
-							<p>输入限定时间、地区、案由、性别，自动出现统计数据和可视化图表。</p>
+						<h3>案例库</h3>
+						<a href="案例库.html">
+							<p>了解典型案例的文书全文、摘要、关键词等信息。</p>
 						</a>
 					</div>
 				</div>
 				<div class="grid wow fadeInUp" data-wow-delay=".6s">
 					<div class="inner">
 						<span class="count">03.</span>
-						<h3>高频数据</h3>
-						<a href="案件推荐.html">
-							<p>展示不同法律类型中引用率、相似度最高的案件和法条，构成高频数据库。</p>
+						<h3>数据展示</h3>
+						<a href="数据展示.html">
+							<p>根据文书信息统计结果，绘制而成的可视化图表。</p>
 						</a>
 					</div>
 				</div>
 				<div class="grid wow fadeInUp" data-wow-delay=".8s">
 					<div class="inner">
 						<span class="count">04.</span>
-						<h3>更多...</h3>
-						<a href="联系我们.html">
-							<p>联系我们</p>
+						<h3>法条推荐</h3>
+						<a href="法条推荐.html">
+							<p>进行法条分类、高频引用条文和依据的科普。</p>
 						</a>
 					</div>
 				</div>
@@ -254,6 +330,28 @@
 		</div>
 	</div>
 
+	<div id="blog-page" class="blog-section section-padding">
+		<div class="container">
+			<div class="row">
+				<div class="offset-lg-2 col-lg-8 text-center">
+					<div class="section-title">
+						<h2>功能示例</h2>
+					</div>
+				</div>
+				<div class="single-blog-item">
+					<div class="blog-content">
+						<p class="blog-meta"><i class="las la-calendar-check"></i>2013-6-15   保定市南市区人民法院   （2013）南民初字第338号</p>
+							<a href="示例页.html">冯春慧与路文军租赁合同纠纷一审民事判决书</a>
+							<p>摘要：原告冯春慧诉称，原、被告于2011年4月24日签订了房屋租赁合同，约定原告将保定市东大街28号（现32号）房屋出租给被告，租赁期限为2011年4月25日至2012年4月24日
+								经审理查明，原、被告于2007年4月21日签订房屋租赁合同，租赁合同约定：原告将位于保定市东大街28号（现32号）的门脸租赁给被告使用
+								二、被告路文军应给付原告冯春慧自2013年4月25日起至交还房屋给原告冯春慧之日止的租金损失，按年租金11000元的标准计算。
+							</p>
+						<a href="示例页.html" class="read-more">了解更多</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="case-area pb-50">
 		<div class="container">
 			<div class="offset-lg-2 col-lg-8 text-center">
@@ -265,7 +363,7 @@
 				<div class="col-lg-4 col-md-6 col-12 wow fadeInLeft" data-wow-delay=".2s">
 					<div class="single-case-item mb-50 bg-cover case-bg-6">
 						<div class="case-inner">
-							<a href="single-case.html" class="case-icon">
+							<a href="高频法条.html" class="case-icon">
 								<i class="las la-plus"></i>
 							</a>
 							<div class="hover-info">
@@ -278,7 +376,7 @@
 				<div class="col-lg-4 col-md-6 col-12 wow fadeInUp" data-wow-delay=".4s">
 					<div class="single-case-item mb-50 bg-cover case-bg-2">
 						<div class="case-inner">
-							<a href="single-case.html" class="case-icon">
+							<a href="高频法条.html" class="case-icon">
 								<i class="las la-plus"></i>
 							</a>
 							<div class="hover-info">
@@ -291,7 +389,7 @@
 				<div class="col-lg-4 col-md-6 col-12 wow fadeInRight" data-wow-delay=".4s">
 					<div class="single-case-item mb-50 bg-cover case-bg-5">
 						<div class="case-inner">
-							<a href="single-case.html" class="case-icon">
+							<a href="高频法条.html" class="case-icon">
 								<i class="las la-plus"></i>
 							</a>
 							<div class="hover-info">
@@ -304,7 +402,7 @@
 				<div class="col-lg-4 col-md-6 col-12 wow fadeInLeft" data-wow-delay=".6s">
 					<div class="single-case-item mb-50 bg-cover case-bg-3">
 						<div class="case-inner">
-							<a href="single-case.html" class="case-icon">
+							<a href="高频法条.html" class="case-icon">
 								<i class="las la-plus"></i>
 							</a>
 							<div class="hover-info">
@@ -318,7 +416,7 @@
 				<div class="col-lg-4 col-md-6 col-12 wow fadeInRight" data-wow-delay=".6s">
 					<div class="single-case-item mb-50 bg-cover case-bg">
 						<div class="case-inner">
-							<a href="single-case.html" class="case-icon">
+							<a href="高频法条.html" class="case-icon">
 								<i class="las la-plus"></i>
 							</a>
 							<div class="hover-info">
@@ -342,6 +440,7 @@
 					<div class="col-lg-3 col-md-6 col-sm-12">
 						<div class="logo">
 							<img src="picture/logo-white.png" alt="expoint-logo">
+							<p>我们是司法大数据的分析者。我们希望用数据创造更公正的明天。</p>
 						</div>
 					</div>
 					<div class="col-lg-2 offset-lg-1 col-md-6 com-sm-12">
@@ -349,8 +448,8 @@
 						<ul>
 							<li>
 								<a href="文书分析.html">文书分析</a>
+								<a href="案例库.html">案例库</a>
 								<a href="数据展示.html">数据展示</a>
-								<a href="高频案件.html">高频案件</a>
 								<a href="法条推荐.html">法条推荐</a>
 								<a href="联系我们.html">联系我们</a>
 							</li>
@@ -360,15 +459,23 @@
 						<h5>涉及领域</h5>
 						<ul>
 							<li>
-								<a href="#"><span>-</span> 宪法</a>
-								<a href="#"><span>-</span> 民事</a>
-								<a href="#"><span>-</span> 刑事 </a>
-								<a href="#"><span>-</span> 经济</a>
-								<a href="#"><span>-</span> 行政</a>
+								<a href="高频法条.html"><span>-</span> 宪法</a>
+								<a href="高频法条.html"><span>-</span> 民事</a>
+								<a href="高频法条.html"><span>-</span> 刑事 </a>
+								<a href="高频法条.html"><span>-</span> 经济</a>
+								<a href="高频法条.html"><span>-</span> 行政</a>
 							</li>
 						</ul>
 					</div>
-
+					<div class="col-lg-3 col-md-6">
+						<div class="subscribe-form">
+							<h5>联系我们</h5>
+							<p>如果你有任何建议，或者像问答机器人等司法大数据的分析灵感，欢迎联系我们。</p>
+							<form action="联系我们.html">
+								<button class="main-btn">联系我们</button>
+							</form>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

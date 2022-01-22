@@ -5,6 +5,7 @@ import DataSci.judicature.domain.CaseMarks;
 import DataSci.judicature.domain.CaseMarksArr;
 import DataSci.judicature.domain.CaseMsg;
 import DataSci.judicature.service.WordService;
+import DataSci.judicature.utils.FileUtil;
 import com.hankcs.hanlp.corpus.tag.Nature;
 import com.hankcs.hanlp.dictionary.CustomDictionary;
 import com.hankcs.hanlp.model.crf.CRFLexicalAnalyzer;
@@ -12,12 +13,12 @@ import com.hankcs.hanlp.seg.Segment;
 import com.hankcs.hanlp.seg.common.Term;
 import com.hankcs.hanlp.tokenizer.NLPTokenizer;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -37,9 +38,10 @@ public class WordServiceImpl implements WordService {
 
     private static Segment crf;
 
-    private static Set<String> accu;
+    private static final Set<String> accu;
 
-    private static Set<String> type;
+    @Autowired
+    private FileUtil fileUtil;
 
 
     //初始化nlp分词器
@@ -47,7 +49,6 @@ public class WordServiceImpl implements WordService {
     static {
         System.out.println("静态代码块");
         accu = new HashSet<>();
-        type = new HashSet<>();
         try {
             nlp = NLPTokenizer.ANALYZER.enableOrganizationRecognize(true).enablePlaceRecognize(true).enableCustomDictionary(true).enableCustomDictionaryForcing(true);
             crf = new CRFLexicalAnalyzer().enablePlaceRecognize(true).enableOrganizationRecognize(true).enableCustomDictionary(true).enableCustomDictionaryForcing(true);
@@ -70,7 +71,6 @@ public class WordServiceImpl implements WordService {
             String line;
             while ((line = br.readLine()) != null) {
                 if (line.length() != 0) {
-                    type.add(line);
                     CustomDictionary.add(line, "type 1024");
                 }
             }
@@ -98,7 +98,10 @@ public class WordServiceImpl implements WordService {
             marks = notification(fileName, session);
         } else if (type.startsWith("order")) {
             marks = order(fileName, session);
+        }else {
+            marks = adjudication(fileName, session);
         }
+        fixCaseSet(marks);
         return marks;
     }
 
@@ -133,13 +136,19 @@ public class WordServiceImpl implements WordService {
             }
         }
 
-        String format = (String) session.getAttribute("format");
         BufferedReader br;
-
-        if ("txt".equals(format))
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_8));
-        else
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "GBK"));
+        String encoding = fileUtil.getEncoding(new File(fileName));
+        //String encoding = "UTF8";
+       /* if (!(boolean)session.getAttribute("static")){//用户上传 就是utf8
+            encoding ="GBK";
+        }else {
+            if (((String)session.getAttribute("filename")).matches("(.*)FBM(.*)")){
+                encoding ="UTF8";
+            }else {
+                encoding ="GBK";
+            }
+        }*/
+        br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), encoding));
 
         String line;
 
@@ -152,8 +161,22 @@ public class WordServiceImpl implements WordService {
             line = line.replaceAll("\\)", "）");
             line = line.replaceAll("[\\s\\p{Zs}]", "");
 
-            if (line.length() == 0)
+            if (lineNo ==1 &&(line.length() == 0 || !line.contains("法院"))) {
+                if (line.contains("裁定书") || line.contains("通知书")
+                        || line.contains("判决书") || line.contains("调解书")
+                        || line.contains("支付令") || line.contains("决定书")) {
+
+                    List<Term> nseg = nlp.seg(name);
+                    for (Term term : nseg) {
+                        term.word = term.word.replaceAll("[，。：,\\s\\.]+", "");
+                        if (term.word.length() > 1) {
+                            if (isAccusation(term))
+                                marks.setAccusation(term.word);
+                        }
+                    }
+                }
                 continue;
+            }
 
             if (lineNo == 1) {
                 //中华人民共和国最高人民法院
@@ -163,8 +186,10 @@ public class WordServiceImpl implements WordService {
                     marks.setCourts(line);
                 }
             } else if (lineNo == 2 || lineNo == 3) {
-                //通 知 书
-                //（2021）最高法刑申155号
+                if (line.matches("(.*)\\d+(.*)号(.*)")) {
+                    lineNo = 4;
+                    continue;
+                }
             } else if (lineNo == 4 && line.endsWith("：")) {
                 isNormal = true;//是正常的
 
@@ -205,9 +230,12 @@ public class WordServiceImpl implements WordService {
                     }
                     //民族和性别
                     for (String value : info) {
-                        if ("男".equals(value) || "女".equals(value)) {
-                            marks.setGender(value);//性别
-                        } else if (value.contains("族") && value.length() <= 5) {
+                        if (value.contains("男")) {
+                            marks.setGender("男");//性别
+                        } else if (value.contains("女")) {
+                            marks.setGender("女");//性别
+                        }
+                        if (value.contains("族") && value.length() <= 5) {
                             marks.setEthnicity(value);//民族
                         }
                     }
@@ -263,13 +291,19 @@ public class WordServiceImpl implements WordService {
             }
         }
 
-        String format = (String) session.getAttribute("format");
         BufferedReader br;
-
-        if ("txt".equals(format))
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_8));
-        else
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "GBK"));
+        String encoding = fileUtil.getEncoding(new File(fileName));
+        //String encoding = "UTF8";
+       /* if (!(boolean)session.getAttribute("static")){//用户上传 就是utf8
+            encoding ="GBK";
+        }else {
+            if (((String)session.getAttribute("filename")).matches("(.*)FBM(.*)")){
+                encoding ="UTF8";
+            }else {
+                encoding ="GBK";
+            }
+        }*/
+        br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), encoding));
 
         String line;
 
@@ -282,8 +316,27 @@ public class WordServiceImpl implements WordService {
             line = line.replaceAll("\\)", "）");
             line = line.replaceAll("[\\s\\p{Zs}]", "");
 
-            if (line.length() == 0)
+            if (lineNo ==1&&(line.length() == 0 || !line.contains("法院"))) {
+                if (line.contains("裁定书") || line.contains("通知书")
+                        || line.contains("判决书") || line.contains("调解书")
+                        || line.contains("支付令") || line.contains("决定书")) {
+
+                    List<Term> nseg = nlp.seg(name);
+                    for (Term term : nseg) {
+                        term.word = term.word.replaceAll("[，。：,\\s\\.]+", "");
+                        if (term.word.length() > 1) {
+                            if (isName(term))
+                                marks.setCriminals(term.word);
+                            if (isCourt(term, court_regEx))
+                                marks.setCourts(term.word);
+                            if (isAccusation(term))
+                                marks.setAccusation(term.word);
+                        }
+                    }
+                }
                 continue;
+            }
+
 
             if (lineNo == 1) {
                 //中华人民共和国最高人民法院
@@ -293,8 +346,10 @@ public class WordServiceImpl implements WordService {
                     marks.setCourts(line);
                 }
             } else if (lineNo == 2 || lineNo == 3) {
-                //通 知 书
-                //（2021）最高法刑申155号
+                if (line.matches("(.*)\\d+(.*)号(.*)")) {
+                    lineNo = 4;
+                    continue;
+                }
             } else {
                 if ((line.matches(regEx) && !line.matches(NO_regEx) && line.length() < 80)) {
 
@@ -320,9 +375,12 @@ public class WordServiceImpl implements WordService {
                     }
                     //民族和性别
                     for (String value : info) {
-                        if ("男".equals(value) || "女".equals(value)) {
-                            marks.setGender(value);//性别
-                        } else if (value.contains("族") && value.length() <= 5) {
+                        if (value.contains("男")) {
+                            marks.setGender("男");//性别
+                        } else if (value.contains("女")) {
+                            marks.setGender("女");//性别
+                        }
+                        if (value.contains("族") && value.length() <= 5) {
                             marks.setEthnicity(value);//民族
                         }
                     }
@@ -369,10 +427,6 @@ public class WordServiceImpl implements WordService {
         String court_regEx = "^(.*)(法院|检察院)(.*)$";
         Pattern courtPattern = Pattern.compile(court_regEx);
 
-        //重庆市高级人民法院（2019）渝民终795号
-        //江苏省高级人民法院（2019）苏民终1487号
-        //  String court_regEx = "^(.*)法院（\\d+）(.{0,3})民(.{0,3})终(.{0,3})\\d+号(.*)$";
-
         CaseMarksArr marks = new CaseMarksArr();
 
         //题目都要读
@@ -392,13 +446,19 @@ public class WordServiceImpl implements WordService {
             }
         }
 
-        String format = (String) session.getAttribute("format");
         BufferedReader br;
-
-        if ("txt".equals(format))
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_8));
-        else
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "GBK"));
+        String encoding = fileUtil.getEncoding(new File(fileName));
+        //String encoding = "UTF8";
+       /* if (!(boolean)session.getAttribute("static")){//用户上传 就是utf8
+            encoding ="GBK";
+        }else {
+            if (((String)session.getAttribute("filename")).matches("(.*)FBM(.*)")){
+                encoding ="UTF8";
+            }else {
+                encoding ="GBK";
+            }
+        }*/
+        br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), encoding));
 
         String line;
 
@@ -411,8 +471,26 @@ public class WordServiceImpl implements WordService {
             line = line.replaceAll("\\)", "）");
             line = line.replaceAll("[\\s\\p{Zs}]", "");
 
-            if (line.length() == 0)
+            if (lineNo == 1 &&(line.length() == 0 || !line.contains("法院"))) {
+                if (line.contains("裁定书") || line.contains("通知书")
+                        || line.contains("判决书") || line.contains("调解书")
+                        || line.contains("支付令") || line.contains("决定书")) {
+
+                    List<Term> nseg = nlp.seg(name);
+                    for (Term term : nseg) {
+                        term.word = term.word.replaceAll("[，。：,\\s\\.]+", "");
+                        if (term.word.length() > 1) {
+                            if (isName(term))
+                                marks.setCriminals(term.word);
+                            if (isCourt(term, court_regEx))
+                                marks.setCourts(term.word);
+                            if (isAccusation(term))
+                                marks.setAccusation(term.word);
+                        }
+                    }
+                }
                 continue;
+            }
 
             if (lineNo == 1) {
                 //中华人民共和国最高人民法院
@@ -422,8 +500,10 @@ public class WordServiceImpl implements WordService {
                     marks.setCourts(line);
                 }
             } else if (lineNo == 2 || lineNo == 3) {
-                //民 事 裁 定 书
-                //（2021）最高法民申5039号
+                if (line.matches("(.*)\\d+(.*)号(.*)")) {
+                    lineNo = 4;
+                    continue;
+                }
             } else {
                 //重庆市渝中区人民检察院指控被告人王风、于思佳犯诈骗罪、非法拘禁罪一案，本院经审查，依照《中华人民共和国刑事诉讼法》第二十七条的规定，决定如下：
 
@@ -474,9 +554,12 @@ public class WordServiceImpl implements WordService {
                     //民族和性别
                     for (int i = 0; i < info.size(); i++) {
                         s = info.get(i);
-                        if ("男".equals(s) || "女".equals(s)) {
-                            marks.setGender(s);//性别
-                        } else if (s.contains("族") && s.length() <= 5) {
+                        if (s.contains("男")) {
+                            marks.setGender("男");//性别
+                        } else if (s.contains("女")) {
+                            marks.setGender("女");//性别
+                        }
+                        if (s.contains("族") && s.length() <= 5) {
                             marks.setEthnicity(s);//民族
                         }
                     }
@@ -499,136 +582,33 @@ public class WordServiceImpl implements WordService {
 
     private CaseMarksArr decision(String fileName, HttpSession session) throws IOException {
         return adjudication(fileName, session);
-        /*        //当事人
-        String regEx = "^((.*)人（(.*)）：(.*))|((.*)人(.*))|((.*)罪犯(.*))|((.*)机关(.*))|((.*)被告(.*))$";
-        Pattern pattern = Pattern.compile(regEx);
-
-        //屏蔽词
-        String NO_regEx = "^((.*)代理人(.*))|((.*)代表人(.*))|((.*)负责人(.*))|((.*)合伙人(.*))$";
-        Pattern NO_pattern = Pattern.compile(NO_regEx);
-
-        //年份
-        String year_regEx = "^(.*)(一|二|〇|三|四|五|六|七|八|九|十|(\\d\\d\\d\\d))年(.*)$";
-        Pattern yearPattern = Pattern.compile(year_regEx);
-
-        //法院 检察院
-        String court_regEx = "^(.*)(法院|检察院)(.*)$";
-        Pattern courtPattern = Pattern.compile(court_regEx);
+    }
 
 
-        CaseMarksArr marks = new CaseMarksArr();
-
-        //题目都要读
-        //名字 法院 案由
-        String name = new File(fileName).getName();
-        System.out.println(name);
-        List<Term> seg = nlp.seg(name);
-        for (Term term : seg) {
-            term.word = term.word.replaceAll("[，。：,\\s\\.]+", "");
-            if (term.word.length() > 1) {
-                if (isName(term))
-                    marks.setCriminals(term.word);
-                if (isCourt(term, court_regEx))
-                    marks.setCourts(term.word);
-                if (isAccusation(term))
-                    marks.setAccusation(term.word);
-            }
+    //处理空集
+    private void fixCaseSet(CaseMarksArr marks) {
+        if (marks == null) {
+            marks = new CaseMarksArr();
         }
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "GBK"));
-        String line;
-
-        int lineNo = 1;//行号
-        while ((line = br.readLine()) != null) {
-
-            //写文书的人能不能走点心啊啊啊
-            line = line.replaceAll(":", "：");
-            line = line.replaceAll("\\(", "（");
-            line = line.replaceAll("\\)", "）");
-            line = line.replaceAll("[\\s\\p{Zs}]", "");
-
-            if (line.length() == 0)
-                continue;
-
-            if (lineNo == 1) {
-                //中华人民共和国最高人民法院
-                String[] s = line.split(" ");
-                line = StringUtils.join(s, "");
-                if (line.contains("法院")) {
-                    marks.setCourts(line);
-                }
-            } else if (lineNo == 2 || lineNo == 3) {
-                //民 事 裁 定 书
-                //（2021）最高法民申5039号
-            } else {
-                //重庆市渝中区人民检察院指控被告人王风、于思佳犯诈骗罪、非法拘禁罪一案，本院经审查，依照《中华人民共和国刑事诉讼法》第二十七条的规定，决定如下：
-
-                ArrayList<String> info;
-                //先把一行字切成几句话来处理
-                String[] words;
-
-                List<Term> Segs = nlp.seg(line);
-                Segs.addAll(crf.seg(line));
-
-                for (Term term : Segs) {
-                    term.word = term.word.replaceAll("[，。：,\\s\\.]+", "");
-                    if (term.word.length() >= 2) {
-                        if (isCourt(term, court_regEx))//法院
-                            marks.setCourts(term.word);
-                        if (term.nature.toString().equals("accu"))//案由
-                            marks.setAccusation(term.word);
-                    }
-                }
-
-                //提取人名，地名，性别，民族
-                if (pattern.matcher(line).matches() && !NO_pattern.matcher(line).matches() && (line.length() < 200 || lineNo == 4)) {
-
-                    //名字和住所地
-                    List<Term> Seg = nlp.seg(line);
-                    Seg.addAll(crf.seg(line));
-                    for (Term term : Seg) {
-                        term.word = term.word.replaceAll("[，。：,\\s\\.]+", "");
-                        if (term.word.length() >= 2) {
-                            if (isName(term)) {//名字
-                                if (term.word.endsWith("犯"))
-                                    term.word = term.word.replaceAll("犯", "");
-                                marks.setCriminals(term.word);
-                            }
-                            if (isPlace(term))//住址,用NLP的更准确
-                                marks.setBirthplace(term.word);
-                        }
-                    }
-
-                    info = new ArrayList<>();
-                    words = line.split("[，。：,\\s]");
-                    for (String word : words) {
-                        if (!StringUtils.isEmpty(word)) {
-                            info.add(word);
-                        }
-                    }
-                    String s;
-                    //民族和性别
-                    for (int i = 0; i < info.size(); i++) {
-                        s = info.get(i);
-                        if ("男".equals(s) || "女".equals(s)) {
-                            marks.setGender(s);//性别
-                        } else if (s.contains("族") && s.length() <= 5) {
-                            marks.setEthnicity(s);//民族
-                        }
-                    }
-                }
-*//*
-                //单独处理地名
-                if (lineNo >= 4 && line.length() < 60 && line.contains("市")) {
-                    for (String s : line.split("[，。：,\\s]")) {
-                        if (s.contains("市") && s.length() <= 30)
-                            marks.setBirthplace(s);
-                    }
-                }*//*
-            }
-            lineNo++;
+        if (marks.getAccusation().isEmpty()) {
+            marks.setAccusation("其他");
         }
-        return marks;*/
+        if (marks.getBirthplace().isEmpty()) {
+            marks.setBirthplace("其他");
+        }
+        if (marks.getCourts().isEmpty()) {
+            marks.setCourts("其他法院");
+        }
+        if (marks.getCriminals().isEmpty()) {
+            marks.setCriminals("未知");
+        }
+        if (marks.getEthnicity().isEmpty()) {
+            marks.setEthnicity("其他");
+        }
+        if (marks.getGender().isEmpty()) {
+            marks.setGender("其他");
+        }
     }
 
 
@@ -752,13 +732,10 @@ public class WordServiceImpl implements WordService {
             }
         }
 
-        String format = (String) session.getAttribute("format");
         BufferedReader br;
-
-        if ("txt".equals(format))
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_8));
-        else
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "GBK"));
+        String encoding = fileUtil.getEncoding(new File(fileName));
+        System.out.println(fileName + encoding);
+        br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), encoding));
 
         String line;
         int lineNo = 1;//行号
@@ -770,8 +747,27 @@ public class WordServiceImpl implements WordService {
             line = line.replaceAll("\\)", "）");
             line = line.replaceAll("[\\s\\p{Zs}]", "");
 
-            if (line.length() == 0)
+            if (lineNo == 1 && (line.length() == 0 || !line.contains("法院"))) {
+                if (line.contains("裁定书") || line.contains("通知书")
+                        || line.contains("判决书") || line.contains("调解书")
+                        || line.contains("支付令") || line.contains("决定书")) {
+                    info.setTitle(line);
+
+                    List<Term> nseg = nlp.seg(name);
+                    for (Term term : nseg) {
+                        term.word = term.word.replaceAll("[，。：,\\s\\.]+", "");
+                        if (term.word.length() > 1) {
+                            if (isAccusation(term))
+                                info.setAccusation(term.word);
+                            if (addType(info, term.word)) {
+                                flag = true;
+                            }
+                        }
+                    }
+                }
                 continue;
+            }
+
 
             if (lineNo == 1) {
                 //中华人民共和国最高人民法院
@@ -781,12 +777,15 @@ public class WordServiceImpl implements WordService {
                 }
             } else if (lineNo == 2) {
                 //民 事 裁 定 书
-                //todo 可能出问题
                 line = line.replaceAll(" ", "");
-                String category = line.substring(Math.max(line.length() - 3, 0));
-                if (cat.contains(category)) {
-                    info.setCategory(category);
-                } else {
+                for (String s : cat) {
+                    if (line.contains(s)){
+                        info.setCategory(s);
+                        break;
+                    }
+
+                }
+                if (info.getCategory().isEmpty()) {
                     info.setCategory("其他");
                 }
 
@@ -796,6 +795,17 @@ public class WordServiceImpl implements WordService {
                         flag = addType(info, term.word);
                     }
                 }
+                //执行裁定书(2021)浙0106执3834号之一
+                if (line.matches("(.*)\\d+(.*)号(.*)")) {
+                    line = line.replaceAll("\\(", "（").replaceAll("\\)", "）");
+                    int i = line.indexOf('（');
+                    info.setCaseno(line.substring(i));
+
+                    lineNo = 4;
+                    continue;
+                }
+
+
             } else if (lineNo == 3) {
                 //（2021）最高法民申5039号
                 info.setCaseno(line);
@@ -875,7 +885,6 @@ public class WordServiceImpl implements WordService {
         }
         if (set.contains("民事案件")) {
             info.setType(new HashSet<>(Collections.singleton("民事案件")));
-            return;
         }
     }
 
@@ -930,35 +939,48 @@ public class WordServiceImpl implements WordService {
     /**
      * 仅用于测试
      */
-    public CaseInfoSets extract(String fileName) throws IOException {
-        boolean flag = false;
-        Set<String> cat = new HashSet<>();
-        initSet(cat);
+    public CaseMarksArr extract(String fileName) throws IOException {
+
+        //当事人
+        String regEx = "^((.*)人（(.*)）：(.*))|((.*)人(.*))|((.*)罪犯(.*))|((.*)机关(.*))|((.*)被告(.*))$";
+        Pattern pattern = Pattern.compile(regEx);
+
+        //屏蔽词
+        String NO_regEx = "^((.*)代理人(.*))|((.*)代表人(.*))|((.*)负责人(.*))|((.*)合伙人(.*))$";
+        Pattern NO_pattern = Pattern.compile(NO_regEx);
 
         //年份
-        String year_regEx = "^(.*)[一二〇三四五六七八九十零０]{4}年[一二三四五六七八九十]{1,2}月[一二三四五六七八九十]{1,3}日(.*)$";
+        String year_regEx = "^(.*)(一|二|〇|三|四|五|六|七|八|九|十|(\\d\\d\\d\\d))年(.*)$";
+        //法院 检察院
+        String court_regEx = "^(.*)(法院|检察院)(.*)$";
+        Pattern courtPattern = Pattern.compile(court_regEx);
 
-        CaseInfoSets info = new CaseInfoSets();
+        CaseMarksArr marks = new CaseMarksArr();
 
-        //题目读案由
+        //题目都要读
+        //名字 法院 案由
         String name = new File(fileName).getName();
         System.out.println(name);
         List<Term> seg = nlp.seg(name);
         for (Term term : seg) {
             term.word = term.word.replaceAll("[，。：,\\s\\.]+", "");
             if (term.word.length() > 1) {
+                if (isName(term))
+                    marks.setCriminals(term.word);
+                if (isCourt(term, court_regEx))
+                    marks.setCourts(term.word);
                 if (isAccusation(term))
-                    info.setAccusation(term.word);
-                if (addType(info, term.word)) {
-                    flag = true;
-                }
+                    marks.setAccusation(term.word);
             }
         }
 
+        BufferedReader br;
+        String encoding = fileUtil.getEncoding(new File(fileName));
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "GBK"));
+        br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), encoding));
 
         String line;
+
         int lineNo = 1;//行号
         while ((line = br.readLine()) != null) {
 
@@ -968,80 +990,107 @@ public class WordServiceImpl implements WordService {
             line = line.replaceAll("\\)", "）");
             line = line.replaceAll("[\\s\\p{Zs}]", "");
 
-            if (line.length() == 0)
-                continue;
+            if (line.length() == 0 || !line.contains("法院")) {
+                if (line.contains("裁定书") || line.contains("通知书")
+                        || line.contains("判决书") || line.contains("调解书")
+                        || line.contains("支付令") || line.contains("决定书")) {
 
-            if (lineNo == 1) {
-                //中华人民共和国最高人民法院
-                line = line.replaceAll(" ", "");
-                if (line.contains("法院")) {
-                    info.setCourts(line);
-                }
-            } else if (lineNo == 2) {
-                //民 事 裁 定 书
-                //todo 可能出问题
-                line = line.replaceAll(" ", "");
-                String category = line.substring(Math.max(line.length() - 3, 0));
-                if (cat.contains(category)) {
-                    info.setCategory(category);
-                } else {
-                    info.setCategory("其他");
-                }
-
-                List<Term> segs = nlp.seg(line);
-                for (Term term : segs) {
-                    if (!flag && term.word.length() > 1) {
-                        flag = addType(info, term.word);
-                    }
-                }
-            } else if (lineNo == 3) {
-                //（2021）最高法民申5039号
-                info.setCaseno(line);
-            } else {
-                //裁判日期
-                //反复迭代的方法做
-                if (line.matches(year_regEx)) {
-                    String[] split = line.split("[，。：,\\s\\.]+");
-                    for (String s : split) {
-                        if (s.matches(year_regEx)) {
-                            if (!s.matches(//只有一个年月日
-                                    "((.*)[一二〇三四五六七八九十零０]{4}年[一二三四五六七八九十]{1,2}月[一二三四五六七八九十]{1,3}日(.*)([一二〇三四五六七八九十零０]){4}年[一二三四五六七八九十]{1,2}月[一二三四五六七八九十]{1,3}日(.*))")) {
-                                int ri = s.indexOf("日");
-                                int nian = s.indexOf("年");
-                                String date;
-                                while (!(date = s.substring(Math.max(0, nian - 4), ri + 1)).matches(year_regEx)) {
-                                    s = s.substring(ri + 1);
-                                    ri = s.indexOf("日");
-                                    nian = s.indexOf("年");
-                                    if (ri == -1 || nian == -1)
-                                        break;
-                                }
-                                info.setDate(proDate(date));
-                            }
+                    List<Term> nseg = nlp.seg(name);
+                    for (Term term : nseg) {
+                        term.word = term.word.replaceAll("[，。：,\\s\\.]+", "");
+                        if (term.word.length() > 1) {
+                            if (isName(term))
+                                marks.setCriminals(term.word);
+                            if (isCourt(term, court_regEx))
+                                marks.setCourts(term.word);
+                            if (isAccusation(term))
+                                marks.setAccusation(term.word);
                         }
                     }
                 }
+            }
 
-                //案由
+            if (lineNo == 1) {
+                //中华人民共和国最高人民法院
+                String[] s = line.split(" ");
+                line = StringUtils.join(s, "");
+                if (line.contains("法院")) {
+                    marks.setCourts(line);
+                }
+            } else if (lineNo == 2 || lineNo == 3) {
+                //民 事 裁 定 书
+                //（2021）最高法民申5039号
+            } else {
+                //重庆市渝中区人民检察院指控被告人王风、于思佳犯诈骗罪、非法拘禁罪一案，本院经审查，依照《中华人民共和国刑事诉讼法》第二十七条的规定，决定如下：
+
+                ArrayList<String> info;
+                //先把一行字切成几句话来处理
+                String[] words;
+
                 List<Term> Segs = nlp.seg(line);
                 Segs.addAll(crf.seg(line));
 
                 for (Term term : Segs) {
                     term.word = term.word.replaceAll("[，。：,\\s\\.]+", "");
-                    if (term.word.length() >= 2 && isAccusation(term)) {
-                        info.setAccusation(term.word);
-                    }
-                    if (!flag) {
-                        addType(info, term.word);
+                    if (term.word.length() >= 2) {
+                        if (isCourt(term, court_regEx))//法院
+                            marks.setCourts(term.word);
+                        if (isAccusation(term))//案由
+                            marks.setAccusation(term.word);
                     }
                 }
 
+                //提取人名，地名，性别，民族
+                if (pattern.matcher(line).matches() && !NO_pattern.matcher(line).matches() && (line.length() < 200 || lineNo == 4)) {
+
+                    //名字和住所地
+                    List<Term> Seg = nlp.seg(line);
+                    Seg.addAll(crf.seg(line));
+                    for (Term term : Seg) {
+                        term.word = term.word.replaceAll("[，。：,\\s]+", "");
+                        if (term.word.length() >= 2) {
+                            if (isName(term)) {//名字
+                                if (term.word.endsWith("犯"))
+                                    term.word = term.word.replaceAll("犯", "");
+                                marks.setCriminals(term.word);
+                            }
+                            if (isPlace(term))//住址,用NLP的更准确
+                                marks.setBirthplace(term.word);
+                        }
+                    }
+
+                    info = new ArrayList<>();
+                    words = line.split("[，。：,\\s]");
+                    for (String word : words) {
+                        if (!StringUtils.isEmpty(word)) {
+                            info.add(word);
+                        }
+                    }
+                    String s;
+                    //民族和性别
+                    for (int i = 0; i < info.size(); i++) {
+                        s = info.get(i);
+                        if (s.contains("男") || s.contains("女")) {
+                            marks.setGender(s);//性别
+                        } else if (s.contains("族") && s.length() <= 5) {
+                            marks.setEthnicity(s);//民族
+                        }
+                    }
+                }
+/*
+                //单独处理地名
+                if (lineNo >= 4 && line.length() < 60 && line.contains("市")) {
+                    for (String s : line.split("[，。：,\\s]")) {
+                        if (s.contains("市") && s.length() <= 30)
+                            marks.setBirthplace(s);
+                    }
+                }*/
             }
             lineNo++;
         }
+        return marks;
 
-        fixType(info);
-        return info;
+
     }
 
 

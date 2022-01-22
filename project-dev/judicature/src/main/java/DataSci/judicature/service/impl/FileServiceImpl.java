@@ -108,7 +108,7 @@ public class FileServiceImpl implements FileService {
 
                 String line;
                 int index = 1;
-                while ((line = br.readLine()) != null && index < 3) {
+                while ((line = br.readLine()) != null && index < 6) {
                     String[] words = line.split(" ");
                     line = StringUtils.join(words, "");
                     if (line.contains("裁定书")) {
