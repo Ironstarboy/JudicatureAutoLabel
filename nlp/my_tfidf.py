@@ -10,6 +10,17 @@ from sklearn import feature_extraction
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import CountVectorizer
 
+def loadLawDict(dictPath):
+    # 自定义词典，以便包含jieba词库里没有的词。虽然jieba有新词识别能力，但是自行添加新词可以保证更高的正确率
+    # 一个词占一行；每一行分三部分：词语、词频（可省略）、词性（可省略），用空格隔开
+    # 格式：
+    # AT&T 3 nz
+    # B超 3 n
+    # c# 3 nz
+    jieba.load_userdict(dictPath)
+
+dictPath='../project-dev/judicature/src/main/resources/case/tools/dict.txt'
+loadLawDict(dictPath)
 
 # 对一个类别的单一文档进行分词处理,分词结果存在segPath里面
 def fenci(srcPath,srcFile, typePath):
@@ -25,7 +36,8 @@ def fenci(srcPath,srcFile, typePath):
     filename = srcPath + '\\' + srcFile
     content=my_IO.readFile(filename)
     # 对文档进行分词处理，采用默认模式
-    seg_list = jieba.cut(content, cut_all=True)
+    seg_list = jieba.cut(content, cut_all=False) # 之前开了全模式，是为了分词结果比对
+    # todo 搜索建议、相似文书推荐应该用精确模式，重新生成分词结果，降低矩阵维度
 
     # 对空格，换行符 停用词 进行处理
     result = []

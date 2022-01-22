@@ -25,12 +25,12 @@ def keysentence(text,n=3):
     """
     tr4s = TextRank4Sentence()
     tr4s.analyze(text=text, lower=True, source='all_filters')
-    result = '' # TODO 停用部分词：XXX法院？
+    result = ''
     for item in tr4s.get_key_sentences(num=n): #num=3表示为提取3个关键句
         # print(item.index, item.weight, item.sentence)  # index是语句在文本中位置 weight是权重 sentence摘要
         result +=  item.sentence + '\n'
     return result
-#todo 缩减句子的自动摘要
+
 def get_abstract(srcRootPath):
     '''
     :param srcRootPath:存储文件的根目录，不涉及类别

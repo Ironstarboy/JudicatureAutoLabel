@@ -25,7 +25,7 @@ def caseReccommend(casePath,rootPath):
     count = 0
     caseRecommendFileName = []
     caseRecommendScore=[]
-    for k, v in fileSimDic:
+    for k, v in tqdm(fileSimDic):
         if v > 0:
             caseRecommendFileName.append(k)
             caseRecommendScore.append(v)
@@ -42,7 +42,7 @@ def saveRecommend():
     currentFilePath=[]
     recFilePaths=[]
     recFileSocres=[]
-    for type in tqdm(my_IO.getTypeNameList()):
+    for type in my_IO.getTypeNameList():
         caseRootPath = '../project-dev/judicature/src/main/resources/case/txt/{}'.format(type)
         caseNames=my_IO.getFileNameList(caseRootPath)
         for caseName in tqdm(caseNames):

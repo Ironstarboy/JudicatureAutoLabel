@@ -79,7 +79,6 @@ def saveSegContent(rootPath='searchRec',fatherDir='segfile'):
         my_IO.dumpVar(fileContent, contentPath)
 
 
-
 # @func_timer
 def loadContent(rootPath='searchRec'):
     contentPath = rootPath + '/' + Vars.fileContent.value
@@ -136,7 +135,7 @@ def loadDocVec(rootPath='searchRec'):
         saveDocVec(rootPath)
     return my_IO.loadVar(docVecPath)
 
-# @func_timer
+@func_timer
 def textSet(keyword,rootPath='searchRec'):
     doc_vectors = loadDocVec(rootPath)
     dictionary = loadDictionary(rootPath)
@@ -169,6 +168,11 @@ def textSet(keyword,rootPath='searchRec'):
 
 import sys
 if __name__=='__main__':
-    res=textSet('公司')
-    print(res)
-    print('done')
+    # res=textSet('离婚案件')
+    # print(res)
+    # print('done')
+    while 1:
+        s=input()
+        if s=='q':  # quit
+            break
+        print(*textSet(s))

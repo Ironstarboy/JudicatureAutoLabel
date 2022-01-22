@@ -6,7 +6,7 @@ from sklearn import feature_extraction
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import CountVectorizer
 import my_IO
-from scipy.special import expit # sigmoid 效果不行呐
+ # sigmoid 效果不行呐
 def split_sentence(text, punctuation_list='!?。！？；;\n'):
     """
     将文本段安装标点符号列表里的符号切分成句子，将所有句子保存在列表里。

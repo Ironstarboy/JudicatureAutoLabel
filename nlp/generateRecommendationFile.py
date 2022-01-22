@@ -7,7 +7,7 @@ import os
 import numpy
 import os.path
 import codecs
-import my_IO
+from my_package import my_IO
 import pandas
 import re
 import jieba
