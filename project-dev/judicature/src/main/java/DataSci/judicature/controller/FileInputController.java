@@ -2,6 +2,7 @@ package DataSci.judicature.controller;
 
 import DataSci.judicature.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +26,9 @@ public class FileInputController {
     @Value("${spring.servlet.multipart.location}")
     private String location;
 
+
     @Autowired
+    @Qualifier("service2")
     private FileService fileService;
 
     @RequestMapping("/file")
@@ -100,13 +103,15 @@ public class FileInputController {
             return "上传失败！";
         System.out.println(txt);
         String name = "文本";
-        File f;
         String newName = name;
+        File f = new File(location + "txt\\else\\" + newName + ".txt");
+        //这里传入的就直接覆盖掉
+/*
         int i = 1;
         while ((f = new File(location + "txt\\else\\" + newName + ".txt")).exists()) {
             newName = name + "(" + i + ")";
             i++;
-        }
+        }*/
 
         try {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f.getAbsolutePath())));

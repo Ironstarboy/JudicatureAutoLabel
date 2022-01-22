@@ -1,5 +1,6 @@
 package DataSci.judicature.controller;
 
+import DataSci.judicature.domain.CaseInfoSets;
 import DataSci.judicature.domain.CaseMarks;
 import DataSci.judicature.domain.CaseMarksArr;
 import DataSci.judicature.domain.CaseMsg;
@@ -34,16 +35,19 @@ public class FileOutPutController {
      * @return 返回案件信息的json文件
      */
     @RequestMapping("/json")
-    public CaseMarks json(CaseMsg caseMsg, HttpServletResponse response) {
+    public CaseMarks json(CaseMsg caseMsg, HttpServletResponse response,HttpSession session) {
         System.out.println("传进来了");
         System.out.println(caseMsg);
+
 
         response.reset();
         response.setContentType("application/octet-stream");// 设置强制下载不打开
         response.setCharacterEncoding("utf8");
         response.addHeader("Content-Disposition", "attachment;fileName=" + new String("标注.json".getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
 
-        return wordService.toJSON(caseMsg);
+        CaseMarks marks = wordService.toJSON(caseMsg);
+        session.setAttribute("cassMarks",marks);//加进session里
+        return marks;
     }
 
     /**
@@ -99,6 +103,9 @@ public class FileOutPutController {
         return null;
     }
 
+    /**
+     * 分词
+     */
     @RequestMapping("/fenci")
     public CaseMarksArr fenci(HttpSession session) {
         System.out.println("开始分词了");
@@ -114,6 +121,7 @@ public class FileOutPutController {
         CaseMarksArr caseSet;
         try {//分词 返回的是set类型的实体类
             caseSet = wordService.extract(downloadFilePath, session);
+            session.setAttribute("caseSet",caseSet);//把分好词封装类的加入到session里
         } catch (IOException e) {
             return null;
         }
@@ -122,6 +130,36 @@ public class FileOutPutController {
         System.out.println(caseSet);
         //criminals, gender, ethnicity, birthplace, accusation, courts
         return caseSet;
+    }
+
+    /**
+     * 文书基本信息
+     */
+    @RequestMapping("/info")
+    public CaseInfoSets baseInfo(HttpSession session) {
+        System.out.println("基本信息开始");
+
+        String downloadFilePath = (String) session.getAttribute("userUploadFile");
+        System.out.println(downloadFilePath);
+        String type = (String) session.getAttribute("category");
+        System.out.println(type);
+
+        if (downloadFilePath == null) {//还没上传文件，session里没有记录
+            return null;
+        }
+
+        CaseInfoSets caseInfo;
+        try {//分词 返回的是set类型的实体类
+            caseInfo = wordService.proInfo(downloadFilePath, session);
+            session.setAttribute("caseInfo",caseInfo);//把分好词封装类的加入到session里
+        } catch (IOException e) {
+            return null;
+        }
+
+        System.out.println("结束基本信息");
+        System.out.println(caseInfo);
+        //courts, type, accusation, procedure, date, criminals
+        return caseInfo;
     }
 
 }

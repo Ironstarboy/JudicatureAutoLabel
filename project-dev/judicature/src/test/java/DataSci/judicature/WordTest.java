@@ -1,5 +1,6 @@
 package DataSci.judicature;
 
+import DataSci.judicature.domain.CaseInfoSets;
 import DataSci.judicature.domain.CaseMarksArr;
 import DataSci.judicature.service.WordService;
 import DataSci.judicature.service.impl.WordServiceImpl;
@@ -120,7 +121,7 @@ public class WordTest {
         }
 
     */
-    @Test
+/*    @Test
     void testNotification() throws IOException {
 
         String type = "judgment";
@@ -132,36 +133,48 @@ public class WordTest {
             CaseMarksArr marks = wordService.extract(dir.getAbsolutePath() + "\\" + file);
             System.out.println(marks);
         }
-    }
+    }*/
 
-/*
+    /*
+        @Test
+        void testOrder() throws IOException {
+            String type = "order";
+            File dir = new File(location + "txt\\" + type);
+
+            String[] files = dir.list();
+            assert files != null;
+            for (String file : files) {
+                CaseMarksArr marks = wordService.extract(dir.getAbsolutePath() + "\\" + file, type);
+                System.out.println(marks);
+            }
+        }
+
+        @Test
+        void testDecision() throws IOException {
+            String type = "decision";
+            File dir = new File(location + "txt\\" + type);
+
+            String[] files = dir.list();
+            assert files != null;
+            for (String file : files) {
+                CaseMarksArr marks = wordService.extract(dir.getAbsolutePath() + "\\" + file, type);
+                System.out.println(marks);
+            }
+        }
+
+    */
     @Test
-    void testOrder() throws IOException {
+    void testInfo() throws IOException {
         String type = "order";
         File dir = new File(location + "txt\\" + type);
 
         String[] files = dir.list();
         assert files != null;
         for (String file : files) {
-            CaseMarksArr marks = wordService.extract(dir.getAbsolutePath() + "\\" + file, type);
+            CaseInfoSets marks = wordService.extract(dir.getAbsolutePath() + "\\" + file);
             System.out.println(marks);
         }
     }
-
-    @Test
-    void testDecision() throws IOException {
-        String type = "decision";
-        File dir = new File(location + "txt\\" + type);
-
-        String[] files = dir.list();
-        assert files != null;
-        for (String file : files) {
-            CaseMarksArr marks = wordService.extract(dir.getAbsolutePath() + "\\" + file, type);
-            System.out.println(marks);
-        }
-    }
-
-*/
 
 
     @Test

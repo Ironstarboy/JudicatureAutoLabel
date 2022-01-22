@@ -21,9 +21,6 @@ function function1(x) {
     }
     $('#criminals_text').val(str);//显示
 }
-function function2() {
-    document.getElementById("3cases").src = "基本信息展示页.html"
-}
 function function4() {
     document.getElementById("3cases").src = "法律依据.html"
 }
@@ -177,7 +174,7 @@ function init_criminals(keys) {
         <p>` +
         criminals_str +
         `</p></div>`
-    console.log(criminals_str)
+    console.log(keys)
     document.querySelector('#criminals').innerHTML = criminals_str
 }
 function init_gender(keys) {
@@ -246,5 +243,46 @@ function init_courts(keys) {
         courts_str +
         `</p></div>`
     document.querySelector('#courts').innerHTML = courts_str
-
+}
+function info_courts(keys) {
+    var courts_str = ''
+    for (var i in keys) {
+        courts_str += "&nbsp" + `${keys[i]}`
+    }
+    document.querySelector('#info_courts').innerHTML = courts_str
+}
+function info_type(keys) {
+    var type_str = ''
+    for (var i in keys) {
+        type_str += "&nbsp" + `${keys[i]}`
+    }
+    document.querySelector('#info_type').innerHTML = type_str
+}
+function info_accusation(keys) {
+    var accusation_str = ''
+    for (var i in keys) {
+        accusation_str += "&nbsp" + `${keys[i]}`
+    }
+    document.querySelector('#info_accusation').innerHTML = accusation_str
+}
+function info_category(keys) {
+    var category_str = ''
+    for (var i in keys) {
+        category_str += `&nbsp${keys[i]}`
+    }
+    document.querySelector('#info_category').innerHTML = category_str
+}
+function info_date(keys) {
+    var date_str = ''
+    for (var i in keys) {
+        date_str += `${keys[i]}`
+    }
+    document.querySelector('#info_date').innerHTML = date_str
+}
+function info_caseno(keys) {
+    var caseno_str = ''
+    for (var i in keys) {
+        caseno_str += `${keys[i]}`
+    }
+    document.querySelector('#info_caseno').innerHTML = caseno_str
 }

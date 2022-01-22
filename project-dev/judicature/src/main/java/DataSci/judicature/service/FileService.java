@@ -16,11 +16,6 @@ import java.io.IOException;
  */
 public interface FileService {
 
-    /**
-     * 根据前端页面传来的词语生成案件信息
-     */
-    public CaseMsg proCaseMsg(String[] words);
-
     public String transfer(MultipartFile upload, String suffix, HttpSession session) throws IOException;
 
     public boolean toTxt(String fileName, HttpSession session);
