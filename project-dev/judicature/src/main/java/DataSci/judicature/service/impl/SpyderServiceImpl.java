@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -25,6 +23,11 @@ public class SpyderServiceImpl implements SpyderService {
 
     @Autowired
     private FileUtil fileUtil;
+
+    @Value("${DOWNLAODPATH}")
+    private String DOWNLAODPATH;
+
+
 
     /**
      * @return 返回文件名集合
@@ -40,12 +43,7 @@ public class SpyderServiceImpl implements SpyderService {
         String et = timeTrans(end);
 
 
-        //TODO 做测试
-       /* String downloadPath = location + "zip\\" + tag + "\\download\\";
-        File f = new File(downloadPath);
-        f.getParentFile().mkdir();
-        f.mkdir();*/
-        String downloadPath = "C:\\Users\\18933\\Desktop\\DataSciProject\\spyder\\"+ tag;
+        String downloadPath = DOWNLAODPATH+ tag;
         File f = new File(downloadPath);
         f.mkdir();
 
@@ -53,6 +51,8 @@ public class SpyderServiceImpl implements SpyderService {
         hashMap.put("download.default_directory", downloadPath);
 
         ChromeOptions chromeOptions = new ChromeOptions();
+        //chromeOptions.addArguments("--headless");
+        //chromeOptions.addArguments("--disable-gpu");
         chromeOptions.setExperimentalOption("prefs", hashMap);
 
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
@@ -90,7 +90,11 @@ public class SpyderServiceImpl implements SpyderService {
                         driver.findElement(By.partialLinkText("普通案例")).click();
                     } catch (Exception exception) {
                         Thread.sleep(15000);
-                        driver.findElement(By.partialLinkText("普通案例")).click();
+                        try {
+                            driver.findElement(By.partialLinkText("普通案例")).click();
+                        }catch (Exception ew){
+                            return "该时间范围没有相应结果";
+                        }
                     }
                 }
             } catch (InterruptedException e) {
@@ -172,5 +176,12 @@ public class SpyderServiceImpl implements SpyderService {
         }
 
         fileUtil.ZipCompress(txtpath,uploadpath);
+    }
+
+
+    //对爬取的文书进行编码转换，转成UTF8
+    //不需要了 本来就是UTF8的
+    private void encoding(String txtpath){
+
     }
 }

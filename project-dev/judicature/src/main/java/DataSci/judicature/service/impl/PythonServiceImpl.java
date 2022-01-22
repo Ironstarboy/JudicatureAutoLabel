@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -15,9 +16,6 @@ public class PythonServiceImpl implements PythonService {
 
     @Value("${PATH}")
     private String PATH;
-
-    public PythonServiceImpl() {
-    }
 
     /**
      * 相似案例推荐
@@ -31,15 +29,17 @@ public class PythonServiceImpl implements PythonService {
         Process proc;
         BufferedWriter br;
         BufferedReader in;
-        proc = Runtime.getRuntime().exec("python getCaseRecommendation.py", null, new File("D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\nlp\\"));
+        proc = Runtime.getRuntime().exec("python getCaseRecommendation.py", null, new File(PATH + "nlp\\"));
         br = new BufferedWriter(new OutputStreamWriter(proc.getOutputStream(), "GBK"));
         in = new BufferedReader(new InputStreamReader(proc.getInputStream(), "GBK"));
 
         br.write(filePath);
         br.flush();
 
-
+        br.close();
         String[] split = in.readLine().split("---");
+        in.close();
+        proc.destroy();
         String[] nameList = cleanName(split[0]);
         String[] rateList = cleanRate(split[1]);
 
@@ -66,15 +66,15 @@ public class PythonServiceImpl implements PythonService {
         Process proc;
         BufferedWriter br;
 
-        proc = Runtime.getRuntime().exec("python autoAbstract.py", null, new File("D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\nlp\\"));
+        proc = Runtime.getRuntime().exec("python autoAbstract.py", null, new File(PATH + "nlp\\"));
         br = new BufferedWriter(new OutputStreamWriter(proc.getOutputStream(), "GBK"));
 
         br.write(filePath);
         br.flush();
 
-        proc.waitFor();
-        //br.close();
 
+        br.close();
+        proc.waitFor();
         proc.destroy();
 
         //D:\java\DataSci\lqf\JudicatureAutoLabel\nlp\摘要\用户上传
@@ -103,20 +103,19 @@ public class PythonServiceImpl implements PythonService {
         Process proc;
         BufferedWriter br;
 
-        proc = Runtime.getRuntime().exec("python POStag.py", null, new File("D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\nlp\\"));
+        proc = Runtime.getRuntime().exec("python POStag.py", null, new File(PATH + "nlp\\"));
         br = new BufferedWriter(new OutputStreamWriter(proc.getOutputStream(), "GBK"));
 
         br.write(filePath);
         br.flush();
+        br.close();
 
         proc.waitFor();
-        //br.close();
-
         proc.destroy();
 
         //D:\java\DataSci\lqf\JudicatureAutoLabel\nlp\词性标注\用户上传
 
-        String dirpath = PATH + "\\nlp\\词性标注\\用户上传\\" + fileName + ".json";
+        String dirpath = PATH + "\\nlp\\词性标注\\用户上传\\" + fileName + ".txt";
         BufferedReader reader = new BufferedReader(new FileReader(dirpath));
         StringBuilder sb = new StringBuilder();
         String line;
@@ -131,10 +130,6 @@ public class PythonServiceImpl implements PythonService {
     }
 
 
-    //不管了
-    private void init(){
-
-    }
 
     /**
      * 执行python脚本
@@ -217,7 +212,7 @@ public class PythonServiceImpl implements PythonService {
         String[] res = str.split(",");
         String[] ans = new String[res.length - 1];
         for (int i = 1; i < res.length; i++) {
-            int srt = 0;
+            int srt = 1;
             int end = res[i].indexOf('.');
             ans[i - 1] = res[i].substring(srt + 1, end);
         }
@@ -237,6 +232,45 @@ public class PythonServiceImpl implements PythonService {
             ans[i - 1] = (int) rate + "%";
         }
         return ans;
+    }
+
+
+    /**
+     * 仅供测试用
+     * @return
+     * @throws Exception
+     */
+    public String exec(String filePath,String fileName) throws Exception {
+        Long srt = new Date().getTime();
+        System.out.println("自动摘要提取");
+        Process proc;
+        BufferedWriter br;
+
+        proc = Runtime.getRuntime().exec("python autoAbstract.py", null, new File("D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\nlp\\"));
+        br = new BufferedWriter(new OutputStreamWriter(proc.getOutputStream(), "GBK"));
+
+        br.write(filePath);
+        br.flush();
+
+
+        br.close();
+        proc.waitFor();
+        proc.destroy();
+
+        //D:\java\DataSci\lqf\JudicatureAutoLabel\nlp\摘要\用户上传
+
+        String dirpath = PATH + "\\nlp\\摘要\\用户上传\\" + fileName + ".txt";
+        BufferedReader reader = new BufferedReader(new FileReader(dirpath));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line).append(System.lineSeparator());
+        }
+
+        reader.close();
+        System.out.println(sb.toString());
+        System.out.println(System.currentTimeMillis() - srt);
+        return sb.toString();
     }
 
 

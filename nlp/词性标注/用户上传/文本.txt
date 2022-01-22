@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\mediate\\文本.txt",
+    "动词": "试行,作出,执行,申请,得到,码,给付,履行,现已,标,实现,工作,确定,发生,借贷,执,督促,恢复,引证",
+    "形容词": "恢,完全"
+}

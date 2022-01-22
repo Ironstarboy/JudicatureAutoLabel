@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>摘要生成</title>
+
+	<!--Favicon-->
+	<link rel="icon" href="assets/img/favicon.png" type="image/jpg" />
+	<!-- Bootstrap CSS -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome CSS-->
+	<link href="css/font-awesome.min.css" rel="stylesheet">
+	<!-- Line Awesome CSS -->
+	<link href="css/line-awesome.min.css" rel="stylesheet">
+	<!-- Animate CSS-->
+	<link href="css/animate.css" rel="stylesheet">
+	<!-- Magnific Popup Video -->
+	<link href="css/magnific-popup.css" rel="stylesheet">
+	<!-- Flaticon CSS -->
+	<link href="css/flaticon.css" rel="stylesheet">
+	<!-- Owl Carousel CSS -->
+	<link href="css/owl.carousel.css" rel="stylesheet">
+	<!-- Style CSS -->
+	<link href="css/style.css" rel="stylesheet">
+	<!-- Responsive CSS -->
+	<link href="css/responsive.css" rel="stylesheet">
+
+	<!-- jquery -->
+	<script src="js/jquery-1.12.4.min.js"></script>
+	<script src="js/main_page.js"></script>
+	<script>
+		window.onload = function(){
+			var str = window.localStorage.getItem('summarise');
+			window.localStorage.removeItem('summarise');//清除字符串
+			document.querySelector('#summary').innerHTML = str
+		}
+	</script>
+
+</head>
+
+<body>
+
+<!-- Frequently Asked Question -->
+
+<div class="container">
+	<div class="styled-faq">
+		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+			<div class="panel panel-default">
+				<h6 class="panel-title">
+						<h4 style="color: #25283a;margin-bottom: 3%"><b>自动摘要</b></h4>
+				</h6>
+			<div class="panel-body" id="summary"></div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<!-- Popper JS -->
+<script src="js/popper.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Wow JS -->
+<script src="js/wow.min.js"></script>
+<!-- Way Points JS -->
+<script src="js/jquery.waypoints.min.js"></script>
+<!-- Counter Up JS -->
+<script src="js/jquery.counterup.min.js"></script>
+<!-- Owl Carousel JS -->
+<script src="js/owl.carousel.min.js"></script>
+<!-- Magnific Popup JS -->
+<script src="js/magnific-popup.min.js"></script>
+<!-- Sticky JS -->
+<script src="js/jquery.sticky.js"></script>
+<!-- Main JS -->
+<script src="js/main.js"></script>
+
+</body>
+
+</html>

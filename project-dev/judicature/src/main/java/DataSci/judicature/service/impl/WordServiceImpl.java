@@ -98,6 +98,8 @@ public class WordServiceImpl implements WordService {
             marks = notification(fileName, session);
         } else if (type.startsWith("order")) {
             marks = order(fileName, session);
+        }else {
+            marks = adjudication(fileName, session);
         }
         fixCaseSet(marks);
         return marks;
@@ -134,18 +136,18 @@ public class WordServiceImpl implements WordService {
             }
         }
 
-        BufferedReader br;/*
-        String encoding = fileUtil.getEncoding(new File(fileName));*/
-        String encoding = "UTF8";
-        if (!(boolean)session.getAttribute("static")){//用户上传 就是utf8
-            encoding ="UTF8";
+        BufferedReader br;
+        String encoding = fileUtil.getEncoding(new File(fileName));
+        //String encoding = "UTF8";
+       /* if (!(boolean)session.getAttribute("static")){//用户上传 就是utf8
+            encoding ="GBK";
         }else {
             if (((String)session.getAttribute("filename")).matches("(.*)FBM(.*)")){
                 encoding ="UTF8";
             }else {
                 encoding ="GBK";
             }
-        }
+        }*/
         br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), encoding));
 
         String line;
@@ -159,7 +161,7 @@ public class WordServiceImpl implements WordService {
             line = line.replaceAll("\\)", "）");
             line = line.replaceAll("[\\s\\p{Zs}]", "");
 
-            if (line.length() == 0 || !line.contains("法院")) {
+            if (lineNo ==1 &&(line.length() == 0 || !line.contains("法院"))) {
                 if (line.contains("裁定书") || line.contains("通知书")
                         || line.contains("判决书") || line.contains("调解书")
                         || line.contains("支付令") || line.contains("决定书")) {
@@ -173,6 +175,7 @@ public class WordServiceImpl implements WordService {
                         }
                     }
                 }
+                continue;
             }
 
             if (lineNo == 1) {
@@ -288,18 +291,18 @@ public class WordServiceImpl implements WordService {
             }
         }
 
-        BufferedReader br;/*
-        String encoding = fileUtil.getEncoding(new File(fileName));*/
-        String encoding = "UTF8";
-        if (!(boolean)session.getAttribute("static")){//用户上传 就是utf8
-            encoding ="UTF8";
+        BufferedReader br;
+        String encoding = fileUtil.getEncoding(new File(fileName));
+        //String encoding = "UTF8";
+       /* if (!(boolean)session.getAttribute("static")){//用户上传 就是utf8
+            encoding ="GBK";
         }else {
             if (((String)session.getAttribute("filename")).matches("(.*)FBM(.*)")){
                 encoding ="UTF8";
             }else {
                 encoding ="GBK";
             }
-        }
+        }*/
         br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), encoding));
 
         String line;
@@ -313,7 +316,7 @@ public class WordServiceImpl implements WordService {
             line = line.replaceAll("\\)", "）");
             line = line.replaceAll("[\\s\\p{Zs}]", "");
 
-            if (line.length() == 0 || !line.contains("法院")) {
+            if (lineNo ==1&&(line.length() == 0 || !line.contains("法院"))) {
                 if (line.contains("裁定书") || line.contains("通知书")
                         || line.contains("判决书") || line.contains("调解书")
                         || line.contains("支付令") || line.contains("决定书")) {
@@ -331,6 +334,7 @@ public class WordServiceImpl implements WordService {
                         }
                     }
                 }
+                continue;
             }
 
 
@@ -442,18 +446,18 @@ public class WordServiceImpl implements WordService {
             }
         }
 
-        BufferedReader br;/*
-        String encoding = fileUtil.getEncoding(new File(fileName));*/
-        String encoding = "UTF8";
-        if (!(boolean)session.getAttribute("static")){//用户上传 就是utf8
-            encoding ="UTF8";
+        BufferedReader br;
+        String encoding = fileUtil.getEncoding(new File(fileName));
+        //String encoding = "UTF8";
+       /* if (!(boolean)session.getAttribute("static")){//用户上传 就是utf8
+            encoding ="GBK";
         }else {
             if (((String)session.getAttribute("filename")).matches("(.*)FBM(.*)")){
                 encoding ="UTF8";
             }else {
                 encoding ="GBK";
             }
-        }
+        }*/
         br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), encoding));
 
         String line;
@@ -467,7 +471,7 @@ public class WordServiceImpl implements WordService {
             line = line.replaceAll("\\)", "）");
             line = line.replaceAll("[\\s\\p{Zs}]", "");
 
-            if (line.length() == 0 || !line.contains("法院")) {
+            if (lineNo == 1 &&(line.length() == 0 || !line.contains("法院"))) {
                 if (line.contains("裁定书") || line.contains("通知书")
                         || line.contains("判决书") || line.contains("调解书")
                         || line.contains("支付令") || line.contains("决定书")) {
@@ -485,6 +489,7 @@ public class WordServiceImpl implements WordService {
                         }
                     }
                 }
+                continue;
             }
 
             if (lineNo == 1) {
@@ -727,19 +732,9 @@ public class WordServiceImpl implements WordService {
             }
         }
 
-        BufferedReader br;/*
-        String encoding = fileUtil.getEncoding(new File(fileName));*/
-        String encoding = "UTF8";
-        if (!(boolean)session.getAttribute("static")){//用户上传 就是utf8
-            encoding ="UTF8";
-        }else {
-            if (((String)session.getAttribute("filename")).matches("(.*)FBM(.*)")){
-                encoding ="UTF8";
-            }else {
-                encoding ="GBK";
-            }
-        }
-
+        BufferedReader br;
+        String encoding = fileUtil.getEncoding(new File(fileName));
+        System.out.println(fileName + encoding);
         br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), encoding));
 
         String line;
@@ -782,7 +777,6 @@ public class WordServiceImpl implements WordService {
                 }
             } else if (lineNo == 2) {
                 //民 事 裁 定 书
-                //todo 可能出问题
                 line = line.replaceAll(" ", "");
                 for (String s : cat) {
                     if (line.contains(s)){

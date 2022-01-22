@@ -71,21 +71,23 @@ public class StaticController {
 
     /**
      * 前端视图展示
-     * http://localhost/static/init?fileName=%E4%BB%BB%E6%85%A7%E6%B8%8A%E4%B8%8E%E8%B5%B5%E6%B6%9B%E4%B8%AD%E5%8D%8E%E8%81%94%E5%90%88%E8%B4%A2%E4%BA%A7%E4%BF%9D%E9%99%A9%E8%82%A1%E4%BB%BD%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%E4%BF%9D%E5%AE%9A%E4%B8%AD%E5%BF%83%E6%94%AF%E5%85%AC%E5%8F%B8%E6%9C%BA%E5%8A%A8%E8%BD%A6%E4%BA%A4%E9%80%9A%E4%BA%8B%E6%95%85%E8%B4%A3%E4%BB%BB%E7%BA%A0%E7%BA%B7%E4%B8%80%E5%AE%A1%E6%B0%91%E4%BA%8B%E5%88%A4%E5%86%B3%E4%B9%A6
+     *
      */
     @ResponseBody
     @RequestMapping(value = "/view", produces = "text/html;charset=utf-8")
     public void view(HttpSession session, HttpServletResponse response) {
         response.setCharacterEncoding("UTF8");
         StringBuilder sb = new StringBuilder();
-        String encoding = "GBK";
+        String encoding = "UTF8";
         try {
             String path = (String) session.getAttribute("userUploadFile");
             BufferedReader br;
+            sb.append((String) session.getAttribute("filename")).append(System.lineSeparator());
             /*encoding = fileUtil.getEncoding(new File(path));
             System.out.println(encoding);*/
-            if (((String)session.getAttribute("filename")).matches("(.*)FBM(.*)"))
-                encoding = "UTF8";
+            /*if (((String)session.getAttribute("filename")).matches("(.*)FBM(.*)"))
+                encoding = "UTF8";*/
+
             br = new BufferedReader(new InputStreamReader(new FileInputStream(path), encoding));
             String line;
             while ((line = br.readLine()) != null) {

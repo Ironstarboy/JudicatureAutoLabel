@@ -42,6 +42,8 @@ server:
 #当前项目在本机的真实路径
 PATH: 'D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\'
 
+DOWNLAODPATH: 'C:\\Users\\18933\\Desktop\\DataSciProject\\spyder\\'
+
 
 ---
 
@@ -55,9 +57,9 @@ spring:
       on-profile: pro
 
   datasource:
-    url: jdbc:mysql://localhost:3306/datasci?useSSL=false
-    username: root
-    password: 888888
+    url:
+    username: 
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   redis:

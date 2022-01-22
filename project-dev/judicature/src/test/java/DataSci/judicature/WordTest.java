@@ -6,6 +6,7 @@ import DataSci.judicature.service.ExcelService;
 import DataSci.judicature.service.PythonService;
 import DataSci.judicature.service.WordService;
 import DataSci.judicature.service.impl.ExcelServiceImpl;
+import DataSci.judicature.service.impl.PythonServiceImpl;
 import DataSci.judicature.service.impl.SearchServiceImpl;
 import DataSci.judicature.service.impl.WordServiceImpl;
 import DataSci.judicature.utils.FileUtil;
@@ -24,6 +25,7 @@ import org.springframework.mock.web.MockHttpSession;
 
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @SpringBootTest
@@ -47,8 +49,7 @@ public class WordTest {
     private ExcelService excelService;
 
     @Autowired
-    private PythonService pythonService;
-
+    private PythonServiceImpl pythonService;
 
 
     private static Segment nlp = null;
@@ -279,18 +280,18 @@ public class WordTest {
         assert dir != null;
         BufferedReader br;
         BufferedWriter bw;
-        StringBuffer sb ;
+        StringBuffer sb;
         String line;
         for (File file : dir) {
             File[] sons = file.listFiles();
             assert sons != null;
             for (File son : sons) {
-                if (son.getName().matches("(.*)FBM-CL(.*)")){
+                if (son.getName().matches("(.*)FBM-CL(.*)")) {
                     br = new BufferedReader(new FileReader(son));
-                    sb=new StringBuffer();
-                    int i = 1 ;
+                    sb = new StringBuffer();
+                    int i = 1;
                     while ((line = br.readLine()) != null) {
-                        if (i>3){
+                        if (i > 3) {
                             sb.append(line).append(System.lineSeparator());
                         }
 
@@ -308,26 +309,47 @@ public class WordTest {
     }
 
     @Test
-    void tsest(){
+    void tsest() {
         SearchServiceImpl s = new SearchServiceImpl();
         String s1 = s.clear("['segfile\\\\judgment\\\\李某与杨某离婚纠纷一审民事判决书.txt', 'segfile\\\\adjudication\\\\中欧汽车电器有限公司吴国琳等合伙协议纠纷股权转让纠纷其他民事民事裁定书.txt', 'segfile\\\\decision\\\\赵鹏飞合同纠纷执行决定书.txt', 'segfile\\\\mediate\\\\李某、张某离婚纠纷民事一审民事调解书(FBM-CLI-C-407872141).txt', 'segfile\\\\decision\\\\刘帅新租赁合同纠纷执行决定书.txt']");
         System.out.println(s1);
     }
 
     @Test
-    void tsest1(){
+    void tsest1() {
         String s1 = excelService.proRecommend("史生来谭承天建设工程施工合同纠纷再审审查与审判监督民事裁定书");
         System.out.println(s1);
     }
 
     @Test
     void testpy() throws Exception {
-        String path = "D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\project-dev\\" +
-                "judicature\\src\\main\\resources\\case\\txt\\else\\文本.txt";
-        String s = pythonService.recommend(path);
+        String path = "D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\project-dev\\judicature\\src\\main\\resources\\case\\txt\\else\\文本.txt";
+        String s = pythonService.exec(path, "文本");
         System.out.println(s);
     }
 
+    @Test
+    void encoding() throws IOException {
+        String path = "D:\\java\\DataSci\\lqf\\JudicatureAutoLabel\\project-dev\\judicature\\src\\main\\resources\\case\\txt\\";
+        File dir = new File(path);
+        for (File dirFile : dir.listFiles()) {
+            for (File son : dirFile.listFiles()) {
+                if (son.getName().matches("(.*)FBM(.*)")) {
+                    continue;
+                }
+                StringBuilder sb = new StringBuilder();
+                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(son), "GBK"));
+                String line;
+                while ((line=br.readLine())!=null){
+                    sb.append(line).append(System.lineSeparator());
+                }
+                br.close();
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(son), StandardCharsets.UTF_8));
+                bw.write(sb.toString());
+                bw.close();
+            }
+        }
+    }
 
 
 }

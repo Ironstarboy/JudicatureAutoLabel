@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.util.List;
 
 @Service
 public class SearchServiceImpl implements SearchService {
@@ -65,11 +64,11 @@ public class SearchServiceImpl implements SearchService {
              br = new BufferedWriter(new OutputStreamWriter(proc.getOutputStream(), "GBK"));
              in = new BufferedReader(new InputStreamReader(proc.getInputStream(), "GBK"));
 
-           /* br.write("测试");
+            br.write("测试"+System.lineSeparator());
             br.flush();
 
             String msg = in.readLine();
-            System.out.println(msg);*/
+            System.out.println(msg);
         }catch (Exception e){
             e.printStackTrace();
         }

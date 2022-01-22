@@ -114,6 +114,7 @@ public class FileUtil {
             byte[] buf = new byte[1024];
             while ((len = bis.read(buf)) != -1) {
                 bos.write(buf, 0, len);
+                bos.flush();
             }
             bis.close();
             fos.close();
@@ -314,7 +315,7 @@ public class FileUtil {
     /**
      * 识别编码
      */
-    public String getFileEncode(File file) throws IOException {
+    public String getEncoding(File file) throws IOException {
 
         BufferedReader br;
 
@@ -330,6 +331,9 @@ public class FileUtil {
         for (Charset charset : encodes) {
             br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charset));
             String str;
+            br.readLine();
+            br.readLine();
+            br.readLine();
             while ((str = br.readLine()) != null && str.matches("[\\s]"));
             br.close();
                 if (charset.newEncoder().canEncode(str)) {
@@ -339,7 +343,7 @@ public class FileUtil {
         return "unknown";
     }
 
-    public  String getEncoding(File fileName) {
+    public  String getFileEncode(File fileName) {
         String charSet = "GBK";
         try {
             FileInputStream fis = new FileInputStream(fileName);

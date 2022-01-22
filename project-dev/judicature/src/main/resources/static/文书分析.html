@@ -48,7 +48,6 @@
 				processData: false,
 				contentType: false,
 				success: function (data) {//后端给前端
-					alert("here")
 					console.log(data)
 					$('#demo7').val(data);//显示
 				}
@@ -192,7 +191,7 @@
 		<p>
 			<button type="submit" onclick="spyder()">爬取案件</button>
 			&nbsp;开始日期：
-			<input type="date" name="start_date" id="start_date" value="2022-01-22" style="border: 1px solid #ddd">
+			<input type="date" name="start_date" id="start_date" value="2015-01-22" style="border: 1px solid #ddd">
 			&nbsp;结束日期：
 			<input type="date" name="end_date" id="end_date" value="2022-01-22" style="border: 1px solid #ddd">
 			&nbsp;文书数量：
@@ -201,12 +200,12 @@
 		</p>
 
 		<p>
-			<input type="submit" value="上传" onclick="submit2();"/>
+			<input type="submit" value="上传" onclick="close();submit2();"/>
 			<input id="file" type="file"/>
 
-			<input type="submit" value="提交" onclick="submitTXT()"/>
+			<input type="submit" value="提交" onclick="close();submitTXT()"/>
 			<span class="popular-tag">
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<span><a href="JavaScript:sentence();">摘要生成</a></span>
 				<span><a href="JavaScript:function2();">基本信息</a></span>
 				<span><a href="JavaScript:getVadj();function3();">自动分词</a></span>
@@ -216,21 +215,21 @@
 
 		</p>
 	</div>
-	<div id="demo7-tools" style="margin-left: 78.5%;height: 3%;margin-bottom: 4px;">
+	<div id="demo7-tools" style="margin-left: 82.5%;height: 3%;margin-bottom: 4px;">
 		<a href="#" class="disable">隐藏高亮 </a> |
 		<a href="#" class="enable">显示高亮</a>
 	</div>
-<!--	文书内容显示框-->
+	<!--	文书内容显示框-->
 	<form action="">
 		<div class="comments-form">
 			<div class="row">
 				<div class="col-lg-12">
-					<textarea name="message" id="demo7" style="width: 74%; border: 1px solid #ddd"></textarea>
-					<textarea name="message" id="demo6" style="width: 24%; border: 1px solid #ddd"></textarea>
+					<textarea name="message" id="demo7" style="width: 100%; border: 1px solid #ddd"></textarea>
 				</div>
 			</div>
 		</div>
 	</form>
+
 
 	</div>
 
@@ -396,6 +395,13 @@
 			addDemo7Events();
 		}
 
+		function close(){
+			$('#demo7-tools .disable').click(function (e) {
+				$('#demo7').highlightTextarea('disable');
+				e.preventDefault();
+			});
+		}
+
 
 		function addDemo7Events() {
 			$('#demo7-textarea mark')
@@ -408,6 +414,10 @@
 		}
 
 		function submit2() {
+				/*$('#demo7').highlightTextarea('disable');*/
+				/*e.preventDefault();*/
+
+
 			var type = "upload";          //后台接收时需要的参数名称，自定义即可
 			var id = "file";            //即input的id，用来寻找值
 			var formData = new FormData();
@@ -419,19 +429,37 @@
 				processData: false,
 				contentType: false,
 				success: function (data) {//后端给前端
-					alert("here")
+					alert("提交成功！")
 					console.log(data)
 					$('#demo7').val(data);//显示
 				}
 			});
 		}
 		function submitTXT() {
+
+				/*$('#demo7').highlightTextarea('disable');*/
+				/*e.preventDefault();*/
+
+
 			var words = $('#demo7').val();
 
 			$.post("/upload/words", {txt: words}, function (data) {
 				alert(data)
 			}, "text")
 		}
+		/*function sentence(){
+			$.ajax({
+				type: "POST",           //因为是传输文件，所以必须是post
+				url: '/download/sentence',         //对应的后台处理类的地址
+				processData: false,
+				contentType: false,
+				success: function (data) {//后端给前端
+
+					console.log(data)
+					$('#demo6').val(data);//显示
+				}
+			});
+		}*/
 		function sentence(){
 			$.ajax({
 				type: "POST",           //因为是传输文件，所以必须是post
@@ -439,12 +467,14 @@
 				processData: false,
 				contentType: false,
 				success: function (data) {//后端给前端
-					alert("here")
-					console.log(data)
-					$('#demo6').val(data);//显示
+					window.localStorage.setItem('summarise',data);
+					document.getElementById("3cases").src = "摘要生成.html"
 				}
 			});
 		}
+
+
+
 		function function2() {
 			$.ajax({
 				type: "POST",
@@ -467,13 +497,13 @@
 			var num = $("#number").val();
 
 			if (num > 100) {
-				alert("请联系我们升级为vip会员");
+				alert("最多只能爬取100份！");
 			} else {
 				var len = num.length;
 				num = num.substring(0, len - 1) + '0';
 
 				var msg = "start=" + srt + "&end=" + end + "&num=" + num;
-				alert(msg)
+				alert("已在后台自动爬取"+num+"份文书，爬取完成将自动下载")
 				var url = "/download/spyder?" + msg;
 				var a = document.createElement("a");
 				a.href = url;
@@ -488,10 +518,12 @@
 				processData: false,
 				contentType: false,
 				success: function (data) {
+					/*alert("案件推荐来咯！")*/
 					window.localStorage.setItem('recommend',data);
+					document.getElementById("3cases").src = "相似案件.html"
 				}
 			});
-			document.getElementById("3cases").src = "相似案件.html"
+
 		}
 
 

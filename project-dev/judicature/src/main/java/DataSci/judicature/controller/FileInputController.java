@@ -106,12 +106,6 @@ public class FileInputController {
         String newName = name;
         File f = new File(location + "txt\\else\\" + newName + ".txt");
         //这里传入的就直接覆盖掉
-/*
-        int i = 1;
-        while ((f = new File(location + "txt\\else\\" + newName + ".txt")).exists()) {
-            newName = name + "(" + i + ")";
-            i++;
-        }*/
 
         try {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f.getAbsolutePath())));

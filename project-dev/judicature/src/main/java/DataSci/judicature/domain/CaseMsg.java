@@ -13,6 +13,13 @@ public class CaseMsg {
     private String summary_text;     //其他
 
     public CaseMsg() {
+        criminals_text      ="";
+        gender_text         ="";
+        ethnicity_text      ="";
+        birthplace_text     ="";
+        accusation_text     ="";
+        courts_text         ="";
+        summary_text        ="";
     }
 
     public CaseMsg(String criminals_text, String gender_text, String ethnicity_text, String birthplace_text, String accusation_text, String courts_text, String summary_text) {

@@ -1,0 +1,5 @@
+{
+    "fileName": "D:\\\\java\\\\DataSci\\\\lqf\\\\JudicatureAutoLabel\\\\project-dev\\\\judicature\\\\src\\\\main\\\\resources\\\\case\\\\txt\\adjudication\\史克砚、张务军民间借贷纠纷民事一审民事裁定书(FBM-CLI-C-408519860).txt",
+    "动词": "行使,委托,码,借贷,提出,诉讼,撤回,符合,裁定,应,申请,起诉,属,引证,准许,减少,受理,收取,闻",
+    "形容词": ""
+}
